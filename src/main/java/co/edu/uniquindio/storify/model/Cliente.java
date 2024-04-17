@@ -6,21 +6,14 @@ import java.io.Serializable;
 
 @SuppressWarnings("all")
 @Data
-public class Cliente implements Serializable, Comparable<Cliente> {
-    private String nombre;
-    private String apellido;
-    private Usuario usuario;
+public class Cliente extends Persona implements Serializable, Comparable<Cliente> {
     private ListaEnlazadaSimpleCircular<Cancion> cancionesFavoritas;
 
-    public Cliente() {
-
-    }
-    public Cliente(String nombre, String apellido, Usuario usuario) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.usuario = usuario;
+    public Cliente(String nombre, String apellido) {
+        super(nombre, apellido);
         this.cancionesFavoritas = new ListaEnlazadaSimpleCircular<>();
     }
+
 
     @Override
     public int compareTo(Cliente o) {

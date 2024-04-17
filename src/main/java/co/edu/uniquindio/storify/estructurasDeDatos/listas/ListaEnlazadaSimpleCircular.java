@@ -42,7 +42,6 @@ public class ListaEnlazadaSimpleCircular<T> implements IListasEnlazadas<T>, Iter
 
         if (headNode == null) {
             headNode = newNode;
-            headNode.setNextNode(headNode);
             lastNode = headNode;
         } else {
             newNode.setNextNode(headNode);

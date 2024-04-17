@@ -8,7 +8,7 @@ import lombok.ToString;
 @SuppressWarnings("all")
 @Data
 @EqualsAndHashCode
-@ToString
+
 public class Node<T>{
 
     private T data;
@@ -19,5 +19,14 @@ public class Node<T>{
         this.data = data;
         this.nextNode = null;
         this.prevNode = null;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "data=" + data +
+                ", nextNode=" + nextNode +
+                ", prevNode=" + prevNode +
+                '}';
     }
 }

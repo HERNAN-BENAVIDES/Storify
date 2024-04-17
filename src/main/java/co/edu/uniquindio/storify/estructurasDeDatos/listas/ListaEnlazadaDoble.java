@@ -144,6 +144,21 @@ public class ListaEnlazadaDoble<T> implements IListasEnlazadas<T>, Iterable<T> {
         return -1;
     }
 
+    public boolean contains(T data) {
+        int index = 0;
+        Node<T> current = headNode;
+
+        while (current != null) {
+            if (current.getData().equals(data)) {
+                return true;
+            }
+            current = current.getNextNode();
+            index++;
+        }
+
+        return false;
+    }
+
     @Override
     public T locate(Integer index) {
         if (index < 0 || index >= size) {

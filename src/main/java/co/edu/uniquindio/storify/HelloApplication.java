@@ -1,6 +1,8 @@
 package co.edu.uniquindio.storify;
 
+import co.edu.uniquindio.storify.controller.ModelFactoryController;
 import co.edu.uniquindio.storify.model.Artista;
+import co.edu.uniquindio.storify.util.ArchivoUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -8,6 +10,8 @@ import javafx.stage.Stage;
 import javafx.scene.web.WebView;
 
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,6 +59,14 @@ public class HelloApplication extends Application {
 
 
     public static void main(String[] args) {
-        launch();
+        //launch();
+        //ModelFactoryController modelFactoryController = ModelFactoryController.getInstance();
+
+        try {
+            HashMap<String, Artista> artistas = ArchivoUtil.cargarArtistasDesdeArchivo("src/main/resources/archivos/artistas.txt");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

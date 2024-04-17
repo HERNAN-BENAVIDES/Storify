@@ -1,20 +1,36 @@
 package co.edu.uniquindio.storify.controller;
 
+import co.edu.uniquindio.storify.model.Administrador;
 import co.edu.uniquindio.storify.model.TiendaMusica;
 import co.edu.uniquindio.storify.util.StorifyUtil;
+
+import java.io.IOException;
 
 @SuppressWarnings("all")
 public class ModelFactoryController {
 
+    Administrador administrador;
     TiendaMusica tiendaMusica;
 
-    public ModelFactoryController() {
+    public ModelFactoryController()  {
         cargarDatosPrueba();
+        this.administrador = new Administrador(tiendaMusica);
+        cargarArtistasDesdeArchivo();
+    }
+
+    private void cargarArtistasDesdeArchivo() {
+        try {
+            administrador.cargarArtistasDesdeArchivo("src/main/resources/archivos/artistas.txt");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void cargarDatosPrueba() {
         tiendaMusica = StorifyUtil.inicializarDatosPrueba();
     }
+
+
 
      /*
     -----------------------------------------------------------------------------------------------------------
