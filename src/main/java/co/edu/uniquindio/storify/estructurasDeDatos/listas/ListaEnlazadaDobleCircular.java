@@ -242,6 +242,23 @@ public class ListaEnlazadaDobleCircular<T> implements IListasEnlazadas<T>, Itera
     }
 
     @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ListaEnlazadaDobleCircular{");
+        if (headNode != null) {
+            Node<T> currentNode = headNode;
+            while (currentNode != lastNode) {
+                sb.append(currentNode.getData()).append(" -> ");
+                currentNode = currentNode.getNextNode();
+            }
+            sb.append(lastNode.getData());
+        }
+        sb.append("}");
+        return sb.toString();
+    }
+
+
+    @Override
     public Iterator<T> iterator() {
         return new ListaEnlazadaDobleCircularIterator<>(headNode, lastNode);
     }

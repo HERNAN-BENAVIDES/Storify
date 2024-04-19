@@ -216,6 +216,28 @@ public class ListaEnlazadaSimpleCircular<T> implements IListasEnlazadas<T>, Iter
         }
     }
 
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ListaEnlazadaSimpleCircular{");
+        Node<T> currentNode = headNode;
+        while (currentNode != null) {
+            sb.append(currentNode.getData());
+            if (currentNode.getNextNode() != headNode) {
+                sb.append(" -> ");
+            }
+            currentNode = currentNode.getNextNode();
+            if (currentNode == headNode) {
+                break;
+            }
+        }
+        sb.append("}");
+        return sb.toString();
+    }
+
+
+
     @Override
     public Iterator<T> iterator() {
         return new ListaEnlazadaDobleIterator<T>(headNode);

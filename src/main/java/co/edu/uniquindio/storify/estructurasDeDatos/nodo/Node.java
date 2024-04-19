@@ -3,7 +3,6 @@ package co.edu.uniquindio.storify.estructurasDeDatos.nodo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @SuppressWarnings("all")
 @Data
@@ -25,8 +24,7 @@ public class Node<T>{
     public String toString() {
         return "Node{" +
                 "data=" + data +
-                ", nextNode=" + nextNode +
-                ", prevNode=" + prevNode +
                 '}';
     }
+
 }

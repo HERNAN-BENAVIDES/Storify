@@ -247,6 +247,24 @@ public class ListaEnlazadaDoble<T> implements IListasEnlazadas<T>, Iterable<T> {
         return current;
     }
 
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ListaEnlazadaDoble{");
+        Node<T> currentNode = headNode;
+        while (currentNode != null) {
+            sb.append(currentNode.getData());
+            if (currentNode.getNextNode() != null) {
+                sb.append(" -> ");
+            }
+            currentNode = currentNode.getNextNode();
+        }
+        sb.append("}");
+        return sb.toString();
+    }
+
+
     @Override
     public Iterator<T> iterator() {
         return new ListaEnlazadaDobleIterator<T>(headNode);
