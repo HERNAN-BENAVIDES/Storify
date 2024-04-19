@@ -1,6 +1,6 @@
 package co.edu.uniquindio.storify.controller;
 
-import co.edu.uniquindio.storify.model.Administrador;
+import co.edu.uniquindio.storify.exceptions.ArtistasYaEnTiendaException;
 import co.edu.uniquindio.storify.model.TiendaMusica;
 import co.edu.uniquindio.storify.util.StorifyUtil;
 
@@ -8,19 +8,19 @@ import java.io.IOException;
 
 @SuppressWarnings("all")
 public class ModelFactoryController {
-
-    Administrador administrador;
-    TiendaMusica tiendaMusica;
+    private TiendaMusica tiendaMusica;
 
     public ModelFactoryController()  {
         cargarDatosPrueba();
-        this.administrador = new Administrador(tiendaMusica);
         cargarArtistasDesdeArchivo();
+        System.out.println("El genero con mas canciones es: " + obtenerGeneroConMasCanciones());
     }
 
     private void cargarArtistasDesdeArchivo() {
         try {
-            administrador.cargarArtistasDesdeArchivo("src/main/resources/archivos/artistas.txt");
+            tiendaMusica.cargarArtistasDesdeArchivo("src/main/resources/archivos/artistas.txt");
+        } catch (ArtistasYaEnTiendaException e) {
+            System.out.println(e.getMessage());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -28,6 +28,10 @@ public class ModelFactoryController {
 
     private void cargarDatosPrueba() {
         tiendaMusica = StorifyUtil.inicializarDatosPrueba();
+    }
+
+    private String obtenerGeneroConMasCanciones() {
+        return tiendaMusica.obtenerGeneroConMasCanciones();
     }
 
 

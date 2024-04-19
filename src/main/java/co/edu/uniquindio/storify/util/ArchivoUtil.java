@@ -1,7 +1,5 @@
 package co.edu.uniquindio.storify.util;
 
-import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDoble;
-import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDobleCircular;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
 import co.edu.uniquindio.storify.model.Artista;
 import co.edu.uniquindio.storify.model.Cancion;

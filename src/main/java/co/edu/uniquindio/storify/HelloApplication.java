@@ -2,6 +2,7 @@ package co.edu.uniquindio.storify;
 
 import co.edu.uniquindio.storify.controller.ModelFactoryController;
 import co.edu.uniquindio.storify.model.Artista;
+import co.edu.uniquindio.storify.model.Cancion;
 import co.edu.uniquindio.storify.util.ArchivoUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,7 +12,10 @@ import javafx.scene.web.WebView;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,6 +68,9 @@ public class HelloApplication extends Application {
 
         try {
             HashMap<String, Artista> artistas = ArchivoUtil.cargarArtistasDesdeArchivo("src/main/resources/archivos/artistas.txt");
+            System.out.println(artistas.values());
+            List<Artista> artistasList = new ArrayList<>(artistas.values());
+            //artistasList.forEach(System.out::println);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

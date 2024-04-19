@@ -36,7 +36,8 @@ public class Artista implements Serializable, Comparable<Artista> {
                 "codigo='" + codigo + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", nacionalidad='" + nacionalidad + '\'' +
-                ", grupo=" + grupo +
+                ", grupo=" +  (grupo ? "Si" : "No") +
+                ", canciones=" + canciones +
                 '}';
     }
 

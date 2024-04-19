@@ -334,6 +334,10 @@ public class ListaEnlazadaSimple<T> implements IListasEnlazadas<T>, Iterable<T> 
         return new ListaEnlazadaSimpleIterator<T>(headNode);
     }
 
+    public boolean isEmpty() {
+        return headNode == null;
+    }
+
     private class ListaEnlazadaSimpleIterator<T> implements Iterator<T>{
         private Node<T> currentNode;
 

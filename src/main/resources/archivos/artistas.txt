@@ -1,6 +1,6 @@
 #Artistas
-ART001;Michael Jackson;Estados Unidos;false
-ART002;The Beatles;Reino Unido;true
+ART005;Michael Jackson;Estados Unidos;false
+ART006;The Beatles;Reino Unido;true
 
 #Canciones
 Michael Jackson;001;Thriller;Thriller;Caratula;1982;5.57;POP;URL1
