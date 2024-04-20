@@ -1,5 +1,6 @@
 package co.edu.uniquindio.storify.model;
 
+
 import lombok.*;
 
 import java.io.Serializable;
@@ -7,7 +8,7 @@ import java.util.Objects;
 
 @SuppressWarnings("All")
 @Data
-@ToString
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
