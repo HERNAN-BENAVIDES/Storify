@@ -63,17 +63,8 @@ public class HelloApplication extends Application {
 
 
     public static void main(String[] args) {
-        //launch();
-        //ModelFactoryController modelFactoryController = ModelFactoryController.getInstance();
+        launch();
 
-        try {
-            HashMap<String, Artista> artistas = ArchivoUtil.cargarArtistasDesdeArchivo("src/main/resources/archivos/artistas.txt");
-            System.out.println(artistas.values());
-            List<Artista> artistasList = new ArrayList<>(artistas.values());
-            //artistasList.forEach(System.out::println);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
     }
 }

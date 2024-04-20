@@ -1,10 +1,12 @@
 package co.edu.uniquindio.storify.controller;
 
 import co.edu.uniquindio.storify.exceptions.ArtistasYaEnTiendaException;
+import co.edu.uniquindio.storify.model.Artista;
 import co.edu.uniquindio.storify.model.TiendaMusica;
 import co.edu.uniquindio.storify.util.StorifyUtil;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 @SuppressWarnings("all")
 public class ModelFactoryController {
@@ -13,7 +15,6 @@ public class ModelFactoryController {
     public ModelFactoryController()  {
         cargarDatosPrueba();
         cargarArtistasDesdeArchivo();
-        System.out.println("El genero con mas canciones es: " + obtenerGeneroConMasCanciones());
     }
 
     private void cargarArtistasDesdeArchivo() {
@@ -32,6 +33,10 @@ public class ModelFactoryController {
 
     private String obtenerGeneroConMasCanciones() {
         return tiendaMusica.obtenerGeneroConMasCanciones();
+    }
+
+    private Artista obtenerArtistaMasPopular() throws IOException, GeneralSecurityException {
+        return tiendaMusica.obtenerArtistaMaspopular();
     }
 
 

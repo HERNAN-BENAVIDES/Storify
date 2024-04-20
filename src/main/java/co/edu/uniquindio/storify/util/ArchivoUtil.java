@@ -3,6 +3,7 @@ package co.edu.uniquindio.storify.util;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
 import co.edu.uniquindio.storify.model.Artista;
 import co.edu.uniquindio.storify.model.Cancion;
+import co.edu.uniquindio.storify.model.TipoArtista;
 import co.edu.uniquindio.storify.model.TipoGenero;
 
 import java.io.BufferedReader;
@@ -38,7 +39,7 @@ public class ArchivoUtil {
             String[] partes = linea.split(";");
 
             if (esEncabezadoArtistas && partes.length == 4) {
-                artistaActual = new Artista(partes[0], partes[1], partes[2], Boolean.parseBoolean(partes[3]));
+                artistaActual = new Artista(partes[0], partes[1], partes[2], TipoArtista.valueOf(partes[3]));
                 artistasEnlazados.add(artistaActual);
                 artistas.put(partes[0], artistaActual);
             } else if (esEncabezadoCanciones && partes.length == 9) {
