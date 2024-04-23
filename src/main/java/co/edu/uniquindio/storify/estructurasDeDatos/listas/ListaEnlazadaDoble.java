@@ -10,7 +10,6 @@ import java.util.NoSuchElementException;
 
 @Data
 @EqualsAndHashCode
-@ToString
 @SuppressWarnings("All")
 public class ListaEnlazadaDoble<T> implements IListasEnlazadas<T>, Iterable<T> {
     private Node<T> headNode;
@@ -291,5 +290,22 @@ public class ListaEnlazadaDoble<T> implements IListasEnlazadas<T>, Iterable<T> {
             currentNode = currentNode.getNextNode();
             return data;
         }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            sb.append("ListaEnlazadaDoble{");
+            Node<T> currentNode = (Node<T>) headNode;
+            while (currentNode != null) {
+                sb.append(currentNode.getData());
+                if (currentNode.getNextNode() != null) {
+                    sb.append(" -> ");
+                }
+                currentNode = currentNode.getNextNode();
+            }
+            sb.append("}");
+            return sb.toString();
+        }
+
     }
 }

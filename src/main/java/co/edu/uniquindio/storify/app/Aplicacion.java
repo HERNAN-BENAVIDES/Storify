@@ -10,6 +10,7 @@ import co.edu.uniquindio.storify.model.Cliente;
 import co.edu.uniquindio.storify.model.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -45,10 +46,10 @@ public class Aplicacion extends Application {
      */
     public void mostrarVentanaRegistroIngreso() {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Aplicacion.class.getResource("/ventanas/VentanaRegistroIngreso.fxml"));
-            rootLayout = (AnchorPane) loader.load();
-            Scene scene = new Scene(rootLayout);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/ventanaRegistroIngreso.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("Storify | Inicio de Sesion");
             stage.setResizable(false);
@@ -59,6 +60,7 @@ public class Aplicacion extends Application {
             e.printStackTrace();
         }
     }
+
 
     public void mostrarVentanaPrincipal(Usuario usuario) throws AtributoVacioException, UsuarioNoExistenteException {
         try{
