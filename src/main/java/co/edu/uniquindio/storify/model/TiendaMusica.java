@@ -40,6 +40,74 @@ public class TiendaMusica implements Serializable {
         return administrador;
     }
 
+    public Cliente crearCliente(String nombre, String apellido) throws AtributoVacioException {
+
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+        if (apellido == null || apellido.isBlank()) {
+            throw new AtributoVacioException("El url Youtube de la canción es obligatorio");
+        }
+
+        Cliente clienteNuevo = Cliente.builder()
+                .nombre(nombre)
+                .apellido(apellido)
+                .build();
+
+        return clienteNuevo;
+    }
+
+
+
+    public Usuario crearUsuario(String username, String password, String email, Persona persona) throws AtributoVacioException{
+        if (username == null || username.isBlank()) {
+            throw new AtributoVacioException("El username es obligatorio");
+        }
+        if (password == null || password.isBlank()) {
+            throw new AtributoVacioException("El username es obligatorio");
+        }
+        if (email == null || email.isBlank()) {
+            throw new AtributoVacioException("El username es obligatorio");
+        }
+
+        Usuario usuarioNuevo= Usuario.builder()
+                .username(username)
+                .password(password)
+                .email(email)
+                .persona(persona)
+                .build();
+
+        return usuarioNuevo;
+    }
+
+    public boolean agregarUsuario(Usuario usuario) {
+        String usernameCliente = usuario.getUsername();
+        Usuario usuarioExistente = getUsuarios().putIfAbsent(usernameCliente, usuario);
+        if (usuarioExistente != null) {
+            throw new IllegalArgumentException("El usuario ya existe en la base de datos");
+        }
+        return true;
+    }
+
+    public ListaEnlazadaDoble<Cancion> buscarCancionesPorArtista(String nombreArtista) throws ArtistaNoEncontradoException {
+        for (Artista artista : artistas.values()) {
+            if (artista.getNombre().equalsIgnoreCase(nombreArtista)) {
+                return artista.getCanciones();
+            }
+        }
+        throw new ArtistaNoEncontradoException("El artista seleccionado no existe");
+    }
+
+
+
+    /**
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * ----------------------------------------------------------------------Funciones de administrador----------------------------------------------------------------------------------------------
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+
     public boolean agregarArtista(Artista artista) {
         String codigoArtista = artista.getCodigo();
         Artista artistaExistente = getArtistas().putIfAbsent(codigoArtista, artista);
@@ -140,63 +208,6 @@ public class TiendaMusica implements Serializable {
         }
         canciones.add(cancion);
         return true;
-    }
-
-    public Cliente crearCliente(String nombre, String apellido) throws AtributoVacioException {
-
-        if (nombre == null || nombre.isBlank()) {
-            throw new AtributoVacioException("El nombre es obligatorio");
-        }
-        if (apellido == null || apellido.isBlank()) {
-            throw new AtributoVacioException("El url Youtube de la canción es obligatorio");
-        }
-
-        Cliente clienteNuevo = Cliente.builder()
-                .nombre(nombre)
-                .apellido(apellido)
-                .build();
-
-        return clienteNuevo;
-    }
-
-
-    public Usuario crearUsuario(String username, String password, String email, Persona persona) throws AtributoVacioException{
-        if (username == null || username.isBlank()) {
-            throw new AtributoVacioException("El username es obligatorio");
-        }
-        if (password == null || password.isBlank()) {
-            throw new AtributoVacioException("El username es obligatorio");
-        }
-        if (email == null || email.isBlank()) {
-            throw new AtributoVacioException("El username es obligatorio");
-        }
-
-        Usuario usuarioNuevo= Usuario.builder()
-                .username(username)
-                .password(password)
-                .email(email)
-                .persona(persona)
-                .build();
-
-        return usuarioNuevo;
-    }
-
-    public boolean agregarUsuario(Usuario usuario) {
-        String usernameCliente = usuario.getUsername();
-        Usuario usuarioExistente = getUsuarios().putIfAbsent(usernameCliente, usuario);
-        if (usuarioExistente != null) {
-            throw new IllegalArgumentException("El usuario ya existe en la base de datos");
-        }
-        return true;
-    }
-
-    public ListaEnlazadaDoble<Cancion> buscarCancionesPorArtista(String nombreArtista) throws ArtistaNoEncontradoException {
-        for (Artista artista : artistas.values()) {
-            if (artista.getNombre().equalsIgnoreCase(nombreArtista)) {
-                return artista.getCanciones();
-            }
-        }
-        throw new ArtistaNoEncontradoException("El artista seleccionado no existe");
     }
 
 

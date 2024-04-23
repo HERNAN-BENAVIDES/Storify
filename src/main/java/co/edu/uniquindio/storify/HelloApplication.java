@@ -11,11 +11,7 @@ import javafx.stage.Stage;
 import javafx.scene.web.WebView;
 
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,7 +60,5 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
-
-
     }
 }
