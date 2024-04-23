@@ -2,9 +2,7 @@ package co.edu.uniquindio.storify.model;
 
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDoble;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
-import co.edu.uniquindio.storify.exceptions.ArtistaNoEncontradoException;
-import co.edu.uniquindio.storify.exceptions.ArtistasYaEnTiendaException;
-import co.edu.uniquindio.storify.exceptions.AtributoVacioException;
+import co.edu.uniquindio.storify.exceptions.*;
 import co.edu.uniquindio.storify.util.ArchivoUtil;
 import co.edu.uniquindio.storify.util.YouTubeHelper;
 import lombok.Data;
@@ -20,7 +18,7 @@ import java.util.Random;
 
 @Data
 @ToString
-@SuppressWarnings("All")
+//@SuppressWarnings("All")
 public class TiendaMusica implements Serializable {
 
     private final String nombre = "Storify";
@@ -40,79 +38,11 @@ public class TiendaMusica implements Serializable {
         return administrador;
     }
 
-    public Cliente crearCliente(String nombre, String apellido) throws AtributoVacioException {
-
-        if (nombre == null || nombre.isBlank()) {
-            throw new AtributoVacioException("El nombre es obligatorio");
-        }
-        if (apellido == null || apellido.isBlank()) {
-            throw new AtributoVacioException("El url Youtube de la canción es obligatorio");
-        }
-
-        Cliente clienteNuevo = Cliente.builder()
-                .nombre(nombre)
-                .apellido(apellido)
-                .build();
-
-        return clienteNuevo;
-    }
-
-
-
-    public Usuario crearUsuario(String username, String password, String email, Persona persona) throws AtributoVacioException{
-        if (username == null || username.isBlank()) {
-            throw new AtributoVacioException("El username es obligatorio");
-        }
-        if (password == null || password.isBlank()) {
-            throw new AtributoVacioException("El username es obligatorio");
-        }
-        if (email == null || email.isBlank()) {
-            throw new AtributoVacioException("El username es obligatorio");
-        }
-
-        Usuario usuarioNuevo= Usuario.builder()
-                .username(username)
-                .password(password)
-                .email(email)
-                .persona(persona)
-                .build();
-
-        return usuarioNuevo;
-    }
-
-    public boolean agregarUsuario(Usuario usuario) {
-        String usernameCliente = usuario.getUsername();
-        Usuario usuarioExistente = getUsuarios().putIfAbsent(usernameCliente, usuario);
-        if (usuarioExistente != null) {
-            throw new IllegalArgumentException("El usuario ya existe en la base de datos");
-        }
-        return true;
-    }
-
-    public ListaEnlazadaDoble<Cancion> buscarCancionesPorArtista(String nombreArtista) throws ArtistaNoEncontradoException {
-        for (Artista artista : artistas.values()) {
-            if (artista.getNombre().equalsIgnoreCase(nombreArtista)) {
-                return artista.getCanciones();
-            }
-        }
-        throw new ArtistaNoEncontradoException("El artista seleccionado no existe");
-    }
-
-
-
-    /**
-     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-     * ----------------------------------------------------------------------Funciones de administrador----------------------------------------------------------------------------------------------
-     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-     */
-
-    public boolean agregarArtista(Artista artista) {
+    public boolean agregarArtista(Artista artista) throws ArtistasYaEnTiendaException {
         String codigoArtista = artista.getCodigo();
         Artista artistaExistente = getArtistas().putIfAbsent(codigoArtista, artista);
         if (artistaExistente != null) {
-            throw new IllegalArgumentException("El artista ya existe en la tienda.");
+            throw new ArtistasYaEnTiendaException("El artista ya existe en la tienda.");
         }
         return true;
     }
@@ -143,6 +73,7 @@ public class TiendaMusica implements Serializable {
 
     }
 
+
     public Cancion crearCancion(String nombre, String nombreAlbum, String caratula, String anio, String duracion, String genero, String urlYoutube)throws AtributoVacioException{
         String codigoRandom= generarCodigoAleatorio();
 
@@ -169,11 +100,12 @@ public class TiendaMusica implements Serializable {
         }
 
         Cancion cancionNueva = Cancion.builder()
+                .codigo(codigoRandom)
                 .nombre(nombre)
                 .album(nombreAlbum)
                 .caratula(caratula)
-                .anioLanzamiento(Integer.valueOf(anio))
-                .duracion(Double.valueOf(duracion))
+                .anioLanzamiento(Integer.parseInt(anio))
+                .duracion(Double.parseDouble(duracion))
                 .genero(TipoGenero.valueOf(genero.toUpperCase()))
                 .urlYoutube(urlYoutube)
                 .build();
@@ -201,13 +133,99 @@ public class TiendaMusica implements Serializable {
         return codigo.toString();
     }
 
-    public boolean agregarCancion(Cancion cancion, Artista artista) {
+    public boolean agregarCancion(Cancion cancion, Artista artista) throws CancionYaRegistradaException {
         ListaEnlazadaDoble<Cancion> canciones = artista.getCanciones();
         if(canciones.contains(cancion)) {
-            throw new IllegalArgumentException("La cancion ya esta en las canciones del  artista");
+            throw new CancionYaRegistradaException("La cancion ya esta en las canciones del  artista");
         }
         canciones.add(cancion);
         return true;
+    }
+
+    public Cliente crearCliente(String nombre, String apellido) throws AtributoVacioException {
+
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+        if (apellido == null || apellido.isBlank()) {
+            throw new AtributoVacioException("El apellido es obligatorio");
+        }
+
+        Cliente clienteNuevo = Cliente.builder()
+                .nombre(nombre)
+                .apellido(apellido)
+                .build();
+
+        return clienteNuevo;
+    }
+
+
+    public Usuario crearUsuario(String username, String password, String email, Persona persona) throws AtributoVacioException{
+        if (username == null || username.isBlank()) {
+            throw new AtributoVacioException("El username es obligatorio");
+        }
+        if (password == null || password.isBlank()) {
+            throw new AtributoVacioException("La contraseña es obligatoria");
+        }
+        if (email == null || email.isBlank()) {
+            throw new AtributoVacioException("El email es obligatorio");
+        }
+
+        Usuario usuarioNuevo= Usuario.builder()
+                .username(username)
+                .password(password)
+                .email(email)
+                .persona(persona)
+                .build();
+
+        return usuarioNuevo;
+    }
+
+    public boolean agregarUsuario(Usuario usuario) throws UsuarioYaRegistradoException {
+        String usernameCliente = usuario.getUsername();
+        Usuario usuarioExistente = getUsuarios().putIfAbsent(usernameCliente, usuario);
+        if (usuarioExistente != null) {
+            throw new UsuarioYaRegistradoException("El usuario ya existe en la base de datos");
+        }
+        return true;
+    }
+
+    public Usuario buscarUsuario(String username, String contrasenia) throws AtributoVacioException, UsuarioNoExistenteException{
+        if (username == null || username.isBlank()) {
+            throw new AtributoVacioException("El username es obligatorio");
+        }
+        if (contrasenia == null || contrasenia.isBlank()) {
+            throw new AtributoVacioException("La contrasenia es obligatorio");
+        }
+
+        for (Usuario usuario : usuarios.values()) {
+            if (usuario.getUsername().equals(username) && usuario.getPassword().equals(contrasenia)) {
+                return usuario;
+            }
+        }
+        throw new UsuarioNoExistenteException("Usuario no encontrado");
+    }
+
+    public String obtenerTipoUsuario(String username, String contrasenia)throws AtributoVacioException, UsuarioNoExistenteException{
+
+        Usuario usuario = buscarUsuario(username, contrasenia);
+        Persona persona = usuario.getPersona();
+        if (persona instanceof Cliente) {
+            return "Cliente";
+        } else if (persona instanceof Administrador) {
+            return "Administrador";
+        }
+
+        throw new UsuarioNoExistenteException("Usuario no encontrado");
+    }
+
+    public ListaEnlazadaDoble<Cancion> buscarCancionesPorArtista(String nombreArtista) throws ArtistaNoEncontradoException {
+        for (Artista artista : artistas.values()) {
+            if (artista.getNombre().equalsIgnoreCase(nombreArtista)) {
+                return artista.getCanciones();
+            }
+        }
+        throw new ArtistaNoEncontradoException("El artista seleccionado no existe");
     }
 
 
@@ -297,7 +315,7 @@ public class TiendaMusica implements Serializable {
     }
 
     private long obtenerCantidadReproducciones(String enlaceYouTube) throws IOException, GeneralSecurityException {
-       return YouTubeHelper.obtenerVistasVideo(enlaceYouTube); // Llama a la clase YouTubeHelper
+        return YouTubeHelper.obtenerVistasVideo(enlaceYouTube); // Llama a la clase YouTubeHelper
     }
 
 

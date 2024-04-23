@@ -1,4 +1,4 @@
-package co.edu.uniquindio.storify.controller;
+package co.edu.uniquindio.storify.controllers;
 
 import co.edu.uniquindio.storify.app.Aplicacion;
 import co.edu.uniquindio.storify.exceptions.ArtistasYaEnTiendaException;

@@ -1,13 +1,19 @@
 package co.edu.uniquindio.storify.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.io.Serializable;
 
-@SuppressWarnings("all")
+//@SuppressWarnings("all")
 @Data
+@EqualsAndHashCode(callSuper = true)
+
 public class Administrador extends Persona implements Serializable {
     private static Administrador administrador;
 
+    @Builder
     public Administrador() {
         super("Jose Juan", "Mesa");
     }

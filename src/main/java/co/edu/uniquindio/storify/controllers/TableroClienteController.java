@@ -2,8 +2,6 @@ package co.edu.uniquindio.storify.controllers;
 
 import co.edu.uniquindio.storify.app.Aplicacion;
 import co.edu.uniquindio.storify.model.Usuario;
-import co.edu.uniquindio.storify.controller.ModelFactoryController;
-
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import lombok.Data;
@@ -13,9 +11,9 @@ import java.util.ResourceBundle;
 
 @Data
 
-public class TablaClienteController implements Initializable {
+public class TableroClienteController implements Initializable {
 
-    private  ModelFactoryController mfm = ModelFactoryController.getInstance();
+    private ModelFactoryController mfm = ModelFactoryController.getInstance();
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
