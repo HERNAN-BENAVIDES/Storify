@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,36 +10,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="800.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.TableroClienteController">
+<Pane prefHeight="700.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.TableroClienteController">
    <children>
-      <Pane layoutY="674.0" prefHeight="68.0" prefWidth="272.0">
+      <Pane layoutX="1.0" layoutY="628.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="26.0" layoutY="17.0">
-               <image>
-                  <Image url="@../imagenes/bot.png" />
-               </image>
-            </ImageView>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Chat Bot">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Solistas">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-         </children>
-         <styleClass>
-            <String fx:value="over" />
-            <String fx:value="cursor_hand" />
-         </styleClass>
-      </Pane>
-      <Pane layoutY="605.0" prefHeight="68.0" prefWidth="272.0">
-         <children>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="              Reportar un error">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="28.0" layoutY="20.0">
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="24.0" layoutY="9.0">
                <image>
-                  <Image url="@../imagenes/alert.png" />
+                  <Image url="@../imagenes/Solista%20Icon.png" />
                </image>
             </ImageView>
          </children>
@@ -52,16 +30,16 @@
             <String fx:value="cursor_hand" />
          </styleClass>
       </Pane>
-      <Pane layoutY="485.0" prefHeight="68.0" prefWidth="272.0">
+      <Pane layoutX="1.0" layoutY="559.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="           Sobre Nosotros">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Bandas">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="26.0" layoutY="17.0">
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="9.0">
                <image>
-                  <Image url="@../imagenes/aboutUs.png" />
+                  <Image url="@../imagenes/Banda%20Icon.png" />
                </image>
             </ImageView>
          </children>
@@ -70,16 +48,16 @@
             <String fx:value="cursor_hand" />
          </styleClass>
       </Pane>
-      <Pane layoutY="416.0" prefHeight="68.0" prefWidth="272.0">
+      <Pane layoutX="1.0" layoutY="490.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Seguros">
+            <Button mnemonicParsing="false" onAction="#mostrarGuias" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Artistas">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="24.0" layoutY="17.0">
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="21.0" layoutY="10.0">
                <image>
-                  <Image url="@../imagenes/salud.png" />
+                  <Image url="@../imagenes/Art%20Icon.png" />
                </image>
             </ImageView>
          </children>
@@ -88,52 +66,16 @@
             <String fx:value="cursor_hand" />
          </styleClass>
       </Pane>
-      <Pane layoutY="347.0" prefHeight="68.0" prefWidth="272.0">
+      <Pane layoutX="1.0" layoutY="396.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="22.0" layoutY="16.0">
-               <image>
-                  <Image url="@../imagenes/pets.png" />
-               </image>
-            </ImageView>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Sobre Mascotas">
+            <Button mnemonicParsing="false" onAction="#mostrarPaquetes" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Mis Favoritos">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-         </children>
-         <styleClass>
-            <String fx:value="over" />
-            <String fx:value="cursor_hand" />
-         </styleClass>
-      </Pane>
-      <Pane layoutY="278.0" prefHeight="68.0" prefWidth="272.0">
-         <children>
-            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="21.0" layoutY="17.0">
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="24.0" layoutY="9.0">
                <image>
-                  <Image url="@../imagenes/guia.png" />
-               </image>
-            </ImageView>
-            <Button mnemonicParsing="false" onAction="#mostrarGuias" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Nuestros Guias">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-         </children>
-         <styleClass>
-            <String fx:value="over" />
-            <String fx:value="cursor_hand" />
-         </styleClass>
-      </Pane>
-      <Pane layoutY="208.0" prefHeight="68.0" prefWidth="272.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#mostrarPaquetes" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Paquetes">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="18.0" layoutY="21.0">
-               <image>
-                  <Image url="@../imagenes/paquetes.png" />
+                  <Image url="@../imagenes/Favoritos%20Icon.png" />
                </image>
             </ImageView>
          </children>
@@ -142,16 +84,16 @@
             <String fx:value="cursor_hand" />
          </styleClass>
       </Pane>
-      <Pane layoutY="139.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
+      <Pane layoutX="1.0" layoutY="327.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button mnemonicParsing="false" onAction="#mostrarDestinos" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Destinos">
+            <Button mnemonicParsing="false" onAction="#mostrarDestinos" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text=" Géneros">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="19.0" layoutY="17.0">
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="9.0">
                <image>
-                  <Image url="@../imagenes/destinos.png" />
+                  <Image url="@../imagenes/Genero%20Musical%20Icon.png" />
                </image>
             </ImageView>
          </children>
@@ -160,23 +102,18 @@
             <String fx:value="cursor_hand" />
          </styleClass>
       </Pane>
-      <Separator layoutY="277.0" prefHeight="3.0" prefWidth="272.0" />
-      <Separator layoutY="554.0" prefHeight="9.0" prefWidth="272.0" />
-      <Text fill="#838181" layoutX="21.0" layoutY="594.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HELP" wrappingWidth="93.2578125">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Text>
-      <Pane layoutY="70.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
+      <Separator layoutX="1.0" layoutY="464.0" prefHeight="3.0" prefWidth="272.0" />
+      <Separator layoutX="2.0" layoutY="691.0" prefHeight="9.0" prefWidth="272.0" />
+      <Pane layoutX="1.0" layoutY="258.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button mnemonicParsing="false" onAction="#mostrarMisReservas" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="     Mis Reservas">
+            <Button mnemonicParsing="false" onAction="#mostrarMisReservas" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="     Canciones" textAlignment="RIGHT">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="19.0" layoutY="19.0">
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="9.0">
                <image>
-                  <Image url="@../imagenes/reservas.png" />
+                  <Image url="@../imagenes/Musica%20Icon.png" />
                </image>
             </ImageView>
          </children>
@@ -185,17 +122,17 @@
             <String fx:value="cursor_hand" />
          </styleClass>
       </Pane>
-      <Separator layoutY="69.0" prefHeight="3.0" prefWidth="272.0" />
-      <Pane prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
+      <Separator layoutX="2.0" layoutY="228.0" prefHeight="3.0" prefWidth="272.0" />
+      <Pane layoutX="2.0" layoutY="160.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
             <Button fx:id="btnAjustesPerfil" mnemonicParsing="false" onAction="#mostrarPerfil" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="      Ajustes de Perfil">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="19.0" layoutY="19.0">
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="9.0">
                <image>
-                  <Image url="@../imagenes/profile.png" />
+                  <Image url="@../imagenes/Editar%20Usuario%20Icon.png" />
                </image>
             </ImageView>
          </children>
@@ -204,5 +141,66 @@
             <String fx:value="cursor_hand" />
          </styleClass>
       </Pane>
+      <Text fill="#838181" layoutX="23.0" layoutY="485.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AUTORES" wrappingWidth="93.2578125">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fill="#838181" layoutX="23.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MÚSICA" wrappingWidth="93.2578125">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="13.0" layoutY="103.0" visible="false">
+         <image>
+            <Image url="@../imagenes/Unmute%20Icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="90.0" fitWidth="90.0" layoutX="6.0" layoutY="8.0">
+         <image>
+            <Image url="@../imagenes/CD%20Icon.png" />
+         </image>
+      </ImageView>
+      <Separator layoutX="2.0" layoutY="159.0" prefHeight="3.0" prefWidth="272.0" />
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="13.0" layoutY="103.0">
+         <image>
+            <Image url="@../imagenes/Mute%20Icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="108.0" layoutY="113.0">
+         <image>
+            <Image url="@../imagenes/Pausa%20Icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="57.0" layoutY="108.0">
+         <image>
+            <Image url="@../imagenes/Back%20Icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="150.0" layoutY="108.0">
+         <image>
+            <Image url="@../imagenes/Next%20Icon.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="106.0" layoutY="29.0" prefHeight="24.0" prefWidth="145.0" text="Nombre Canción">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="106.0" layoutY="62.0" prefHeight="24.0" prefWidth="145.0" text="Nombre Artista">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="203.0" layoutY="108.0">
+         <image>
+            <Image url="@../imagenes/Cara%20Feliz%20icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="203.0" layoutY="108.0" visible="false">
+         <image>
+            <Image url="@../imagenes/Cara%20Corazones%20Icon.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
