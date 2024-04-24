@@ -6,7 +6,7 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-//@SuppressWarnings("all")
+@SuppressWarnings("all")
 public class Persona {
     private String nombre;
     private String apellido;

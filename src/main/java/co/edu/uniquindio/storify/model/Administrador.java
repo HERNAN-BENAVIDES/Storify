@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
-//@SuppressWarnings("all")
+@SuppressWarnings("all")
 @Data
 @EqualsAndHashCode(callSuper = true)
 

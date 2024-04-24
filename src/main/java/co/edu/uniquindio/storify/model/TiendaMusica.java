@@ -18,7 +18,7 @@ import java.util.Random;
 
 @Data
 @ToString
-//@SuppressWarnings("All")
+@SuppressWarnings("All")
 public class TiendaMusica implements Serializable {
 
     private final String nombre = "Storify";

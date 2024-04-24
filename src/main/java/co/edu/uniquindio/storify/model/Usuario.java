@@ -11,7 +11,7 @@ import java.util.Objects;
 @EqualsAndHashCode
 @AllArgsConstructor
 @Builder
-//@SuppressWarnings("All")
+@SuppressWarnings("All")
 public class Usuario implements Serializable, Comparable<Usuario> {
 
     private String username;

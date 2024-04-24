@@ -4,11 +4,13 @@ package co.edu.uniquindio.storify.estructurasDeDatos.nodo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
+
 @SuppressWarnings("all")
 @Data
 @EqualsAndHashCode
 
-public class Node<T>{
+public class Node<T> implements Serializable {
 
     private T data;
     private Node<T> nextNode;

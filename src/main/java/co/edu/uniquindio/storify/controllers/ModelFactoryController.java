@@ -4,21 +4,32 @@ import co.edu.uniquindio.storify.app.Aplicacion;
 import co.edu.uniquindio.storify.exceptions.ArtistasYaEnTiendaException;
 import co.edu.uniquindio.storify.model.Artista;
 import co.edu.uniquindio.storify.model.TiendaMusica;
+import co.edu.uniquindio.storify.util.Persistencia;
 import co.edu.uniquindio.storify.util.StorifyUtil;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-//@SuppressWarnings("all")
+@SuppressWarnings("all")
 public class ModelFactoryController {
     private TiendaMusica tiendaMusica=null;
     private Aplicacion aplicacion;
     private Stage ventana;
 
     public ModelFactoryController()  {
-        cargarDatosPrueba();
-        cargarArtistasDesdeArchivo();
+        //cargarDatosPrueba();
+        //cargarArtistasDesdeArchivo();
+        //guardarDatosBinario();
+        cargarDatosBinario();
+    }
+
+    private void cargarDatosBinario() {
+        this.tiendaMusica = Persistencia.cargarRecursoBancoBinario();
+    }
+
+    private void guardarDatosBinario() {
+        Persistencia.guardarRecursoBancoBinario(tiendaMusica);
     }
 
     private void cargarArtistasDesdeArchivo() {

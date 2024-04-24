@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
-//@SuppressWarnings("all")
+@SuppressWarnings("all")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)

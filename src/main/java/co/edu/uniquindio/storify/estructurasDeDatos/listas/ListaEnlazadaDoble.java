@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 @Data
 @EqualsAndHashCode
 @SuppressWarnings("All")
-public class ListaEnlazadaDoble<T> implements IListasEnlazadas<T>, Iterable<T> {
+public class ListaEnlazadaDoble<T> implements IListasEnlazadas<T>, Iterable<T>, Serializable {
     private Node<T> headNode;
     private Node<T> lastNode;
     private int size;

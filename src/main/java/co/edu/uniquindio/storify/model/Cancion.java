@@ -6,7 +6,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-//@SuppressWarnings("All")
+@SuppressWarnings("All")
 @Data
 @Builder
 @NoArgsConstructor

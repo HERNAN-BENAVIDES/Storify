@@ -3,12 +3,13 @@ package co.edu.uniquindio.storify.estructurasDeDatos.listas;
 import co.edu.uniquindio.storify.estructurasDeDatos.nodo.Node;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 @SuppressWarnings("All")
 @Data
-public class ListaEnlazadaSimple<T> implements IListasEnlazadas<T>, Iterable<T> {
+public class ListaEnlazadaSimple<T> implements IListasEnlazadas<T>, Iterable<T>, Serializable {
     private Node<T> headNode;
     private Node<T> lastNode;
     private int size;
