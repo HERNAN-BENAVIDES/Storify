@@ -18,10 +18,13 @@ public class ModelFactoryController {
     private Stage ventana;
 
     public ModelFactoryController()  {
-        //cargarDatosPrueba();
-        //cargarArtistasDesdeArchivo();
-        //guardarDatosBinario();
         cargarDatosBinario();
+
+        if(tiendaMusica == null){
+            cargarDatosPrueba();
+        }
+
+        //guardarDatosBinario();
     }
 
     private void cargarDatosBinario() {
@@ -32,9 +35,9 @@ public class ModelFactoryController {
         Persistencia.guardarRecursoBancoBinario(tiendaMusica);
     }
 
-    private void cargarArtistasDesdeArchivo() {
+    private void cargarArtistasDesdeArchivo(String ruta) {
         try {
-            tiendaMusica.cargarArtistasDesdeArchivo("src/main/resources/archivos/artistas.txt");
+            tiendaMusica.cargarArtistasDesdeArchivo(ruta);
         } catch (ArtistasYaEnTiendaException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
