@@ -49,13 +49,13 @@ public class ModelFactoryController {
         tiendaMusica = StorifyUtil.inicializarDatosPrueba();
     }
 
-    private String obtenerGeneroConMasCanciones() {
-        return tiendaMusica.obtenerGeneroConMasCanciones();
-    }
-
-    private Artista obtenerArtistaMasPopular() throws IOException, GeneralSecurityException {
-        return tiendaMusica.obtenerArtistaMaspopular();
-    }
+//    private String obtenerGeneroConMasCanciones() {
+//        return tiendaMusica.obtenerGeneroConMasCanciones();
+//    }
+//
+//    private Artista obtenerArtistaMasPopular() throws IOException, GeneralSecurityException {
+//        return tiendaMusica.obtenerArtistaMaspopular();
+//    }
 
     /**
      * Metodo que obtiene la TiendaMusica
