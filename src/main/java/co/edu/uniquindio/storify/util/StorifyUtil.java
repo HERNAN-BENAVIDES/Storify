@@ -12,7 +12,6 @@ public class StorifyUtil {
         Administrador administrador = new Administrador();
         Cliente persona1 = new Cliente("Mary", "Saire");
 
-        // Datos de usuarios
         Usuario usuario = new Usuario("admin", "$aDmiN", "admin@gmail", administrador);
         Usuario usuario1 = new Usuario("Mary", "1234", "mary@gmail.com", persona1);
         tiendaMusica.getUsuarios().put("admin", usuario);
@@ -45,9 +44,6 @@ public class StorifyUtil {
         artista5.agregarCancion(cancion2);
         artista6.agregarCancion(cancion3);
         artista7.agregarCancion(cancion4);
-
-
-
 
 
         persona1.agregarCancionFavorita(cancion1);

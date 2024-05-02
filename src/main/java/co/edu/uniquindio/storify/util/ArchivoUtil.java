@@ -10,9 +10,8 @@ import java.util.List;
 
 public class ArchivoUtil {
 
-    public static HashMap<String, Artista> cargarArtistasDesdeArchivo(String ruta) throws IOException {
-        HashMap<String, Artista> artistas = new HashMap<>();
-        ListaEnlazadaSimple<Artista> artistasEnlazados = new ListaEnlazadaSimple<>();
+    public static ListaEnlazadaSimple<Artista> cargarArtistasDesdeArchivo(String ruta) throws IOException {
+        ListaEnlazadaSimple<Artista> artistas = new ListaEnlazadaSimple<>();
         List<String> contenido = leerArchivo(ruta);
 
         Artista artistaActual = null;
@@ -35,13 +34,13 @@ public class ArchivoUtil {
 
             if (esEncabezadoArtistas && partes.length == 4) {
                 artistaActual = new Artista(partes[0], partes[1], partes[2], TipoArtista.valueOf(partes[3]));
-                artistasEnlazados.add(artistaActual);
-                artistas.put(partes[0], artistaActual);
-            } else if (esEncabezadoCanciones && partes.length == 9) {
-                Cancion cancion = new Cancion(partes[1], partes[2], partes[3], partes[4], Integer.parseInt(partes[5]), partes[6], TipoGenero.valueOf(partes[7]), partes[8]);
-                
+
+                artistas.add(artistaActual);
+            } else if (esEncabezadoCanciones && partes.length == 8) {
+                Cancion cancion = new Cancion(partes[1], partes[2], partes[3], Integer.parseInt(partes[4]), Double.parseDouble(partes[5]), TipoGenero.valueOf(partes[6]), (partes[7]));
+
                 // Buscar al artista correspondiente en la lista enlazada
-                for (Artista artista : artistasEnlazados) {
+                for (Artista artista : artistas) {
                     if (artista.getNombre().equals(partes[0])) {
                         artista.getCanciones().add(cancion);
                         break; // Una vez encontramos al artista, no es necesario seguir buscando

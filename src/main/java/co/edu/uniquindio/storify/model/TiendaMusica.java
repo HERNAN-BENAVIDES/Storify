@@ -1,7 +1,9 @@
 package co.edu.uniquindio.storify.model;
 
+import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDoble;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
+import co.edu.uniquindio.storify.estructurasDeDatos.nodo.BinaryNode;
 import co.edu.uniquindio.storify.exceptions.*;
 import co.edu.uniquindio.storify.util.ArchivoUtil;
 import co.edu.uniquindio.storify.util.YouTubeHelper;
@@ -24,12 +26,12 @@ public class TiendaMusica implements Serializable {
     private final String nombre = "Storify";
     private final String version = "1.0.0";
     private HashMap<String, Usuario> usuarios;
-    private HashMap<String, Artista> artistas;
+    private BinaryTree<Artista> artistas;
     private  Administrador administrador;
 
     public TiendaMusica() {
         this.usuarios = new HashMap<>();
-        this.artistas = new HashMap<>();
+        this.artistas = new BinaryTree<>();
         this.administrador = crearAdministrador();
     }
 
@@ -38,13 +40,11 @@ public class TiendaMusica implements Serializable {
         return administrador;
     }
 
-    public boolean agregarArtista(Artista artista) throws ArtistasYaEnTiendaException {
-        String codigoArtista = artista.getCodigo();
-        Artista artistaExistente = getArtistas().putIfAbsent(codigoArtista, artista);
-        if (artistaExistente != null) {
+    public void agregarArtista(Artista artista) throws ArtistasYaEnTiendaException {
+        if (artistas.find(artista) != null){
             throw new ArtistasYaEnTiendaException("El artista ya existe en la tienda.");
         }
-        return true;
+        artistas.insert(artista);
     }
 
     public Artista crearArtista(String nombre, String codigo, String nacionalidad, String tipoArtista)throws AtributoVacioException{
@@ -75,7 +75,6 @@ public class TiendaMusica implements Serializable {
 
 
     public Cancion crearCancion(String nombre, String nombreAlbum, String caratula, String anio, String duracion, String genero, String urlYoutube)throws AtributoVacioException{
-        String codigoRandom= generarCodigoAleatorio();
 
         if (nombre == null || nombre.isBlank()) {
             throw new AtributoVacioException("El nombre es obligatorio");
@@ -98,6 +97,7 @@ public class TiendaMusica implements Serializable {
         if (urlYoutube == null || urlYoutube.isBlank()) {
             throw new AtributoVacioException("El url Youtube de la canción es obligatorio");
         }
+
 
         Cancion cancionNueva = Cancion.builder()
                 .codigo(codigoRandom)
@@ -220,11 +220,11 @@ public class TiendaMusica implements Serializable {
     }
 
     public ListaEnlazadaDoble<Cancion> buscarCancionesPorArtista(String nombreArtista) throws ArtistaNoEncontradoException {
-        for (Artista artista : artistas.values()) {
-            if (artista.getNombre().equalsIgnoreCase(nombreArtista)) {
-                return artista.getCanciones();
-            }
-        }
+        ListaEnlazadaDoble<Cancion> cancionesArtista = new ListaEnlazadaDoble<>();
+        Artista artista = new Artista(null, nombreArtista, null, null);
+
+        Artista artista1  = artistas.find(artista);
+
         throw new ArtistaNoEncontradoException("El artista seleccionado no existe");
     }
 
@@ -243,20 +243,17 @@ public class TiendaMusica implements Serializable {
 
 
     public void cargarArtistasDesdeArchivo(String ruta) throws IOException, ArtistasYaEnTiendaException {
-        HashMap<String, Artista> artistas = ArchivoUtil.cargarArtistasDesdeArchivo(ruta);
-        HashMap<String, Artista> artistasExistentes = getArtistas();
+        ListaEnlazadaSimple<Artista> artistas = ArchivoUtil.cargarArtistasDesdeArchivo(ruta);
+        BinaryTree<Artista> artistasExistentes = getArtistas();
         ListaEnlazadaSimple<Artista> artistasYaEnTienda = new ListaEnlazadaSimple<>();
 
-        for (Map.Entry<String, Artista> entry : artistas.entrySet()) {
-            String nombreArtista = entry.getKey();
-            Artista nuevoArtista = entry.getValue();
-
-            if (artistasExistentes.containsKey(nombreArtista)) {
+        for (Artista artista : artistas) {
+            if (artistasExistentes.find(artista) != null) {
                 // El artista ya está en la tienda, agregalo a la lista de artistas existentes
-                artistasYaEnTienda.add(nuevoArtista);
+                artistasYaEnTienda.add(artista);
             } else {
                 // El artista es nuevo, agrégalo a la tienda
-                artistasExistentes.put(nombreArtista, nuevoArtista);
+                artistasExistentes.insert(artista);
             }
         }
 
@@ -269,9 +266,9 @@ public class TiendaMusica implements Serializable {
 
     public String obtenerGeneroConMasCanciones() {
         HashMap<TipoGenero, Integer> contadorGeneros = new HashMap<>();
-
+        ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
         // Iterar sobre todos los artistas en la tienda
-        for (Artista artista : artistas.values()) {
+        for (Artista artista : artistas) {
             // Iterar sobre todas las canciones del artista
             for (Cancion cancion : artista.getCanciones()) {
                 // Obtener el género de la canción
@@ -295,12 +292,13 @@ public class TiendaMusica implements Serializable {
         return generoConMasCanciones;
     }
 
-    public Artista obtenerArtistaMaspopular() throws IOException, GeneralSecurityException {
+    public Artista obtenerArtistaMasPopular() throws IOException, GeneralSecurityException {
+        ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
         Artista artistaMasPopular = null;
         long maxReproducciones = 0;
 
         // Iterar sobre todos los artistas en la tienda
-        for (Artista artista : artistas.values()) {
+        for (Artista artista : artistas) {
             long totalReproducciones = 0;
 
             // Iterar sobre todas las canciones del artista

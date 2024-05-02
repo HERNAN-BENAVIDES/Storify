@@ -4,13 +4,11 @@ package co.edu.uniquindio.storify.model;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @SuppressWarnings("All")
 @Data
-@Builder
+
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode
 public class Cancion implements Serializable, Comparable<Cancion> {
 
@@ -22,6 +20,17 @@ public class Cancion implements Serializable, Comparable<Cancion> {
     private String duracion;
     private TipoGenero genero;
     private String urlYoutube;
+
+    public Cancion(String nombre, String album, String caratula, int anioLanzamiento, double duracion, TipoGenero genero, String urlYoutube) {
+        this.codigo = TiendaMusica.generarCodigoAleatorio();
+        this.nombre = nombre;
+        this.album = album;
+        this.caratula = caratula;
+        this.anioLanzamiento = anioLanzamiento;
+        this.duracion = duracion;
+        this.genero = genero;
+        this.urlYoutube = urlYoutube;
+    }
 
     @Override
     public int compareTo(Cancion o) {
