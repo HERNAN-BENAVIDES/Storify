@@ -37,7 +37,7 @@ public class ArchivoUtil {
 
                 artistas.add(artistaActual);
             } else if (esEncabezadoCanciones && partes.length == 8) {
-                Cancion cancion = new Cancion(partes[1], partes[2], partes[3], Integer.parseInt(partes[4]), Double.parseDouble(partes[5]), TipoGenero.valueOf(partes[6]), (partes[7]));
+                Cancion cancion = new Cancion(TiendaMusica.generarCodigoAleatorio(), partes[1], partes[2], partes[3], Integer.parseInt(partes[4]), (partes[5]), TipoGenero.valueOf(partes[6]), (partes[7]));
 
                 // Buscar al artista correspondiente en la lista enlazada
                 for (Artista artista : artistas) {

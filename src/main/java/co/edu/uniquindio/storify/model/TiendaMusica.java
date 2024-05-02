@@ -3,7 +3,6 @@ package co.edu.uniquindio.storify.model;
 import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDoble;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
-import co.edu.uniquindio.storify.estructurasDeDatos.nodo.BinaryNode;
 import co.edu.uniquindio.storify.exceptions.*;
 import co.edu.uniquindio.storify.util.ArchivoUtil;
 import co.edu.uniquindio.storify.util.YouTubeHelper;
