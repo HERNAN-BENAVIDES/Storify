@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="800.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.TableroClienteController">
+<Pane prefHeight="800.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.TableroClienteController">
    <children>
       <Pane layoutY="674.0" prefHeight="68.0" prefWidth="272.0">
          <children>
@@ -113,7 +113,7 @@
                   <Image url="@../imagenes/guia.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#mostrarGuias" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Nuestros Guias">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Nuestros Guias">
                <font>
                   <Font size="16.0" />
                </font>
@@ -126,7 +126,7 @@
       </Pane>
       <Pane layoutY="208.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#mostrarPaquetes" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Paquetes">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Paquetes">
                <font>
                   <Font size="16.0" />
                </font>
@@ -144,7 +144,7 @@
       </Pane>
       <Pane layoutY="139.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button mnemonicParsing="false" onAction="#mostrarDestinos" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Destinos">
+            <Button mnemonicParsing="false" onAction="#mostrarCanciones" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Canciones">
                <font>
                   <Font size="16.0" />
                </font>
@@ -169,7 +169,7 @@
       </Text>
       <Pane layoutY="70.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button mnemonicParsing="false" onAction="#mostrarMisReservas" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="     Mis Reservas">
+            <Button mnemonicParsing="false" onAction="#mostrarFavoritos" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="     Mis Canciones">
                <font>
                   <Font size="16.0" />
                </font>
@@ -188,7 +188,7 @@
       <Separator layoutY="69.0" prefHeight="3.0" prefWidth="272.0" />
       <Pane prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button fx:id="btnAjustesPerfil" mnemonicParsing="false" onAction="#mostrarPerfil" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="      Ajustes de Perfil">
+            <Button fx:id="btnAjustesPerfil" mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="      Ajustes de Perfil">
                <font>
                   <Font size="16.0" />
                </font>

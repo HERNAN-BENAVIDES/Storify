@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @SuppressWarnings("all")
 @Data
-@Builder
+
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -21,6 +21,7 @@ public class Artista implements Serializable, Comparable<Artista> {
     private TipoArtista tipoArtista;
     private ListaEnlazadaDoble<Cancion> canciones;
 
+    @Builder
     public Artista(String codigo, String nombre, String nacionalidad, TipoArtista tipoArtista) {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -81,6 +82,10 @@ public class Artista implements Serializable, Comparable<Artista> {
      * @param o the object to be compared.
      * @return
      */
+
+    public void agregarCancion(Cancion cancion) {
+        canciones.add(cancion);
+    }
 
 
     @Override

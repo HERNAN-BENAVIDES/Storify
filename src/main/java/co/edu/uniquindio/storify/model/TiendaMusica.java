@@ -105,7 +105,7 @@ public class TiendaMusica implements Serializable {
                 .album(nombreAlbum)
                 .caratula(caratula)
                 .anioLanzamiento(Integer.parseInt(anio))
-                .duracion(Double.parseDouble(duracion))
+                .duracion(duracion)
                 .genero(TipoGenero.valueOf(genero.toUpperCase()))
                 .urlYoutube(urlYoutube)
                 .build();
@@ -226,6 +226,18 @@ public class TiendaMusica implements Serializable {
             }
         }
         throw new ArtistaNoEncontradoException("El artista seleccionado no existe");
+    }
+
+    public Artista buscarArtistaCancion(Cancion cancion) throws ArtistaNoEncontradoException {
+        for (Artista artista : artistas.values()) {
+            ListaEnlazadaDoble<Cancion> cancionesArtista = artista.getCanciones();
+            for (Cancion cancionArtista : cancionesArtista) {
+                if (cancionArtista.equals(cancion)) {
+                    return artista;
+                }
+            }
+        }
+        throw new ArtistaNoEncontradoException("Ningun artista coincide con la cancion especificada");
     }
 
 
