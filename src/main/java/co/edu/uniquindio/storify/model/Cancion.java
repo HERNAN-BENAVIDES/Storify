@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @SuppressWarnings("All")
 @Data
-
+@Builder
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Cancion implements Serializable, Comparable<Cancion> {
@@ -21,8 +21,8 @@ public class Cancion implements Serializable, Comparable<Cancion> {
     private TipoGenero genero;
     private String urlYoutube;
 
-    public Cancion(String nombre, String album, String caratula, int anioLanzamiento, double duracion, TipoGenero genero, String urlYoutube) {
-        this.codigo = TiendaMusica.generarCodigoAleatorio();
+    public Cancion(String codigo, String nombre, String album, String caratula, int anioLanzamiento, String duracion, TipoGenero genero, String urlYoutube) {
+        this.codigo = codigo;
         this.nombre = nombre;
         this.album = album;
         this.caratula = caratula;

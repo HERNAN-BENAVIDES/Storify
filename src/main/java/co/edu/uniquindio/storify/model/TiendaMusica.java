@@ -100,7 +100,7 @@ public class TiendaMusica implements Serializable {
 
 
         Cancion cancionNueva = Cancion.builder()
-                .codigo(codigoRandom)
+                .codigo(generarCodigoAleatorio())
                 .nombre(nombre)
                 .album(nombreAlbum)
                 .caratula(caratula)
@@ -229,7 +229,7 @@ public class TiendaMusica implements Serializable {
     }
 
     public Artista buscarArtistaCancion(Cancion cancion) throws ArtistaNoEncontradoException {
-        for (Artista artista : artistas.values()) {
+        for (Artista artista : artistas.iterator()) {
             ListaEnlazadaDoble<Cancion> cancionesArtista = artista.getCanciones();
             for (Cancion cancionArtista : cancionesArtista) {
                 if (cancionArtista.equals(cancion)) {
