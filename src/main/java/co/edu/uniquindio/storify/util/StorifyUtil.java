@@ -26,13 +26,13 @@ public class StorifyUtil {
         Artista artista6 =new Artista("ART006", "Miro", "Mexico", TipoArtista.BANDA);
         Artista artista7 = new Artista("ART007", "Coldplay", "Inglaterra", TipoArtista.BANDA);
 
-        tiendaMusica.getArtistas().put("ART001", artista1);
-        tiendaMusica.getArtistas().put("ART002", artista2);
-        tiendaMusica.getArtistas().put("ART003", artista3);
-        tiendaMusica.getArtistas().put("ART004", artista4);
-        tiendaMusica.getArtistas().put("ART005", artista5);
-        tiendaMusica.getArtistas().put("ART006", artista6);
-        tiendaMusica.getArtistas().put("ART007", artista7);
+        tiendaMusica.getArtistas().insert(artista1);
+        tiendaMusica.getArtistas().insert(artista2);
+        tiendaMusica.getArtistas().insert(artista3);
+        tiendaMusica.getArtistas().insert(artista4);
+        tiendaMusica.getArtistas().insert(artista5);
+        tiendaMusica.getArtistas().insert(artista6);
+        tiendaMusica.getArtistas().insert(artista7);
 
         // Datos adicionales de artistas y canciones
         Cancion cancion1 = new Cancion("SONG001", "Die For You", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:20", TipoGenero.OTRO, "https://www.youtube.com/watch?v=mTLQhPFx2nM&list=PLWGXKDxW301QZrzSl7hLzdYakFdayHC4l&index=17&ab_channel=TheWeeknd-Topic");

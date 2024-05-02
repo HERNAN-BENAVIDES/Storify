@@ -3,7 +3,6 @@ package co.edu.uniquindio.storify.model;
 import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDoble;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
-import co.edu.uniquindio.storify.estructurasDeDatos.nodo.BinaryNode;
 import co.edu.uniquindio.storify.exceptions.*;
 import co.edu.uniquindio.storify.util.ArchivoUtil;
 import co.edu.uniquindio.storify.util.YouTubeHelper;
@@ -100,7 +99,7 @@ public class TiendaMusica implements Serializable {
 
 
         Cancion cancionNueva = Cancion.builder()
-                .codigo(codigoRandom)
+                .codigo(generarCodigoAleatorio())
                 .nombre(nombre)
                 .album(nombreAlbum)
                 .caratula(caratula)
@@ -229,7 +228,7 @@ public class TiendaMusica implements Serializable {
     }
 
     public Artista buscarArtistaCancion(Cancion cancion) throws ArtistaNoEncontradoException {
-        for (Artista artista : artistas.values()) {
+        for (Artista artista : artistas.iterator()) {
             ListaEnlazadaDoble<Cancion> cancionesArtista = artista.getCanciones();
             for (Cancion cancionArtista : cancionesArtista) {
                 if (cancionArtista.equals(cancion)) {
