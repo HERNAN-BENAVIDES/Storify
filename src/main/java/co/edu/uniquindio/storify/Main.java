@@ -1,6 +1,6 @@
 package co.edu.uniquindio.storify;
 
-import co.edu.uniquindio.storify.controller.ModelFactoryController;
+import co.edu.uniquindio.storify.controllers.ModelFactoryController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

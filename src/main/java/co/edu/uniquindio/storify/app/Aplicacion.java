@@ -2,6 +2,7 @@ package co.edu.uniquindio.storify.app;
 
 import co.edu.uniquindio.storify.controllers.ModelFactoryController;
 import co.edu.uniquindio.storify.controllers.VentanaInicioController;
+import co.edu.uniquindio.storify.controllers.VentanaRegistroController;
 import co.edu.uniquindio.storify.controllers.VentanaRegistroIngresoController;
 import co.edu.uniquindio.storify.exceptions.AtributoVacioException;
 import co.edu.uniquindio.storify.exceptions.UsuarioNoExistenteException;
@@ -11,10 +12,12 @@ import co.edu.uniquindio.storify.model.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Aplicacion extends Application {
 
@@ -22,7 +25,7 @@ public class Aplicacion extends Application {
     private AnchorPane rootLayout;
 
     public VentanaInicioController ventanaInicioController;
-    public VentanaRegistroIngresoController ventanaRegistroIngresoController;
+    public VentanaRegistroController ventanaRegistroController;
 
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
 
@@ -32,10 +35,10 @@ public class Aplicacion extends Application {
         Administrador admin=null;
 
         this.stage=stage;
-        this.stage.setTitle("Sporify");
-        //this.stage.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/logoFinalVentana.png")));
+        this.stage.setTitle("Storify");
+        this.stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/imagenes/Logo.png"))));
         this.stage.setResizable(false);
-        mostrarVentanaRegistroIngreso();
+        mostrarVentanaRegistro();
         //mostrarVentanaPrincipal(cliente, admin);
 
     }
@@ -43,10 +46,10 @@ public class Aplicacion extends Application {
     /**
      * Inicia la Ventana de Registro e Ingreso
      */
-    public void mostrarVentanaRegistroIngreso() {
+    public void mostrarVentanaRegistro() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Aplicacion.class.getResource("/ventanas/VentanaRegistroIngreso.fxml"));
+            loader.setLocation(Aplicacion.class.getResource("/ventanas/VentanaRegistro.fxml"));
             rootLayout = (AnchorPane) loader.load();
             Scene scene = new Scene(rootLayout);
             stage.setScene(scene);
@@ -76,7 +79,7 @@ public class Aplicacion extends Application {
             switch (tipoUsuario) {
                 case "Administrador":
                     /**
-                     * controlador.mostrarPanelIzquierdoAdmin();
+                     * Controlador.mostrarPanelIzquierdoAdmin();
                      *                  controlador.mostrarPanelDerechoGestionarCanciones();
                      *                  controlador.mostrarBarraSuperiorAdmin(); break;
                      */

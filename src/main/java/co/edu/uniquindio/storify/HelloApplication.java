@@ -1,6 +1,6 @@
 package co.edu.uniquindio.storify;
 
-import co.edu.uniquindio.storify.controller.ModelFactoryController;
+import co.edu.uniquindio.storify.controllers.ModelFactoryController;
 import co.edu.uniquindio.storify.model.Artista;
 import co.edu.uniquindio.storify.model.Cancion;
 import co.edu.uniquindio.storify.util.ArchivoUtil;
