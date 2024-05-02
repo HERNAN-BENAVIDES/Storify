@@ -7,6 +7,7 @@ import co.edu.uniquindio.storify.exceptions.AtributoVacioException;
 import co.edu.uniquindio.storify.exceptions.UsuarioNoExistenteException;
 import co.edu.uniquindio.storify.model.Administrador;
 import co.edu.uniquindio.storify.model.Cliente;
+import co.edu.uniquindio.storify.model.Persona;
 import co.edu.uniquindio.storify.model.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,16 +29,12 @@ public class Aplicacion extends Application {
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
 
     public void start(Stage stage) throws Exception {
-
-        Cliente cliente=null;
-        Administrador admin=null;
-
+        mfm.setAplicacion(this);
         this.stage=stage;
         this.stage.setTitle("Sporify");
         //this.stage.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/logoFinalVentana.png")));
         this.stage.setResizable(false);
         mostrarVentanaRegistroIngreso();
-        //mostrarVentanaPrincipal(cliente, admin);
 
     }
 
@@ -85,8 +82,8 @@ public class Aplicacion extends Application {
 
                 case "Cliente":
                     controlador.mostrarPanelIzquierdoCliente();
-                    //controlador.mostrarPanelDerechoCanciones();
-                    //controlador.mostrarBarraSuperiorCliente(); break;
+                    controlador.mostrarPanelDerechoClienteFavoritos();
+                    controlador.mostrarBarraSuperiorCliente(); break;
             }
 
 

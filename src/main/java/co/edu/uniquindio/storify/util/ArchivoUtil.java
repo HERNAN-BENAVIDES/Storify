@@ -34,10 +34,11 @@ public class ArchivoUtil {
 
             if (esEncabezadoArtistas && partes.length == 4) {
                 artistaActual = new Artista(partes[0], partes[1], partes[2], TipoArtista.valueOf(partes[3]));
+
                 artistas.add(artistaActual);
             } else if (esEncabezadoCanciones && partes.length == 8) {
                 Cancion cancion = new Cancion(partes[1], partes[2], partes[3], Integer.parseInt(partes[4]), Double.parseDouble(partes[5]), TipoGenero.valueOf(partes[6]), (partes[7]));
-                
+
                 // Buscar al artista correspondiente en la lista enlazada
                 for (Artista artista : artistas) {
                     if (artista.getNombre().equals(partes[0])) {

@@ -19,6 +19,11 @@ public class Cliente extends Persona implements Serializable, Comparable<Cliente
         this.cancionesFavoritas = new ListaEnlazadaSimpleCircular<>();
     }
 
+    public void agregarCancionFavorita(Cancion cancion) {
+        cancionesFavoritas.add(cancion);
+    }
+
+
     /**
      *
      * public static ClienteBuilder builder() {

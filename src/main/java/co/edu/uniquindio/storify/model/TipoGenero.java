@@ -5,5 +5,5 @@ import java.io.Serializable;
 @SuppressWarnings("all")
 
 public enum TipoGenero implements Serializable {
-    ROCK, POP, SALSA, BACHATA, PUNK, REGGAETON, ELECTRONICA, OTRO;
+    ROCK, POP, SALSA, BACHATA, PUNK, REGGAETON, ELECTRONICA, RB, OTRO;
 }

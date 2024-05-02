@@ -54,6 +54,41 @@ public class VentanaInicioController implements Initializable {
         }
     }
 
+    /**
+     * Se usara el mismo metodo para canciones favoritas, y canciones generales
+     */
+    public void mostrarPanelDerechoClienteFavoritos(){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaFiltrarCanciones.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaFiltrarCancionesController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setUsuario(this.usuario);
+            controlador.establecerListaCancionesFavoritas();
+            controlador.iniciarGridPane();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void mostrarBarraSuperiorCliente(){
+        try {
+            barraSuperior.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/BarraCliente.fxml"));
+            Node node = loader.load();
+            barraSuperior.getChildren().add(node);
+            BarraClienteController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
+            controlador.setUsuario(this.usuario);
+            controlador.cargarInfo();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void mostrarPanelDerechosMisFavoritos(Usuario usuario){
         try {
             /**

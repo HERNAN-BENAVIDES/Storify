@@ -98,16 +98,17 @@ public class TiendaMusica implements Serializable {
             throw new AtributoVacioException("El url Youtube de la canción es obligatorio");
         }
 
-        Cancion cancionNueva = new Cancion(nombre, nombreAlbum, caratula, Integer.parseInt(anio), Double.parseDouble(duracion), TipoGenero.valueOf(genero.toUpperCase()), urlYoutube);
-//                Cancion.builder()
-//                .nombre(nombre)
-//                .album(nombreAlbum)
-//                .caratula(caratula)
-//                .anioLanzamiento(Integer.parseInt(anio))
-//                .duracion(Double.parseDouble(duracion))
-//                .genero(TipoGenero.valueOf(genero.toUpperCase()))
-//                .urlYoutube(urlYoutube)
-//                .build();
+
+        Cancion cancionNueva = Cancion.builder()
+                .codigo(codigoRandom)
+                .nombre(nombre)
+                .album(nombreAlbum)
+                .caratula(caratula)
+                .anioLanzamiento(Integer.parseInt(anio))
+                .duracion(duracion)
+                .genero(TipoGenero.valueOf(genero.toUpperCase()))
+                .urlYoutube(urlYoutube)
+                .build();
 
         return cancionNueva;
 
@@ -225,6 +226,18 @@ public class TiendaMusica implements Serializable {
         Artista artista1  = artistas.find(artista);
 
         throw new ArtistaNoEncontradoException("El artista seleccionado no existe");
+    }
+
+    public Artista buscarArtistaCancion(Cancion cancion) throws ArtistaNoEncontradoException {
+        for (Artista artista : artistas.values()) {
+            ListaEnlazadaDoble<Cancion> cancionesArtista = artista.getCanciones();
+            for (Cancion cancionArtista : cancionesArtista) {
+                if (cancionArtista.equals(cancion)) {
+                    return artista;
+                }
+            }
+        }
+        throw new ArtistaNoEncontradoException("Ningun artista coincide con la cancion especificada");
     }
 
 

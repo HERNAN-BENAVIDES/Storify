@@ -17,7 +17,7 @@ public class Cancion implements Serializable, Comparable<Cancion> {
     private String album;
     private String caratula;
     private int anioLanzamiento;
-    private double duracion;
+    private String duracion;
     private TipoGenero genero;
     private String urlYoutube;
 
