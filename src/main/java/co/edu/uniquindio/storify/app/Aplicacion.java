@@ -30,8 +30,6 @@ public class Aplicacion extends Application {
 
     public void start(Stage stage) throws Exception {
         mfm.setAplicacion(this);
-        mfm.cargarDatosQuemados();
-
         this.stage=stage;
         this.stage.setTitle("Sporify");
         //this.stage.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/logoFinalVentana.png")));
