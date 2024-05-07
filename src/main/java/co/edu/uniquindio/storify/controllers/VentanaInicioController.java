@@ -77,10 +77,10 @@ public class VentanaInicioController implements Initializable {
     public void mostrarBarraSuperiorCliente(){
         try {
             barraSuperior.getChildren().clear();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/BarraCliente.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/BarraUsuario.fxml"));
             Node node = loader.load();
             barraSuperior.getChildren().add(node);
-            BarraClienteController controlador = loader.getController();
+            BarraUsuarioController controlador = loader.getController();
             controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
             controlador.setUsuario(this.usuario);
             controlador.cargarInfo();

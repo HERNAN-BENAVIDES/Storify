@@ -2,12 +2,9 @@ package co.edu.uniquindio.storify.app;
 
 import co.edu.uniquindio.storify.controllers.ModelFactoryController;
 import co.edu.uniquindio.storify.controllers.VentanaInicioController;
-import co.edu.uniquindio.storify.controllers.VentanaRegistroIngresoController;
+import co.edu.uniquindio.storify.controllers.VentanaRegistroController;
 import co.edu.uniquindio.storify.exceptions.AtributoVacioException;
 import co.edu.uniquindio.storify.exceptions.UsuarioNoExistenteException;
-import co.edu.uniquindio.storify.model.Administrador;
-import co.edu.uniquindio.storify.model.Cliente;
-import co.edu.uniquindio.storify.model.Persona;
 import co.edu.uniquindio.storify.model.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,14 +21,14 @@ public class Aplicacion extends Application {
     private AnchorPane rootLayout;
 
     public VentanaInicioController ventanaInicioController;
-    public VentanaRegistroIngresoController ventanaRegistroIngresoController;
+    public VentanaRegistroController ventanaRegistroController;
 
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
 
     public void start(Stage stage) throws Exception {
         mfm.setAplicacion(this);
         this.stage=stage;
-        this.stage.setTitle("Sporify");
+        this.stage.setTitle("Storify");
         //this.stage.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/logoFinalVentana.png")));
         this.stage.setResizable(false);
         mostrarVentanaRegistroIngreso();
@@ -43,7 +40,7 @@ public class Aplicacion extends Application {
      */
     public void mostrarVentanaRegistroIngreso() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/ventanaRegistroIngreso.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/ventanaRegistro.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
@@ -51,7 +48,7 @@ public class Aplicacion extends Application {
             stage.setTitle("Storify | Inicio de Sesion");
             stage.setResizable(false);
             stage.show();
-            VentanaRegistroIngresoController controlador = loader.getController();
+            VentanaRegistroController controlador = loader.getController();
             controlador.setVentana(stage);
         } catch (IOException e) {
             e.printStackTrace();

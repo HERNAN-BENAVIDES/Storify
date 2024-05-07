@@ -17,7 +17,7 @@
 }
 
 .btnIngresar{
-    -fx-background-color: linear-gradient(to bottom, #0052D1, #14AEEE);
+    -fx-background-color: linear-gradient(to bottom, #6D0096, #A00000);
     -fx-background-radius: 50;
     -fx-border-radius: 50;
     -fx-opacity: 1.0;
@@ -28,7 +28,7 @@
 }
 
 .btnIngresar:hover{
-    -fx-background-color: linear-gradient(to bottom, #0052D1, #C73D76);
+    -fx-background-color: linear-gradient(to bottom, #6D0096, #A00000);
     -fx-border-color: transparent;
 
 }
@@ -59,7 +59,7 @@
 }
 
 .gradientPanel{
-    -fx-background-color: linear-gradient(to bottom right, #0052D1, #f4006a);
+    -fx-background-color: linear-gradient(to bottom right, #6D0096, #A00000);
 }
 
 .panel_transparent {
@@ -76,12 +76,12 @@
 }
 .login_button:hover{
     -fx-background-color: white;
-    -fx-text-fill: linear-gradient(to bottom right, #0052D1, #C73D76);
+    -fx-text-fill: linear-gradient(to bottom right, #6D0096, #A00000);
 
 }
 
 .btnPaneles{
-    -fx-background-color: linear-gradient(to bottom right, #0048ae, #f4006a);
+    -fx-background-color: linear-gradient(to bottom right, #6D0096, #A00000);
     -fx-background-radius: 50;
     -fx-border-radius: 50;
     -fx-opacity: 1.0;
@@ -89,23 +89,23 @@
 }
 
 .btnPaneles:hover{
-    -fx-background-color: linear-gradient(to bottom right,#0052D1, #C73D76);
+    -fx-background-color: linear-gradient(to bottom right,#6D0096, #A00000);
 }
 
 .one_label{
-    -fx-text-fill:#0052D1;
+    -fx-text-fill:#6D0096;
     -fx-background-color: transparent;
 }
 
 .one_label:hover {
     -fx-underline: true;
-    -fx-text-fill: linear-gradient(to bottom, #0052D1, #C73D76);
+    -fx-text-fill: linear-gradient(to bottom, #6D0096, #A00000);
     -fx-background-color: transparent;
-}
+} 
 
 .comboUsuario{
     -fx-background-color: transparent;
-    -fx-border-color:linear-gradient(to bottom right, #0048ae, #f4006a);
+    -fx-border-color:linear-gradient(to bottom right, #6D0096, #A00000);
     -fx-border-radius: 30;
     -fx-border-width: 1px;
     -fx-background-radius: 30;
