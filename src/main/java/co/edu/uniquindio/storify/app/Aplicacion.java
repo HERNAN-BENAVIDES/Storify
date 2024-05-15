@@ -2,7 +2,6 @@ package co.edu.uniquindio.storify.app;
 
 import co.edu.uniquindio.storify.controllers.ModelFactoryController;
 import co.edu.uniquindio.storify.controllers.VentanaInicioController;
-import co.edu.uniquindio.storify.controllers.VentanaRegistroController;
 import co.edu.uniquindio.storify.exceptions.AtributoVacioException;
 import co.edu.uniquindio.storify.exceptions.UsuarioNoExistenteException;
 import co.edu.uniquindio.storify.model.Usuario;

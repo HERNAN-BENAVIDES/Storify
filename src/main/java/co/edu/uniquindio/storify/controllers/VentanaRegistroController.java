@@ -6,11 +6,12 @@ import co.edu.uniquindio.storify.model.Cliente;
 import co.edu.uniquindio.storify.model.TiendaMusica;
 import co.edu.uniquindio.storify.model.Usuario;
 import co.edu.uniquindio.storify.util.Alertas;
-import co.edu.uniquindio.storify.util.StorifyUtil;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Data;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 @Data
@@ -59,9 +61,17 @@ public class VentanaRegistroController implements Initializable {
 
     @FXML
     private TextField txtContrasenia;
+    @FXML
+    private MediaView mediaView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String videoFile = "src/main/resources/videos/Video Fondo Login.mp4"; // Ruta al archivo de video
+        Media media = new Media(new File(videoFile).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+
+        mediaView.setMediaPlayer(mediaPlayer);
         txtShowPassword2.setVisible(false);
         closeEye1.setVisible(true);
         closeEye2.setVisible(true);
