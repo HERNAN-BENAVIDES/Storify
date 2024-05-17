@@ -21,7 +21,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <ImageView fx:id="portada" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="portada" fitHeight="300.0" fitWidth="300.0" onMouseClicked="#abrirVentanaYoutube" pickOnBounds="true" preserveRatio="true" />
    </children>
    <styleClass>
       <String fx:value="paquete_item" />

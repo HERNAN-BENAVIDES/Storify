@@ -45,20 +45,24 @@ public class TableroClienteController implements Initializable {
     }
 
     public void mostrarFavoritos(){
-        aplicacion.mostrarVentanaMisCanciones(this.usuario);
+        aplicacion.mostrarVentanaMisCanciones();
     }
+
 
     public void mostrarCanciones(){
-
+        aplicacion.mostrarVentanaCancionesGenerales();
     }
 
-    public void mostrarSolistas(ActionEvent actionEvent) {
+    public void mostrarSolistas() {
+        aplicacion.mostrarVentanaCancionesBanda(false);
     }
 
-    public void mostrarBandas(ActionEvent actionEvent) {
+    public void mostrarBandas() {
+        aplicacion.mostrarVentanaCancionesBanda(true);
     }
 
-    public void mostrarArtistas(ActionEvent actionEvent) {
+    public void mostrarArtistas() {
+        aplicacion.mostrarVentanaArtistas();
     }
 
     public void mostrarMisFavoritos(ActionEvent actionEvent) {

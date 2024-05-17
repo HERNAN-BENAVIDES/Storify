@@ -1,8 +1,13 @@
 package co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario;
 
+import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDoble;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
 import co.edu.uniquindio.storify.estructurasDeDatos.nodo.BinaryNode;
 import co.edu.uniquindio.storify.exceptions.EmptyNodeException;
+import co.edu.uniquindio.storify.model.Artista;
+import co.edu.uniquindio.storify.model.Cancion;
+import co.edu.uniquindio.storify.model.TiendaMusica;
+
 import lombok.Data;
 
 import java.io.Serializable;
@@ -54,20 +59,33 @@ public class BinaryTree<T extends Comparable<T>> implements Serializable {
         return node;
     }
 
-    public T find(T data) {
-        return (T) find(this.root, data);
-    }
-
-    private T find(BinaryNode<T> node, T data) {
-        if (node == null) {
+    public T find(T data) throws InterruptedException {
+        if (this.root == null) {
             return null;
         }
-        if (data.compareTo(node.getData()) < 0) {
-            return find(node.getLeftNode(), data);
-        } else if (data.compareTo(node.getData()) > 0) {
-            return find(node.getRightNode(), data);
+
+        if (root.getData().equals(data)) {
+            return (T) root.getData();
         }
-        return node.getData();
+
+        BusquedaIzquierda<T> tareaIzquierda = new BusquedaIzquierda<>(root.getLeftNode(), data);
+        BusquedaDerecha<T> tareaDerecha = new BusquedaDerecha<>(root.getRightNode(), data);
+
+        tareaIzquierda.start();
+        tareaDerecha.start();
+
+        tareaIzquierda.join();
+        tareaDerecha.join();
+
+        T resultadoIzquierda = tareaIzquierda.getResultado();
+        T resultadoDerecha = tareaDerecha.getResultado();
+
+        if (resultadoIzquierda != null) {
+            return resultadoIzquierda;
+        } else {
+            return resultadoDerecha;
+        }
+
     }
 
     public ListaEnlazadaSimple<T> iterator() {
@@ -133,6 +151,81 @@ public class BinaryTree<T extends Comparable<T>> implements Serializable {
             System.out.println(node.getData()); // Visitar el nodo actual
             inorder(node.getRightNode()); // Recorrer el subárbol derecho
         }
+    }
+
+    public ListaEnlazadaDoble<Cancion> obtenerBusquedaAlMenosUnFiltro(String genero, String anioLanzamiento, String duracion) throws InterruptedException {
+        ListaEnlazadaDoble<Cancion> cancionesFiltradas = new ListaEnlazadaDoble<>();
+
+        if (root != null) {
+            Artista nodoRaiz= (Artista)root.getData();
+
+            for (Cancion cancion : nodoRaiz.getCanciones()) {
+                if (TiendaMusica.cumpleMinimoUnFiltro(cancion, genero, anioLanzamiento, duracion)) {
+                    cancionesFiltradas.add(cancion);
+                }
+            }
+
+            BusquedaIzquierdaFiltros<Artista> tareaIzquierda = new BusquedaIzquierdaFiltros<>(root.getLeftNode(), genero, anioLanzamiento, duracion);
+            tareaIzquierda.start();
+
+
+            BusquedaDerechaFiltros<Artista> tareaDerecha = new BusquedaDerechaFiltros<>(root.getRightNode(), genero, anioLanzamiento, duracion);
+            tareaDerecha.start();
+
+            tareaIzquierda.join();
+            tareaDerecha.join();
+
+            ListaEnlazadaDoble<Cancion> cancionesIzquierda = tareaIzquierda.getCancionesFiltradas1();
+            ListaEnlazadaDoble<Cancion> cancionesDerecha = tareaDerecha.getCancionesFiltradas1();
+
+            cancionesFiltradas.addAll(cancionesIzquierda);
+            cancionesFiltradas.addAll(cancionesDerecha);
+        }
+
+        return cancionesFiltradas;
+    }
+
+    public ListaEnlazadaDoble<Cancion> obtenerBusquedaTodosFiltros(String genero, String anioLanzamiento, String duracion) throws InterruptedException {
+
+
+        ListaEnlazadaDoble<Cancion> cancionesFiltradas = new ListaEnlazadaDoble<>();
+        System.out.println("bla");
+        if (root != null) {
+            System.out.println("no es null");
+            Artista nodoRaiz= (Artista)root.getData();
+
+            System.out.println(nodoRaiz.getNombre()+ " es su nombre");
+
+            for (Cancion cancion : nodoRaiz.getCanciones()) {
+                System.out.println("la cancion: "+ cancion.getNombre());
+
+                if (TiendaMusica.cumpleTodosLosFiltros(cancion, genero, anioLanzamiento, duracion)) {
+                    cancionesFiltradas.add(cancion);
+                    System.out.println("Si cumplio");
+                }
+                System.out.println("No cumplio");
+            }
+
+            BusquedaIzquierdaFiltros<Artista> tareaIzquierda = new BusquedaIzquierdaFiltros<>(root.getLeftNode(), genero, anioLanzamiento, duracion);
+            tareaIzquierda.start();
+
+
+            BusquedaDerechaFiltros<Artista> tareaDerecha = new BusquedaDerechaFiltros<>(root.getRightNode(), genero, anioLanzamiento, duracion);
+            tareaDerecha.start();
+
+            tareaIzquierda.join();
+            tareaDerecha.join();
+
+            ListaEnlazadaDoble<Cancion> cancionesIzquierda = tareaIzquierda.getCancionesFiltradas2();
+            ListaEnlazadaDoble<Cancion> cancionesDerecha = tareaDerecha.getCancionesFiltradas2();
+
+            cancionesFiltradas.addAll(cancionesIzquierda);
+            cancionesFiltradas.addAll(cancionesDerecha);
+
+            cancionesFiltradas.toString();
+        }
+
+        return cancionesFiltradas;
     }
 
 }

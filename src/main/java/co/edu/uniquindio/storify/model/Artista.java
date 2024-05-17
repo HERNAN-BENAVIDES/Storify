@@ -30,6 +30,15 @@ public class Artista implements Serializable, Comparable<Artista> {
         this.canciones = new ListaEnlazadaDoble<>();
     }
 
+    // Método para obtener el tipo de artista como String
+    public String obtenerTipoArtistaString() {
+        return tipoArtista.toString();
+    }
+
+    public int obtenerCantidadCanciones(){
+        return canciones.size();
+    }
+
     /**
      * @Override
      *     public String toString() {

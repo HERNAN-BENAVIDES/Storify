@@ -37,6 +37,33 @@ public class Cancion implements Serializable, Comparable<Cancion> {
         return this.getNombre().compareTo(o.getNombre());
     }
 
+    public String obtenerGeneroComoString() {
+        switch (genero) {
+            case ROCK:
+                return "Rock";
+            case POP:
+                return "Pop";
+            case SALSA:
+                return "Salsa";
+            case BACHATA:
+                return "Bachata";
+            case PUNK:
+                return "Punk";
+            case REGGAETON:
+                return "Reggaeton";
+            case ELECTRONICA:
+                return "Electrónica";
+            case RB:
+                return "R&B";
+            case KPOP:
+                return "K-POP";
+            case OTRO:
+                return "Otro";
+            default:
+                return "Desconocido";
+        }
+    }
+
     /**
      * @Override
      *     public String toString() {

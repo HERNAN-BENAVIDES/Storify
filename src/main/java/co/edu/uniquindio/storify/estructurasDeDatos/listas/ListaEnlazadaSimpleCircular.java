@@ -237,6 +237,21 @@ public class ListaEnlazadaSimpleCircular<T> implements IListasEnlazadas<T>, Iter
         return sb.toString();
     }
 
+    public boolean contains(T cancion) {
+        if (headNode == null) {
+            return false;
+        }
+
+        Node<T> current = headNode;
+        while (current.getNextNode() != headNode) {
+            if (current.getData().equals(cancion)) {
+                return true;
+            }
+            current = current.getNextNode();
+        }
+        return current.getData().equals(cancion);
+    }
+
 
 
     @Override

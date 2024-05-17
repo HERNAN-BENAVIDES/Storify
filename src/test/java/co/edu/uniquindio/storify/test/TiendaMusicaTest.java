@@ -1,5 +1,9 @@
 package co.edu.uniquindio.storify.test;
 
+import co.edu.uniquindio.storify.controllers.controladorFlujo.Comando;
+import co.edu.uniquindio.storify.controllers.controladorFlujo.ComandoAgregarCancion;
+import co.edu.uniquindio.storify.controllers.controladorFlujo.ComandoEliminarCancion;
+import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
 import co.edu.uniquindio.storify.exceptions.*;
 import co.edu.uniquindio.storify.model.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -90,7 +94,7 @@ class TiendaMusicaTest {
     }
 
     @Test
-    void buscarCancionesPorArtista() throws ArtistaNoEncontradoException, ArtistasYaEnTiendaException, CancionYaRegistradaException {
+    void buscarCancionesPorArtista() throws ArtistaNoEncontradoException, ArtistasYaEnTiendaException, CancionYaRegistradaException, InterruptedException {
         Artista artista = new Artista("Juan", "Codigo", "Nacionalidad", TipoArtista.SOLISTA);
         Cancion cancion1 = new Cancion("123","Cancion1", "Album1", "Caratula1", 2022, "4.5", TipoGenero.ROCK, "url1");
         Cancion cancion2 = new Cancion("1233","Cancion2", "Album2", "Caratula2", 2023, "3.5", TipoGenero.POP, "url2");
@@ -109,7 +113,7 @@ class TiendaMusicaTest {
     }
 
     @Test
-    void obtenerGeneroConMasCanciones() throws ArtistasYaEnTiendaException {
+    void obtenerGeneroConMasCanciones() throws ArtistasYaEnTiendaException, InterruptedException {
         Artista artista = new Artista("1234", "Codigo", "Nacionalidad", TipoArtista.SOLISTA);
         tienda.agregarArtista(artista);
         assertDoesNotThrow(() -> tienda.obtenerGeneroConMasCanciones());
@@ -118,6 +122,94 @@ class TiendaMusicaTest {
     @Test
     void obtenerArtistaMaspopular() {
 
-       // assertDoesNotThrow(() -> tienda.obtenerArtistaMaspopular());
+        // assertDoesNotThrow(() -> tienda.obtenerArtistaMaspopular());
     }
+
+    @Test
+    public void testComandoAgregarCancion() {
+        Cliente usuario = new Cliente("usuarioPrueba","Velez");
+        Cancion cancion = new Cancion("SONG001", "Die For You", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:20", TipoGenero.OTRO, "https://www.youtube.com/watch?v=mTLQhPFx2nM&list=PLWGXKDxW301QZrzSl7hLzdYakFdayHC4l&index=17&ab_channel=TheWeeknd-Topic");
+        Cancion cancion1 = new Cancion("SONG002", "Die For You34", "Starbo3434y", "/imagenes/starboy.jpeg", 2016, "4:20", TipoGenero.OTRO, "https://www.youtube.com/watch?v=mTLQhPFx2nM&list=PLWGXKDxW301QZrzSl7hLzdYakFdayHC4l&index=17&ab_channel=TheWeeknd-Topic");
+        usuario.agregarCancionFavorita(cancion1);
+        Comando agregarCancion = new ComandoAgregarCancion(usuario, cancion);
+
+        agregarCancion.ejecutar();
+        assertTrue(usuario.getCancionesFavoritas().contains(cancion));
+
+        agregarCancion.deshacer();
+        assertFalse(usuario.getCancionesFavoritas().contains(cancion));
+
+        agregarCancion.rehacer();
+        assertTrue(usuario.getCancionesFavoritas().contains(cancion));
+    }
+
+    @Test
+    public void testComandoEliminarCancion() {
+        Cliente usuario = new Cliente("usuarioPrueba","Velez");
+        Cancion cancion = new Cancion("SONG001", "Die For You", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:20", TipoGenero.OTRO, "https://www.youtube.com/watch?v=mTLQhPFx2nM&list=PLWGXKDxW301QZrzSl7hLzdYakFdayHC4l&index=17&ab_channel=TheWeeknd-Topic");
+        Cancion cancion1 = new Cancion("SONG002", "Die For You", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:20", TipoGenero.OTRO, "https://www.youtube.com/watch?v=mTLQhPFx2nM&list=PLWGXKDxW301QZrzSl7hLzdYakFdayHC4l&index=17&ab_channel=TheWeeknd-Topic");
+        usuario.agregarCancionFavorita(cancion);
+        usuario.agregarCancionFavorita(cancion1);
+        Comando eliminarCancion = new ComandoEliminarCancion(usuario, cancion);
+
+        eliminarCancion.ejecutar();
+        assertFalse(usuario.getCancionesFavoritas().contains(cancion));
+
+        eliminarCancion.deshacer();
+        assertTrue(usuario.getCancionesFavoritas().contains(cancion));
+
+        eliminarCancion.rehacer();
+        assertFalse(usuario.getCancionesFavoritas().contains(cancion));
+    }
+
+    @Test
+    void testFind() {
+        BinaryTree<String> arbol = new BinaryTree<>();
+        arbol.insert("Beatles");
+        arbol.insert("Queen");
+        arbol.insert("Led Zeppelin");
+        arbol.insert("Pink Floyd");
+
+        try {
+            String resultado = arbol.find("Queen");
+            assertNotNull(resultado);
+            assertEquals("Queen", resultado);
+        } catch (InterruptedException e) {
+            fail("La búsqueda fue interrumpida: " + e.getMessage());
+        }
+    }
+
+    @Test
+    void testFindNotFound() {
+        BinaryTree<String> arbol = new BinaryTree<>();
+        arbol.insert("Beatles");
+        arbol.insert("Queen");
+        arbol.insert("Led Zeppelin");
+        arbol.insert("Pink Floyd");
+
+        try {
+            String resultado = arbol.find("Nirvana");
+            assertNull(resultado);
+        } catch (InterruptedException e) {
+            fail("La búsqueda fue interrumpida: " + e.getMessage());
+        }
+    }
+
+    @Test
+    void testFindRoot() {
+        BinaryTree<String> arbol = new BinaryTree<>();
+        arbol.insert("Beatles");
+        arbol.insert("Queen");
+        arbol.insert("Led Zeppelin");
+        arbol.insert("Pink Floyd");
+
+        try {
+            String resultado = arbol.find("Beatles");
+            assertNotNull(resultado);
+            assertEquals("Beatles", resultado);
+        } catch (InterruptedException e) {
+            fail("La búsqueda fue interrumpida: " + e.getMessage());
+        }
+    }
+
 }

@@ -5,6 +5,8 @@ import co.edu.uniquindio.storify.controllers.VentanaInicioController;
 import co.edu.uniquindio.storify.controllers.VentanaRegistroController;
 import co.edu.uniquindio.storify.exceptions.AtributoVacioException;
 import co.edu.uniquindio.storify.exceptions.UsuarioNoExistenteException;
+import co.edu.uniquindio.storify.model.Artista;
+import co.edu.uniquindio.storify.model.Cancion;
 import co.edu.uniquindio.storify.model.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -80,7 +82,7 @@ public class Aplicacion extends Application {
                 case "Cliente":
                     controlador.mostrarPanelIzquierdoCliente();
                     controlador.mostrarPanelDerechoClienteFavoritos();
-                    controlador.mostrarBarraSuperiorCliente(); break;
+                    controlador.mostrarBarraSuperiorCliente(null); break;
             }
 
 
@@ -89,8 +91,27 @@ public class Aplicacion extends Application {
         }
     }
 
-    public void mostrarVentanaMisCanciones(Usuario usuario){
-        ventanaInicioController.mostrarPanelDerechosMisFavoritos(usuario);
+    public void mostrarVentanaMisCanciones(){
+        ventanaInicioController.mostrarPanelDerechoClienteFavoritos();
     }
 
+    public void mostrarVentanaCancionesGenerales(){
+        ventanaInicioController.mostrarPanelDerechoCancionesGenerales();
+    }
+
+    public void abrirDetalleCancion(Cancion cancion){
+        ventanaInicioController.abrirVentanaDetalleCancion(cancion);
+    }
+
+    public void mostrarVentanaArtistas(){
+        ventanaInicioController.mostrarVentanaFiltrarArtistas();
+    }
+
+    public void mostrarVentanaCancionesBanda(boolean esBanda) {
+        ventanaInicioController.mostrarVentanaBandas(esBanda);
+    }
+
+    public void verCancionesDeArtista(Artista artistaElegido) {
+        ventanaInicioController.mostrarPanelDerechoCancionesArtista(artistaElegido);
+    }
 }

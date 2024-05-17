@@ -235,6 +235,25 @@ public class ListaEnlazadaDoble<T> implements IListasEnlazadas<T>, Iterable<T>, 
         }
     }
 
+    public ListaEnlazadaSimpleCircular<T> convertirListaDobleASimpleCircular() {
+        ListaEnlazadaSimpleCircular<T> listaSimpleCircular = new ListaEnlazadaSimpleCircular<>();
+
+        if (headNode == null) {
+            return listaSimpleCircular; // Si la lista doble está vacía, la lista simple circular también estará vacía
+        }
+
+        // Agregar cada elemento de la lista doble al final de la lista simple circular
+        Node<T> currentNode = headNode;
+        do {
+            listaSimpleCircular.add(currentNode.getData());
+            currentNode = currentNode.getNextNode();
+        } while (currentNode != null);
+
+        return listaSimpleCircular;
+    }
+
+
+
     private Node<T> getNodeAtIndex(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index fuera de rango");

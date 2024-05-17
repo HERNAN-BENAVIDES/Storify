@@ -1,6 +1,7 @@
 package co.edu.uniquindio.storify.controllers;
 
 import co.edu.uniquindio.storify.app.Aplicacion;
+import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
 import co.edu.uniquindio.storify.exceptions.ArtistasYaEnTiendaException;
 import co.edu.uniquindio.storify.model.*;
 import co.edu.uniquindio.storify.util.Persistencia;
@@ -17,7 +18,7 @@ public class ModelFactoryController {
     private Stage ventana;
 
     public ModelFactoryController()  {
-        cargarDatosBinario();
+        //cargarDatosBinario();
 
         if(tiendaMusica == null){
             cargarDatosPrueba();
@@ -42,6 +43,8 @@ public class ModelFactoryController {
         } catch (ArtistasYaEnTiendaException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e){
             throw new RuntimeException(e);
         }
     }
@@ -119,6 +122,8 @@ public class ModelFactoryController {
     public static ModelFactoryController getInstance() {
         return SingletonHolder.INSTANCE;
     }
+
+
 
     /**
      * Clase interna que contiene la instancia única de ModelFactoryController.

@@ -23,6 +23,10 @@ public class Cliente extends Persona implements Serializable, Comparable<Cliente
         cancionesFavoritas.add(cancion);
     }
 
+    public void eliminarCancionFavorita(Cancion cancion) {
+        cancionesFavoritas.removeData(cancion);
+    }
+
 
     /**
      *

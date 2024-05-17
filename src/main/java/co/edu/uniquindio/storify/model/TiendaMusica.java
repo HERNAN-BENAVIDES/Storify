@@ -3,6 +3,9 @@ package co.edu.uniquindio.storify.model;
 import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDoble;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
+import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimpleCircular;
+import co.edu.uniquindio.storify.estructurasDeDatos.nodo.BinaryNode;
+import co.edu.uniquindio.storify.estructurasDeDatos.nodo.Node;
 import co.edu.uniquindio.storify.exceptions.*;
 import co.edu.uniquindio.storify.util.ArchivoUtil;
 import co.edu.uniquindio.storify.util.YouTubeHelper;
@@ -13,9 +16,7 @@ import lombok.ToString;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.GeneralSecurityException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Data
 @ToString
@@ -39,7 +40,7 @@ public class TiendaMusica implements Serializable {
         return administrador;
     }
 
-    public void agregarArtista(Artista artista) throws ArtistasYaEnTiendaException {
+    public void agregarArtista(Artista artista) throws ArtistasYaEnTiendaException, InterruptedException {
         if (artistas.find(artista) != null){
             throw new ArtistasYaEnTiendaException("El artista ya existe en la tienda.");
         }
@@ -218,7 +219,9 @@ public class TiendaMusica implements Serializable {
         throw new UsuarioNoExistenteException("Usuario no encontrado");
     }
 
-    public ListaEnlazadaDoble<Cancion> buscarCancionesPorArtista(String nombreArtista) throws ArtistaNoEncontradoException {
+
+
+    public ListaEnlazadaDoble<Cancion> buscarCancionesPorArtista(String nombreArtista) throws ArtistaNoEncontradoException, InterruptedException {
         ListaEnlazadaDoble<Cancion> cancionesArtista = new ListaEnlazadaDoble<>();
         Artista artista = new Artista(null, nombreArtista, null, null);
 
@@ -239,9 +242,27 @@ public class TiendaMusica implements Serializable {
         throw new ArtistaNoEncontradoException("Ningun artista coincide con la cancion especificada");
     }
 
+    /**
+     * Metodo para obtener todas las canciones en el sistema
+     * @return
+     */
+    public ListaEnlazadaSimpleCircular<Cancion> obtenerCancionesGenerales() {
+        ListaEnlazadaSimpleCircular<Cancion> cancionesGenerales = new ListaEnlazadaSimpleCircular<>();
+        ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
+
+        for (Artista artista : artistas) {
+            for (Cancion cancion : artista.getCanciones()) {
+                cancionesGenerales.add(cancion);
+            }
+        }
+
+        return cancionesGenerales;
+    }
 
 
-    public void cargarArtistasDesdeArchivo(String ruta) throws IOException, ArtistasYaEnTiendaException {
+
+
+    public void cargarArtistasDesdeArchivo(String ruta) throws IOException, ArtistasYaEnTiendaException, InterruptedException {
         ListaEnlazadaSimple<Artista> artistas = ArchivoUtil.cargarArtistasDesdeArchivo(ruta);
         BinaryTree<Artista> artistasExistentes = getArtistas();
         ListaEnlazadaSimple<Artista> artistasYaEnTienda = new ListaEnlazadaSimple<>();
@@ -323,9 +344,207 @@ public class TiendaMusica implements Serializable {
         return artistaMasPopular;
     }
 
+    public <T extends Comparable<T>> List<T> convertirArbolALista(BinaryTree<T> arbol) {
+        List<T> lista = new ArrayList<>();
+
+        // Obtener un iterador para recorrer el árbol en orden
+        ListaEnlazadaSimple<T> iterador = arbol.iterator();
+
+        // Recorrer el árbol con el iterador y agregar cada elemento a la lista
+        for (T elemento : iterador) {
+            lista.add(elemento);
+        }
+
+        return lista;
+    }
+
+    public List<String> obtenerNacionalidadesSinRepetir() {
+        List<String> nacionalidades = new ArrayList<>();
+        Set<String> nacionalidadesSet = new HashSet<>(); // Usamos un Set para evitar duplicados
+
+        // Recorremos el árbol de artistas utilizando el iterador
+        for (Artista artista : this.artistas.iterator()) {
+            String nacionalidad = artista.getNacionalidad();
+            nacionalidadesSet.add(nacionalidad);
+        }
+
+        // Convertimos el Set a una lista para retornarla
+        nacionalidades.addAll(nacionalidadesSet);
+        return nacionalidades;
+    }
+
+    public List<String> obtenerAniosLanzamientoSinRepetir() {
+        List<String> lanzamiento = new ArrayList<>();
+        Set<String> lanzamientoSet = new HashSet<>(); // Usamos un Set para evitar duplicados
+
+        // Recorremos el árbol de artistas utilizando el iterador
+        for (Artista artista : this.artistas.iterator()) {
+            for (Cancion cancion : artista.getCanciones()){
+                String cancionLanzamiento= String.valueOf(cancion.getAnioLanzamiento());
+                lanzamientoSet.add(cancionLanzamiento);
+            }
+        }
+        lanzamientoSet.add("Todos");
+
+        lanzamiento.addAll(lanzamientoSet);
+        return lanzamiento;
+    }
+
+    public List<String> obtenerTipoGeneroCancionesSinRepetir() {
+        List<String> genero = new ArrayList<>();
+        Set<String> generoSet = new HashSet<>(); // Usamos un Set para evitar duplicados
+
+        // Recorremos el árbol de artistas utilizando el iterador
+        for (Artista artista : this.artistas.iterator()) {
+            for (Cancion cancion : artista.getCanciones()){
+                String tipoCancion= cancion.obtenerGeneroComoString();
+                generoSet.add(tipoCancion);
+            }
+        }
+
+        generoSet.add("Todos");
+
+        genero.addAll(generoSet);
+        return genero;
+    }
+
+    public List<String> obtenerDuracionCancionesSinRepetir() {
+        List<String> duracion = new ArrayList<>();
+        Set<String> duracionSet = new HashSet<>(); // Usamos un Set para evitar duplicados
+
+        // Recorremos el árbol de artistas utilizando el iterador
+        for (Artista artista : this.artistas.iterator()) {
+            for (Cancion cancion : artista.getCanciones()){
+                String cancionDuracion= cancion.getDuracion();
+                duracionSet.add(cancionDuracion);
+            }
+        }
+
+        duracionSet.add("Todos");
+
+        duracion.addAll(duracionSet);
+        return duracion;
+    }
+
+    public BinaryTree<Artista> obtenerMinimoFiltroArtistas(String minimoNacionalidad, String minimoTipo){
+        BinaryTree<Artista> artistasFiltrados = new BinaryTree<>();
+
+        // Iterar sobre el árbol de artistas
+        for (Artista artista : this.artistas.iterator()) {
+            // Verificar si el artista cumple con los criterios de filtro
+            if (artista.getNacionalidad().equals(minimoNacionalidad) || artista.obtenerTipoArtistaString().equals(minimoTipo)) {
+                artistasFiltrados.insert(artista); // Agregar el artista al nuevo árbol
+            }
+        }
+
+        return artistasFiltrados;
+    }
+
+    public BinaryTree<Artista> obtenerMaximoFiltroArtistas(String minimoNacionalidad, String minimoTipo){
+        BinaryTree<Artista> artistasFiltrados = new BinaryTree<>();
+
+        // Iterar sobre el árbol de artistas
+        for (Artista artista : this.artistas.iterator()) {
+            // Verificar si el artista cumple con los criterios de filtro
+            if (artista.getNacionalidad().equals(minimoNacionalidad) && artista.obtenerTipoArtistaString().equals(minimoTipo)) {
+                artistasFiltrados.insert(artista); // Agregar el artista al nuevo árbol
+            }
+        }
+
+        return artistasFiltrados;
+    }
+
+    /**
+     * Este metodo toma en parametro la lista favorita de un cliente, y verifica los filtros tambien especificados por parametro
+     * Nota: no se uso directamente en esta parte la busqueda por hilos ya que la lista de canciones favoritas
+     * de un cliente se obtiene directamente del cliente, si se trata de usar un albor binario se abarcaran
+     * otras canciones NO favoritas del mismo artista
+     * @param listaFavs
+     * @param genero
+     * @param anio
+     * @param duracion
+     * @return
+     */
+    public ListaEnlazadaSimpleCircular<Cancion> obtenerListaMinimoFiltroDeFavoritos(ListaEnlazadaSimpleCircular<Cancion> listaFavs, String genero, String anio, String duracion){
+        ListaEnlazadaSimpleCircular<Cancion> nuevaLista = new ListaEnlazadaSimpleCircular<>();
+
+        // Utilizar un iterador para recorrer la lista
+        Node<Cancion> currentNode = listaFavs.getHeadNode();
+        if (currentNode != null) {
+            do {
+                Cancion cancion = currentNode.getData();
+                if (cumpleMinimoUnFiltro(cancion, genero, anio, duracion)) {
+                    nuevaLista.add(cancion);
+                }
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != null && currentNode != listaFavs.getHeadNode());
+        }
+
+        return nuevaLista;
+    }
+
+
+
+    /**
+     * Este metodo toma en parametro la lista favorita de un cliente, y verifica los filtros tambien especificados por parametro
+     * Nota: no se uso directamente en esta parte la busqueda por hilos ya que la lista de canciones favoritas
+     * de un cliente se obtiene directamente del cliente, si se trata de usar un albor binario se abarcaran
+     * otras canciones NO favoritas del mismo artista
+     * @param listaFavs
+     * @param genero
+     * @param anio
+     * @param duracion
+     * @return
+     */
+    public ListaEnlazadaSimpleCircular<Cancion> obtenerListaMaximoFiltroDeFavoritos(ListaEnlazadaSimpleCircular<Cancion> listaFavs, String genero, String anio, String duracion){
+        ListaEnlazadaSimpleCircular<Cancion> nuevaLista = new ListaEnlazadaSimpleCircular<>();
+
+        // Utilizar un iterador para recorrer la lista
+        Node<Cancion> currentNode = listaFavs.getHeadNode();
+        if (currentNode != null) {
+            do {
+                Cancion cancion = currentNode.getData();
+                if (cumpleTodosLosFiltros(cancion, genero, anio, duracion)) {
+                    nuevaLista.add(cancion);
+                }
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != null && currentNode != listaFavs.getHeadNode());
+        }
+
+        return nuevaLista;
+    }
+
+
+
+    public static boolean cumpleMinimoUnFiltro(Cancion cancion, String genero, String anioLanzamiento, String duracion) {
+        boolean cumpleGenero = genero.equals("Todos") || cancion.obtenerGeneroComoString().equals(genero);
+        boolean cumpleAnioLanzamiento = anioLanzamiento.equals("Todos") || String.valueOf(cancion.getAnioLanzamiento()).equals(anioLanzamiento);
+        boolean cumpleDuracion = duracion.equals("Todos") || cancion.getDuracion().equals(duracion);
+
+        return cumpleGenero || cumpleAnioLanzamiento || cumpleDuracion;
+    }
+
+    public static boolean cumpleTodosLosFiltros(Cancion cancion, String genero, String anioLanzamiento, String duracion) {
+        boolean cumpleGenero = genero.equals("Todos") || cancion.obtenerGeneroComoString().equals(genero) || genero.equals("Vacio");
+        boolean cumpleAnioLanzamiento = anioLanzamiento.equals("Todos") || String.valueOf(cancion.getAnioLanzamiento()).equals(anioLanzamiento) || anioLanzamiento.equals("Vacio");
+        boolean cumpleDuracion = duracion.equals("Todos") || cancion.getDuracion().equals(duracion) || duracion.equals("Vacio");
+
+        return cumpleGenero && cumpleAnioLanzamiento && cumpleDuracion;
+    }
+
+    public BinaryTree<Artista> obtenerArbolPorArtista(Artista artistaPorBuscar) {
+        BinaryTree<Artista> resultadoArbol= new BinaryTree<>();
+        resultadoArbol.insert(artistaPorBuscar);
+        return resultadoArbol;
+    }
+
+
+
     private long obtenerCantidadReproducciones(String enlaceYouTube) throws IOException, GeneralSecurityException {
         return YouTubeHelper.obtenerVistasVideo(enlaceYouTube); // Llama a la clase YouTubeHelper
     }
+
+
 
 
 }

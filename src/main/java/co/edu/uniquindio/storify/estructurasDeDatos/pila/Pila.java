@@ -160,4 +160,10 @@ public class Pila<T> {
         }
         tamanio++;
     }
+
+    public void clear() {
+        nodoCabeza = null;
+        nodoUltimo = null;
+        tamanio = 0;
+    }
 }
