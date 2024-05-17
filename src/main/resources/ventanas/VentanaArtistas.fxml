@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="622.0" fitWidth="1025.0">
+         <image>
+            <Image url="@../imagenes/Fondo%20Ventana%20Artistas.png" />
+         </image>
+      </ImageView>
+      <ScrollPane fx:id="scroll" layoutX="18.0" layoutY="211.0" prefHeight="397.0" prefWidth="990.0" styleClass="transparent" stylesheets="@../aplicacion.css">
+         <content>
+            <GridPane fx:id="grid" layoutY="-20.0" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <Pane layoutX="18.0" layoutY="73.0" prefHeight="118.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
+         <children>
+            <Text fill="#bcbcbc" layoutX="16.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrar Artistas">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="16.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nacionalidad">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="298.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de Autor">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <ComboBox layoutX="14.0" layoutY="72.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir género" />
+            <ComboBox layoutX="298.0" layoutY="72.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir tipo de Autor" />
+            <Pane layoutX="806.0" layoutY="69.0" prefHeight="35.0" prefWidth="135.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
+               <children>
+                  <Button layoutX="11.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="113.0" stylesheets="@../aplicacion.css" text="Filtrar (1)      " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="transparent" />
+                        <String fx:value="cursor_hand" />
+                     </styleClass>
+                  </Button>
+                  <ImageView fitHeight="20.0" fitWidth="18.0" layoutX="95.0" layoutY="8.0">
+                     <image>
+                        <Image url="@../imagenes/filtrar.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutX="604.0" layoutY="69.0" prefHeight="35.0" prefWidth="135.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
+               <children>
+                  <Button layoutX="11.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="113.0" stylesheets="@../aplicacion.css" text="Filtrar (*)      " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="transparent" />
+                        <String fx:value="cursor_hand" />
+                     </styleClass>
+                  </Button>
+                  <ImageView fitHeight="20.0" fitWidth="18.0" layoutX="95.0" layoutY="8.0">
+                     <image>
+                        <Image url="@../imagenes/filtrar.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+         <styleClass>
+            <String fx:value="panelFiltrar" />
+            <String fx:value="shadowPane" />
+         </styleClass>
+      </Pane>
+      <Pane layoutX="18.0" layoutY="20.0" prefHeight="28.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
+         <children>
+            <TextField layoutY="-2.0" minHeight="-Infinity" prefHeight="29.0" prefWidth="878.0" promptText="Buscar por nombre del autor" styleClass="transparent" stylesheets="@../aplicacion.css" />
+            <Separator layoutX="900.0" layoutY="-0.0" orientation="VERTICAL" prefHeight="27.0" prefWidth="3.0" />
+            <Button layoutX="903.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="102.0" stylesheets="@../aplicacion.css" text=" Buscar" textFill="#838181">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="transparent" />
+                  <String fx:value="cursor_hand" />
+               </styleClass>
+            </Button>
+            <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="911.0" layoutY="5.0">
+               <image>
+                  <Image url="@../imagenes/lupa.png" />
+               </image>
+            </ImageView>
+         </children>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadowPane" />
+         </styleClass>
+      </Pane>
+   </children>
+</Pane>
