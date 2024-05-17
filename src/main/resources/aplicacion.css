@@ -23,6 +23,13 @@
     -fx-opacity: 1.0;
 }
 
+.btnBlanco{
+    -fx-background-color: linear-gradient(to bottom, #fff, #fff);
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-opacity: 1.0;
+}
+
 .panelFiltrar{
     -fx-background-color: linear-gradient(to bottom, #6D0096, #A00000);
     -fx-background-radius: 20;
@@ -40,6 +47,7 @@
 
 }
 
+
 .over:hover{
     -fx-background-color: #d3d1d1;
 }
@@ -47,6 +55,11 @@
 .shadowPane{
     -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);
 }
+
+.shadowDarkPane{
+    -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,4), 6,0,0,0);
+}
+
 
 .white-bg{
     -fx-background-color:#fff;

@@ -1,88 +1,42 @@
 package co.edu.uniquindio.storify;
 
-import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
-import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDoble;
-import co.edu.uniquindio.storify.exceptions.EmptyNodeException;
-import co.edu.uniquindio.storify.model.Artista;
-import co.edu.uniquindio.storify.model.Cancion;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.math.BigInteger;
-import java.net.URL;
+public class Main extends Application {
 
-public class Main   {
-    public static void main(String[] args) {
-//        launch(args);
+    @Override
+    public void start(Stage primaryStage) {
+        // Crear el WebView
+        WebView webView = new WebView();
+        WebEngine webEngine = webView.getEngine();
 
-//        Artista artista = new Artista("a4", "Ana", "a4", null);
-//
-//        BinaryTree<Artista> arbol = new BinaryTree<>();
-//        arbol.insert(new Artista("a1", "Juan", "a1", null));
-//        arbol.insert(new Artista("a2", "Pedro", "a2", null));
-//        arbol.insert(new Artista("a3", "Maria", "a3", null));
-//        arbol.insert(artista);
-//
-//        Cancion cancion = new Cancion("c1", "c1", "c1", 4, 3.24, null,"www");
-//        artista.getCanciones().add(cancion);
-//
-//        Artista artista2 = new Artista("a5", "Ana", "a5", null);
-//
-//        ListaEnlazadaDoble<Cancion> cancionesArtista = arbol.find(artista2).getCanciones();
+        // Establecer una cadena de agente de usuario más moderna
+        String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36";
+        webEngine.setUserAgent(userAgent);
 
-        BinaryTree<Integer> tree = new BinaryTree<>();
-        tree.insert(50);
-        tree.insert(70);
-        tree.insert(30);
-        tree.insert(40);
-        tree.insert(20);
-        tree.insert(80);
-        tree.insert(60);
-        tree.insert(1000);
+        // URL del video de Dailymotion
+        String videoUrl = "https://www.dailymotion.com/embed/video/x8mn8ml?autoplay=1";
 
-        System.out.println("Árbol original:");
-        tree.inorder(); // Imprimir el árbol original
+        // Cargar el contenido en el WebView
+        webEngine.load(videoUrl);
 
-        // Eliminar algunos nodos
-        try {
-            tree.delete(20);
-            tree.delete(80);
-            tree.delete(50);
-        } catch (EmptyNodeException e) {
-            System.out.println(e.getMessage());
-        }
+        // Configurar el layout
+        BorderPane root = new BorderPane();
+        root.setCenter(webView);
 
-        System.out.println("\nÁrbol después de eliminar nodos:");
-        tree.inorder(); // Imprimir el árbol después de eliminar nodos
-
+        // Configurar la escena y el escenario
+        Scene scene = new Scene(root, 800, 600);
+        primaryStage.setTitle("Dailymotion Video Player");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
-//    @Override
-//    public void start(Stage primaryStage) {
-//        try {
-//            // Especifica la ruta del archivo FXML
-//            String fxmlPath = "src/main/resources/ventanas/VentanaInicio.fxml";
-//            URL location = getClass().getResource(fxmlPath);
-//
-//            // Carga el archivo FXML
-//            FXMLLoader loader = new FXMLLoader(location);
-//            AnchorPane root = loader.load();
-//
-//            // Configura la escena
-//            Scene scene = new Scene(root, 400, 300);
-//            primaryStage.setScene(scene);
-//
-//            // Establece el título de la ventana
-//            primaryStage.setTitle("Mi Ventana JavaFX");
-//
-//            // Muestra la ventana
-//            primaryStage.show();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
