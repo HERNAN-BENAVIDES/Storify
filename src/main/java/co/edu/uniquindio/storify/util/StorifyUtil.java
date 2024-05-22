@@ -15,7 +15,7 @@ public class StorifyUtil {
         Usuario usuario = new Usuario("admin", "$aDmiN", "admin@gmail", administrador);
         Usuario usuario1 = new Usuario("Mary", "1234", "mary@gmail.com", persona1);
         tiendaMusica.getUsuarios().put("admin", usuario);
-        tiendaMusica.getUsuarios().put(usuario.getUsername(), usuario1);
+        tiendaMusica.getUsuarios().put(usuario1.getUsername(), usuario1);
 
         // Datos de artistas
         Artista artista1 = new Artista("ART001", "Michael Jackson", "Estados Unidos", TipoArtista.SOLISTA);
@@ -37,19 +37,19 @@ public class StorifyUtil {
         tiendaMusica.getArtistas().insert(artista8);
 
         // Datos adicionales de artistas y canciones
-        Cancion cancion1 = new Cancion("SONG001", "Die For You", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:20", TipoGenero.OTRO, "https://dai.ly/x8vsp3q");
-        Cancion cancion2 = new Cancion("SONG002","I Feel It Coming", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:29", TipoGenero.OTRO, "https://www.dailymotion.com/video/x578p1u");
+        Cancion cancion1 = new Cancion("SONG001", "Die For You", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:20", TipoGenero.OTRO, "https://www.youtube.com/watch?v=QLCpqdqeoII&ab_channel=TheWeeknd-Topic");
+        Cancion cancion2 = new Cancion("SONG002","I Feel It Coming", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:29", TipoGenero.OTRO, "https://www.youtube.com/watch?v=iIWoYaJRryw&ab_channel=TheWeeknd-Topic");
         Cancion cancion3 = new Cancion("SONG003","Gangnam Style", "Ssai Yukgap, Part 1", "/imagenes/gangnam.jpg", 2012, "4:13", TipoGenero.KPOP, "https://www.youtube.com/watch?v=9bZkp7q19f0&ab_channel=officialpsy");
-        Cancion cancion4 = new Cancion("SONG004","Paradise", "Mylo Xyloto", "/imagenes/paradise.jpeg", 2011, "4:20", TipoGenero.RB, "https://www.dailymotion.com/video/xlsf63");
-        Cancion cancion5 = new Cancion("SONG005","Tu Falta De Querer", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "4:38", TipoGenero.POP, "https://www.dailymotion.com/video/x8v7vso");
-        Cancion cancion6 = new Cancion("SONG006","Gentleman", "The Singles", "/imagenes/theSingles.jpg", 2013, "3:53", TipoGenero.KPOP, "https://www.dailymotion.com/video/x8v2lb2");
-        Cancion cancion7 = new Cancion("SONG007","Blue Frog", "Ssai Yukgap, Part 1", "/imagenes/gangnam.jpg", 2012, "3:27", TipoGenero.KPOP, "https://www.dailymotion.com/video/xsg9aq");
-        Cancion cancion8 = new Cancion("SONG008","Amor Completo", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "4:08", TipoGenero.POP, "https://www.dailymotion.com/video/x8v7utu");
-        Cancion cancion9 = new Cancion("SONG009","Cielito de Abril", "La Trenza", "/imagenes/laTrenza.jpg", 2017, "2:53", TipoGenero.POP, "https://www.dailymotion.com/video/x613ytv");
-        Cancion cancion10 = new Cancion("SONG010","Amárrame", "La Trenza", "/imagenes/laTrenza.jpg", 2017, "3:25", TipoGenero.POP, "https://www.dailymotion.com/video/x8vb1x0");
+        Cancion cancion4 = new Cancion("SONG004","Paradise", "Mylo Xyloto", "/imagenes/paradise.jpeg", 2011, "4:20", TipoGenero.RB, "https://www.youtube.com/watch?v=J6ZWlDks0nQ&ab_channel=Coldplay");
+        Cancion cancion5 = new Cancion("SONG005","Tu Falta De Querer", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "4:38", TipoGenero.POP, "https://www.youtube.com/watch?v=EbO74Yb0un4&ab_channel=MitchellMarela");
+        Cancion cancion6 = new Cancion("SONG006","Gentleman", "The Singles", "/imagenes/theSingles.jpg", 2013, "3:53", TipoGenero.KPOP, "https://www.youtube.com/watch?v=ASO_zypdnsQ&ab_channel=officialpsy");
+        Cancion cancion7 = new Cancion("SONG007","Blue Frog", "Ssai Yukgap, Part 1", "/imagenes/gangnam.jpg", 2012, "3:27", TipoGenero.KPOP, "https://www.youtube.com/watch?v=GjIrL7ivEyk&ab_channel=PSY-Topic");
+        Cancion cancion8 = new Cancion("SONG008","Amor Completo", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "4:01", TipoGenero.POP, "https://www.youtube.com/watch?v=QaFtF7XLEBI&ab_channel=MonLaferte-Topic");
+        Cancion cancion9 = new Cancion("SONG009","Mi Buen Amor", "La Trenza", "/imagenes/laTrenza.jpg", 2017, "3:49", TipoGenero.POP, "https://www.youtube.com/watch?v=bId_8k1gfjA&ab_channel=MonLaferte-Topic");
+        Cancion cancion10 = new Cancion("SONG010","Si Tú Me Quisieras", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "3:22", TipoGenero.POP, "https://www.youtube.com/watch?v=QBew-Lg1jvY&ab_channel=MonLaferte-Topic");
         Cancion cancion11 = new Cancion("SONG011","Billie Jean", "Thriller", "/imagenes/thriller.jpeg", 1983, "4:54", TipoGenero.RB, "https://www.youtube.com/watch?v=tfIuEwzoDME&ab_channel=elcoronelGOD");
-        Cancion cancion12 = new Cancion("SONG012","Beat It", "Thriller", "/imagenes/thriller.jpeg", 1983, "4:58", TipoGenero.ROCK, "https://www.dailymotion.com/video/x7ossoh");
-        Cancion cancion13 = new Cancion("SONG013","Thriller", "Thriller", "/imagenes/thriller.jpeg", 1983, "5:45", TipoGenero.ROCK, "https://www.youtube.com/watch?v=fztTUhjdJLQ&ab_channel=EdKara");
+        Cancion cancion12 = new Cancion("SONG012","Beat It", "Thriller", "/imagenes/thriller.jpeg", 1983, "4:58", TipoGenero.ROCK, "https://www.youtube.com/watch?v=WlTlUseVt7E&ab_channel=MichaelJackson-Topic");
+        Cancion cancion13 = new Cancion("SONG013","Thriller", "Thriller", "/imagenes/thriller.jpeg", 1983, "5:45", TipoGenero.ROCK, "https://www.youtube.com/watch?v=in5IYOatFb8&ab_channel=MichaelJackson-Topic");
 
 
 

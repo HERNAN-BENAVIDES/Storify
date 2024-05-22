@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="800.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.TableroAdminController">
+   <children>
+      <Pane layoutY="674.0" prefHeight="68.0" prefWidth="272.0">
+         <children>
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="26.0" layoutY="17.0">
+               <image>
+                  <Image url="" />
+               </image>
+            </ImageView>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Chat Bot">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+         <styleClass>
+            <String fx:value="over" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Pane>
+      <Pane layoutY="605.0" prefHeight="68.0" prefWidth="272.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Reportar un error">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="28.0" layoutY="20.0">
+               <image>
+                  <Image url="" />
+               </image>
+            </ImageView>
+         </children>
+         <styleClass>
+            <String fx:value="over" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Pane>
+      <Pane layoutY="485.0" prefHeight="68.0" prefWidth="272.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="     Sobre Nosotros">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="26.0" layoutY="17.0">
+               <image>
+                  <Image url="" />
+               </image>
+            </ImageView>
+         </children>
+         <styleClass>
+            <String fx:value="over" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Pane>
+      <Pane layoutY="416.0" prefHeight="68.0" prefWidth="272.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Seguros">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="24.0" layoutY="17.0">
+               <image>
+                  <Image url="" />
+               </image>
+            </ImageView>
+         </children>
+         <styleClass>
+            <String fx:value="over" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Pane>
+      <Pane layoutY="347.0" prefHeight="68.0" prefWidth="272.0">
+         <children>
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="22.0" layoutY="16.0">
+               <image>
+                  <Image url="" />
+               </image>
+            </ImageView>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="j">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+         <styleClass>
+            <String fx:value="over" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Pane>
+      <Pane layoutY="277.0" prefHeight="68.0" prefWidth="272.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Estadísticas">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="20.0" layoutY="17.0">
+               <image>
+                  <Image url="" />
+               </image>
+            </ImageView>
+         </children>
+         <styleClass>
+            <String fx:value="over" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Pane>
+      <Pane layoutY="208.0" prefHeight="68.0" prefWidth="272.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="      Gestionar Usuarios">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="18.0" layoutY="21.0">
+               <image>
+                  <Image url="" />
+               </image>
+            </ImageView>
+         </children>
+         <styleClass>
+            <String fx:value="over" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Pane>
+      <Pane layoutY="139.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="      Gestionar Artistas">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="19.0" layoutY="17.0">
+               <image>
+                  <Image url="" />
+               </image>
+            </ImageView>
+         </children>
+         <styleClass>
+            <String fx:value="over" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Pane>
+      <Separator layoutY="346.0" prefHeight="3.0" prefWidth="272.0" />
+      <Separator layoutY="550.0" prefHeight="9.0" prefWidth="272.0" />
+      <Text fill="#838181" layoutX="21.0" layoutY="594.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HELP" wrappingWidth="93.2578125">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <Pane layoutY="70.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Gestionar Canciones">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="20.0" layoutY="17.0">
+               <image>
+                  <Image url="" />
+               </image>
+            </ImageView>
+         </children>
+         <styleClass>
+            <String fx:value="over" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Pane>
+      <Separator layoutY="69.0" prefHeight="3.0" prefWidth="272.0" />
+      <Pane prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text=" Ajustes de Perfil">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="19.0" layoutY="19.0">
+               <image>
+                  <Image url="" />
+               </image>
+            </ImageView>
+         </children>
+         <styleClass>
+            <String fx:value="over" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Pane>
+   </children>
+</Pane>

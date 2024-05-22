@@ -42,7 +42,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Text>
-      <WebView fx:id="webView" layoutX="203.0" layoutY="38.0" prefHeight="360.0" prefWidth="640.0" />
+      <WebView fx:id="webView" layoutX="98.0" layoutY="30.0" prefHeight="324.0" />
    </children>
    <styleClass>
       <String fx:value="white-bg" />

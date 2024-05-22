@@ -11,22 +11,18 @@ import co.edu.uniquindio.storify.model.Cliente;
 import co.edu.uniquindio.storify.model.Usuario;
 import co.edu.uniquindio.storify.util.Alertas;
 import co.edu.uniquindio.storify.util.YoutubeEmbedGenerator;
-import com.google.api.client.http.HttpRequestInitializer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebErrorEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import lombok.Data;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Data
 
@@ -73,27 +69,81 @@ public class VentanaCancionDetalleController implements Initializable {
     }
 
 
-    public void iniciarDatosDaily() {
 
-        iniciarTextos();
-        if (cancion != null) {
-            String dailymotionLink = cancion.getUrlYoutube(); //en vz de yt seria dailymotion
-            String embedCode = YoutubeEmbedGenerator.obtenerEmbedCode(dailymotionLink);
-            System.out.println(embedCode);
-            if (embedCode != null && !embedCode.isEmpty()) {
-                String htmlContent = String.format("<html><body style=\"margin:0; padding:0;\">%s</body></html>", embedCode);
-                webView.getEngine().loadContent(htmlContent);
-            } else {
-                // Manejar el caso en el que no se pudo obtener el código de inserción
-            }
+    public void stopWebView(){
 
-        } else {
-            // Manejar el caso en el que no hay enlace de YouTube disponible
+        if(cancion!=null){
+            webView.getEngine().load("");
         }
 
     }
 
+    public void iniciarVideoDatos(){
+        iniciarTextos();
+
+        WebEngine webEngine = webView.getEngine();
+        webEngine.load("https://blank.page/");
+
+        String embedCode=YoutubeEmbedGenerator.obtenerEmbedCode(cancion.getUrlYoutube());
+
+
+        webEngine.documentProperty().addListener((obs, oldDoc, newDoc) -> {
+            if (newDoc != null) {
+                // Injectar JavaScript para cambiar el contenido de la página
+                String newContent = "<!DOCTYPE html>" +
+                        "<html lang=\"es\">" +
+                        "<head>" +
+                        "<meta charset=\"UTF-8\">" +
+                        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" +
+                        "<title>Reproductor de Video</title>" +
+                        "<style>" +
+                        "body, html {" +
+                        "height: 100%;" +
+                        "margin: 0;" +
+                        "display: flex;" +
+                        "justify-content: center;" +
+                        "align-items: center;" +
+                        "background-color: #000;" +
+                        "}" +
+                        ".video-container {" +
+                        "width: 560px;" +
+                        "height: 315px;" +
+                        "}" +
+                        "iframe {" +
+                        "width: 100%;" +
+                        "height: 100%;" +
+                        "border: none;" +
+                        "}" +
+                        "</style>" +
+                        "</head>" +
+                        "<body>" +
+                        "<div class=\"video-container\">" +
+                        "<iframe width=\"560\" height=\"315\" src=\"linkEmbed\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"no-referrer-when-downgrade\" allowfullscreen></iframe>" +
+                        "</div>" +
+                        "</body>" +
+                        "</html>";
+
+                String oldUrl = "linkEmbed";
+                String newURL = newContent.replace(oldUrl, embedCode);
+
+
+
+                webEngine.executeScript(
+                        "document.open();" +
+                                "document.write('" + newURL.replaceAll("'", "\\\\'") + "');" +
+                                "document.close();"
+                );
+            }
+        });
+
+
+    }
+
+
     public void agregarFav(){
+
+        stopWebView();
+
         Comando agregarCancion = new ComandoAgregarCancion((Cliente)usuario.getPersona(), cancion);
         agregarCancion.ejecutar();
 
@@ -105,6 +155,8 @@ public class VentanaCancionDetalleController implements Initializable {
     }
 
     public void eliminarFav(){
+
+        stopWebView();
         Comando eliminarCancion = new ComandoEliminarCancion((Cliente)usuario.getPersona(), cancion);
         eliminarCancion.ejecutar();
 
@@ -135,24 +187,5 @@ public class VentanaCancionDetalleController implements Initializable {
     }
 
 
-
-
-
-
-
-    /**
-     * public void iniciarDatos(){
-     *         if (cancion != null) {
-     *             String youtubeLink = cancion.getUrlYoutube();
-     *             if (youtubeLink != null && !youtubeLink.isEmpty()) {
-     *                 String videoId = obtenerIdVideo(youtubeLink);
-     *                 String embedUrl = String.format("https://www.youtube.com/embed/%s?autoplay=1", videoId);
-     *                 webView.getEngine().load(embedUrl);
-     *             } else {
-     *                 // Manejar el caso en el que no hay enlace de YouTube disponible
-     *             }
-     *         }
-     *     }
-     */
 
 }

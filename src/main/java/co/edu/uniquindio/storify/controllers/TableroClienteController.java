@@ -46,23 +46,28 @@ public class TableroClienteController implements Initializable {
 
     public void mostrarFavoritos(){
         aplicacion.mostrarVentanaMisCanciones();
+        aplicacion.detenerVideoYoutube();
     }
 
 
     public void mostrarCanciones(){
         aplicacion.mostrarVentanaCancionesGenerales();
+        aplicacion.detenerVideoYoutube();
     }
 
     public void mostrarSolistas() {
         aplicacion.mostrarVentanaCancionesBanda(false);
+        aplicacion.detenerVideoYoutube();
     }
 
     public void mostrarBandas() {
         aplicacion.mostrarVentanaCancionesBanda(true);
+        aplicacion.detenerVideoYoutube();
     }
 
     public void mostrarArtistas() {
         aplicacion.mostrarVentanaArtistas();
+        aplicacion.detenerVideoYoutube();
     }
 
     public void mostrarMisFavoritos(ActionEvent actionEvent) {

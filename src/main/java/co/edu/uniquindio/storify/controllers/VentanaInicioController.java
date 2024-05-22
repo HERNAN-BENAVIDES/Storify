@@ -60,6 +60,37 @@ public class VentanaInicioController implements Initializable {
         }
     }
 
+    public void mostrarPanelIzquierdoAdmin(){
+        try {
+            panelIzquierdo.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/TableroAdmin.fxml"));
+            Node node = loader.load();
+            panelIzquierdo.getChildren().add(node);
+            TableroAdminController controlador = loader.getController();
+            controlador.setUsuario(this.usuario);
+        }catch (Exception e){
+            //log.severe(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+    public void mostrarPanelDerechoAdminGestionarCanciones(){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaGestionar.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaGestionarController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
+            controlador.setUsuario(this.usuario);
+            controlador.establecerListaCancionesGenerales();
+            controlador.iniciarGestionCanciones();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Se usara el mismo metodo para canciones favoritas, y canciones generales
      */
@@ -83,6 +114,25 @@ public class VentanaInicioController implements Initializable {
     }
 
     public void mostrarBarraSuperiorCliente(Comando comando){
+        try {
+            barraSuperior.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/BarraUsuario.fxml"));
+            Node node = loader.load();
+            barraSuperior.getChildren().add(node);
+            BarraUsuarioController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
+            controlador.setUsuario(this.usuario);
+            controlador.cargarInfo();
+            controlador.setComando(comando);
+            if (comando!=null) {
+                controlador.cargarDeshacer();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void mostrarBarraSuperiorAdmin(Comando comando){
         try {
             barraSuperior.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/BarraUsuario.fxml"));
@@ -130,7 +180,9 @@ public class VentanaInicioController implements Initializable {
             controlador.setAplicacion(this.aplicacion);
             controlador.setUsuario(this.usuario);
             controlador.setCancion(cancion);
-            controlador.iniciarDatosDaily();
+            controlador.iniciarVideoDatos();
+            aplicacion.ventanaCancionDetalleController=loader.getController();
+
 
         } catch (IOException e) {
             e.printStackTrace();

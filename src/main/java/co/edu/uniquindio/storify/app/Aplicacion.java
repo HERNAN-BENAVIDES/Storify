@@ -1,6 +1,7 @@
 package co.edu.uniquindio.storify.app;
 
 import co.edu.uniquindio.storify.controllers.ModelFactoryController;
+import co.edu.uniquindio.storify.controllers.VentanaCancionDetalleController;
 import co.edu.uniquindio.storify.controllers.VentanaInicioController;
 import co.edu.uniquindio.storify.controllers.VentanaRegistroController;
 import co.edu.uniquindio.storify.exceptions.AtributoVacioException;
@@ -23,7 +24,7 @@ public class Aplicacion extends Application {
     private AnchorPane rootLayout;
 
     public VentanaInicioController ventanaInicioController;
-    public VentanaRegistroController ventanaRegistroController;
+    public VentanaCancionDetalleController ventanaCancionDetalleController;
 
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
 
@@ -73,11 +74,9 @@ public class Aplicacion extends Application {
 
             switch (tipoUsuario) {
                 case "Administrador":
-                    /**
-                     * controlador.mostrarPanelIzquierdoAdmin();
-                     *                  controlador.mostrarPanelDerechoGestionarCanciones();
-                     *                  controlador.mostrarBarraSuperiorAdmin(); break;
-                     */
+                    controlador.mostrarPanelIzquierdoAdmin();
+                    controlador.mostrarPanelDerechoAdminGestionarCanciones();
+                    controlador.mostrarBarraSuperiorAdmin(null);
 
                 case "Cliente":
                     controlador.mostrarPanelIzquierdoCliente();
@@ -113,5 +112,11 @@ public class Aplicacion extends Application {
 
     public void verCancionesDeArtista(Artista artistaElegido) {
         ventanaInicioController.mostrarPanelDerechoCancionesArtista(artistaElegido);
+    }
+
+    public void detenerVideoYoutube(){
+        if (ventanaCancionDetalleController!=null){
+            ventanaCancionDetalleController.stopWebView();
+        }
     }
 }

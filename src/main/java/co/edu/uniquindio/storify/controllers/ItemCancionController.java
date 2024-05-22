@@ -1,6 +1,7 @@
 package co.edu.uniquindio.storify.controllers;
 
 import co.edu.uniquindio.storify.app.Aplicacion;
+import co.edu.uniquindio.storify.controllers.controladorListeners.MyListenerCancion;
 import co.edu.uniquindio.storify.exceptions.ArtistaNoEncontradoException;
 import co.edu.uniquindio.storify.model.Artista;
 import co.edu.uniquindio.storify.model.Cancion;
@@ -38,9 +39,21 @@ public class ItemCancionController implements Initializable {
     private Usuario usuario;
     private Cancion cancion= null;
     private boolean esVentanaFavs;
+    private boolean esGestion;
+    private MyListenerCancion myListenerCancion;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    /**
+     * Método invocado cuando se hace clic en el elemento.
+     * Notifica al listener de clic con la cancion asociada.
+     */
+    @FXML
+    private void click() {
+        myListenerCancion.onClickListener(cancion);
 
     }
 
@@ -66,7 +79,11 @@ public class ItemCancionController implements Initializable {
     }
 
     public void abrirVentanaYoutube() {
-        aplicacion.abrirDetalleCancion(cancion);
+        if (!esGestion){
+            aplicacion.abrirDetalleCancion(cancion);
+        }else{
+            click();
+        }
     }
 
 
