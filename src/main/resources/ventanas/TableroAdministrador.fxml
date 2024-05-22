@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="700.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.TableroClienteController">
+   <children>
+      <ImageView fx:id="btnCanciones" fitHeight="150.0" fitWidth="150.0" layoutX="58.0" layoutY="352.0">
+         <image>
+            <Image url="@../imagenes/Musica%20Icon.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="btnGestionarArtistas" fitHeight="175.0" fitWidth="175.0" layoutX="59.0" layoutY="19.0">
+         <image>
+            <Image url="@../imagenes/Gestionar%20Artistas%20Icon.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="btnAnaliticas" fitHeight="150.0" fitWidth="150.0" layoutX="58.0" layoutY="509.0">
+         <image>
+            <Image url="@../imagenes/Analytics%20Icon.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="btnGestionarCanciones" fitHeight="175.0" fitWidth="175.0" layoutX="58.0" layoutY="176.0">
+         <image>
+            <Image url="@../imagenes/Gestionar%20Canciones%20Icon.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+   </children>
+</Pane>

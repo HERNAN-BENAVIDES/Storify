@@ -192,14 +192,14 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <ImageView fx:id="btnMeGusta" fitHeight="40.0" fitWidth="40.0" layoutX="203.0" layoutY="108.0" onMouseClicked="#aniadirFavoritos">
+      <ImageView fx:id="btnMeGusta" fitHeight="40.0" fitWidth="40.0" layoutX="203.0" layoutY="108.0" onMouseClicked="#aniadirFavoritos" visible="false">
          <image>
-            <Image url="@../imagenes/Cara Feliz icon.png" />
+            <Image url="@../imagenes/Corazon%20Blanco%20Icon.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="btnNoMeGusta" fitHeight="40.0" fitWidth="40.0" layoutX="203.0" layoutY="108.0" onMouseClicked="#eliminarFavoritos" visible="false">
+      <ImageView fx:id="btnNoMeGusta" fitHeight="40.0" fitWidth="40.0" layoutX="203.0" layoutY="108.0" onMouseClicked="#eliminarFavoritos">
          <image>
-            <Image url="@../imagenes/Cara Corazones Icon.png" />
+            <Image url="@../imagenes/Favoritos%20Icon.png" />
          </image>
       </ImageView>
    </children>
