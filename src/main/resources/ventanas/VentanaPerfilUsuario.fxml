@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.VentanaPerfilUsuarioController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.VentanaPerfilUsuarioController">
    <children>
       <ImageView fitHeight="622.0" fitWidth="1025.0">
          <image>
@@ -48,7 +48,7 @@
             </ImageView>
             <ImageView fx:id="btnFavoritos" fitHeight="200.0" fitWidth="200.0" layoutX="50.0" layoutY="40.0">
                <image>
-                  <Image url="@../imagenes/Cara Corazones Icon.png" />
+                  <Image url="@../imagenes/Corazon%20Icon.png" />
                </image>
             </ImageView>
             <Text layoutX="81.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tus Favoritos">
