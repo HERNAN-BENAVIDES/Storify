@@ -77,6 +77,8 @@ public class TableroClienteController implements Initializable {
     }
 
     public void mostrarPerfil(ActionEvent actionEvent) {
+        aplicacion.mostrarVentanaPerfil();
+        aplicacion.detenerVideoYoutube();
     }
 
     public void desmutear(MouseEvent mouseEvent) {

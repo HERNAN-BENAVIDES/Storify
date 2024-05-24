@@ -53,6 +53,7 @@ public class VentanaRegistroController implements Initializable {
     public TiendaMusica tiendaMusica = mfm.getTiendaMusica();
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
+    private Usuario usuarioSesion;
 
     @FXML
     private TextField txtUsername;
@@ -74,34 +75,23 @@ public class VentanaRegistroController implements Initializable {
     public void ingresarUsuario(){
 
         try {
-            //String tipoUsuario=mfm.getTiendaMusica().obtenerTipoUsuario(txtUsername.getText(), txtContrasenia.getText());
             Usuario usuario = mfm.getTiendaMusica().buscarUsuario(txtUsername2.getText(), txtShowPassword2.getText());
             String nombreUsuario=usuario.getPersona().getNombre();
-            iniciarSesionUsuario(usuario);
-            /**
-             * switch (tipoUsuario) {
-             *                 case "Administrador":
-             *                     //iniciarSesionAdministrador(usuario); break;
-             *                 case "Cliente":
-             *                     iniciarSesionCliente(usuario); break;
-             *             }
-             */
+            iniciarSesionUsuario(usuario); // Guardar el usuario que inició sesión
             Alertas.mostrarMensaje("Ingreso Exitoso", "Operación completada", "¡Haz ingresado correctamente "+nombreUsuario+"!", Alert.AlertType.INFORMATION);
 
         } catch (AtributoVacioException | UsuarioNoExistenteException e) {
             Alertas.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
         }
-
     }
 
-    /**
-     * Inicia sesión para un usuario.
-     * @param usuario El objeto Usuario correspondiente al usuario que ha iniciado sesión.
-     */
+    // Método para guardar el usuario que inició sesión en la variable de instancia
     public void iniciarSesionUsuario(Usuario usuario) throws AtributoVacioException, UsuarioNoExistenteException {
+        this.usuarioSesion = usuario;
         ventana.close();
         aplicacion.mostrarVentanaPrincipal(usuario);
     }
+
 
     public void switchFormbtnIngresarPanel(){
         TranslateTransition slider= new TranslateTransition();

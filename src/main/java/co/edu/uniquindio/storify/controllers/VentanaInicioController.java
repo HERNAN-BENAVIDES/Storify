@@ -42,7 +42,6 @@ public class VentanaInicioController implements Initializable {
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -55,7 +54,7 @@ public class VentanaInicioController implements Initializable {
             Node node = loader.load();
             panelIzquierdo.getChildren().add(node);
             TableroClienteController controlador = loader.getController();
-            controlador.setUsuario(this.usuario);
+            controlador.setUsuario(usuario);
         }catch (Exception e){
             //log.severe(e.getMessage());
             e.printStackTrace();
@@ -141,7 +140,6 @@ public class VentanaInicioController implements Initializable {
             controlador.setUsuario(this.usuario);
             controlador.cargarInfo();
             controlador.setAdministradorComandos(administrador);
-
 
             if (administrador!=null) {
                 controlador.actualizarBotones();
@@ -327,4 +325,19 @@ public class VentanaInicioController implements Initializable {
 
     }
 
+    public void mostrarVentanaPerfil() {
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaPerfilUsuario.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaPerfilUsuarioController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setUsuario(this.usuario);
+            controlador.setearUsuario(this.usuario);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

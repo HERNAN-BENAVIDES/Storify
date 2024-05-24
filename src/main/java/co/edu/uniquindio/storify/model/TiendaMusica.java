@@ -109,6 +109,39 @@ public class TiendaMusica implements Serializable {
         return cancionNueva;
     }
 
+    public Usuario editarUsuario(Usuario usuarioAntiguo, String nuevoUsername, String nuevoPassword, String nuevoEmail, String nuevoNombre, String nuevoApellido) throws AtributoVacioException, EmailInvalidoException {
+        // Validar que los campos obligatorios no estén vacíos
+        if (nuevoUsername.isEmpty() || nuevoPassword.isEmpty() || nuevoEmail.isEmpty() || nuevoNombre.isEmpty() || nuevoApellido.isEmpty()) {
+            throw new AtributoVacioException("Todos los campos son obligatorios");
+        }
+
+        // Validar formato del email
+        if (!isValidEmail(nuevoEmail)) {
+            throw new EmailInvalidoException("El formato del email es incorrecto");
+        }
+
+        // Crea un nuevo objeto Persona con los datos actualizados
+        Persona nuevaPersona = new Persona(nuevoNombre, nuevoApellido);
+
+        // Actualiza los datos del usuario con los nuevos valores
+        usuarioAntiguo.setUsername(nuevoUsername);
+        usuarioAntiguo.setPassword(nuevoPassword);
+        usuarioAntiguo.setEmail(nuevoEmail);
+        usuarioAntiguo.setPersona(nuevaPersona);
+
+        // Actualiza la información del usuario en otras partes del sistema, si es necesario
+
+        return usuarioAntiguo;
+    }
+
+    // Método para validar el formato de un email
+    private boolean isValidEmail(String email) {
+        // Verifica que el email termine en @gmail.com o en @uqvirtual.edu.co
+        return email.endsWith("@gmail.com") || email.endsWith("@uqvirtual.edu.co");
+    }
+
+
+
     public void actualizarCancionUsuarioFav(Cancion cancionNueva, Cancion cancionAntigua){
         for (Usuario usuario : usuarios.values()) {
             Persona persona= usuario.getPersona();

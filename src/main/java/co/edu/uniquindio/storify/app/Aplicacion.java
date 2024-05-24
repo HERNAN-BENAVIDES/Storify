@@ -145,4 +145,8 @@ public class Aplicacion extends Application {
             ventanaCancionDetalleController.stopWebView();
         }
     }
+
+    public void mostrarVentanaPerfil() {
+        ventanaInicioController.mostrarVentanaPerfil();
+    }
 }
