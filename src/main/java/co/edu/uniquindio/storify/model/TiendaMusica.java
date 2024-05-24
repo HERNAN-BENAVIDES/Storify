@@ -716,6 +716,27 @@ public class TiendaMusica implements Serializable {
     }
 
 
+    public void eliminarCancion(Cancion cancionElegida) {
+        ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
 
+        for(Artista artista: artistas){
+            if (artista.getCanciones().contains(cancionElegida)){
+                artista.getCanciones().removeData(cancionElegida);
+                eliminarCancionUsuario(cancionElegida);
+                return;
+            }
+        }
 
+    }
+
+    private void eliminarCancionUsuario(Cancion cancionElegida) {
+        for (Usuario usuario: usuarios.values()){
+            if(usuario.getPersona() instanceof Cliente){
+                Cliente cliente = (Cliente) usuario.getPersona();
+                if(cliente.getCancionesFavoritas().contains(cancionElegida)){
+                    cliente.eliminarCancionFavorita(cancionElegida);
+                }
+            }
+        }
+    }
 }

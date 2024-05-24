@@ -27,35 +27,6 @@ public class Cliente extends Persona implements Serializable, Comparable<Cliente
         cancionesFavoritas.removeData(cancion);
     }
 
-
-    /**
-     *
-     * public static ClienteBuilder builder() {
-     *         return new ClienteBuilder();
-     *     }
-     *
-     *     public static class ClienteBuilder {
-     *         private String nombre;
-     *         private String apellido;
-     *
-     *         public ClienteBuilder nombre(String nombre) {
-     *             this.nombre = nombre;
-     *             return this;
-     *         }
-     *
-     *         public ClienteBuilder apellido(String apellido) {
-     *             this.apellido = apellido;
-     *             return this;
-     *         }
-     *
-     *         public Cliente build() {
-     *             return new Cliente(nombre, apellido);
-     *         }
-     *     }
-     */
-
-
-
     @Override
     public int compareTo(Cliente o) {
         return this.getNombre().compareTo(o.getNombre());
