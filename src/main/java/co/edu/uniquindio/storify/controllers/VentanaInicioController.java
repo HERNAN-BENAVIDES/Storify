@@ -90,6 +90,21 @@ public class VentanaInicioController implements Initializable {
             e.printStackTrace();
         }
     }
+    public void mostrarPanelDerechoAdminGestionarArtistas(){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaGestionar.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaGestionarController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
+            controlador.setUsuario(this.usuario);
+            controlador.iniciarGestionArtistas();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Se usara el mismo metodo para canciones favoritas, y canciones generales
@@ -181,6 +196,7 @@ public class VentanaInicioController implements Initializable {
             controlador.setUsuario(this.usuario);
             controlador.setCancion(cancion);
             controlador.iniciarVideoDatos();
+            controlador.permitirVolverAdmin();//este ultimo boton solo funcionara para admin
             aplicacion.ventanaCancionDetalleController=loader.getController();
 
 
@@ -246,4 +262,65 @@ public class VentanaInicioController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void mostrarPanelDerechoCrearEditarCancion(Cancion cancion){
+
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaCrearEditarCancion.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaCrearEditarCancionController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setUsuario(this.usuario);
+            //para saber si se esta creando o editando
+            controlador.setCancion(cancion);
+            controlador.iniciarDatosCrearEditar();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void mostrarPanelDerechoCrearEditarArtista(Artista artista){
+
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaCrearEditarArtista.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaCrearEditarArtistaController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setUsuario(this.usuario);
+            //para saber si se esta creando o editando
+            controlador.setArtista(artista);
+            controlador.iniciarDatosCrearEditar();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void mostrarPanelDerechoEstadisticas(Boolean empiezaGenero){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaEstadisticas.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaEstadisticasController controlador = loader.getController();
+            controlador.iniciarDatos();
+            if (empiezaGenero){
+                controlador.actualizarChartsGeneros();
+            }else{
+                controlador.actualizarChartsArtistas();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 }

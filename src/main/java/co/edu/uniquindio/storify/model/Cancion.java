@@ -52,7 +52,7 @@ public class Cancion implements Serializable, Comparable<Cancion> {
             case REGGAETON:
                 return "Reggaeton";
             case ELECTRONICA:
-                return "Electrónica";
+                return "Electronica";
             case RB:
                 return "R&B";
             case KPOP:

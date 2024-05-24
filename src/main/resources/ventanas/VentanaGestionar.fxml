@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.VentanaGestionarControllers">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.VentanaGestionarController">
    <children>
       <Pane layoutX="14.0" layoutY="14.0" prefHeight="164.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
          <children>
@@ -65,13 +65,26 @@
             <String fx:value="shadowPane" />
          </styleClass>
       </Pane>
-      <ScrollPane fx:id="scroll" layoutX="14.0" layoutY="194.0" prefHeight="417.0" prefWidth="990.0" styleClass="transparent" stylesheets="@../aplicacion.css">
+      <ScrollPane fx:id="scrollGrid" layoutX="14.0" layoutY="194.0" prefHeight="417.0" prefWidth="990.0" styleClass="transparent" stylesheets="@../aplicacion.css">
          <content>
             <GridPane fx:id="grid" layoutY="-20.0" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
+         </content>
+      </ScrollPane>
+      <ScrollPane fx:id="scrollTabla" layoutX="17.0" layoutY="194.0" prefViewportHeight="386.0" prefViewportWidth="990.0" visible="false">
+         <content>
+            <TableView fx:id="tablaArtistas" layoutX="17.0" layoutY="194.0" prefHeight="386.0" prefWidth="990.0">
+               <columns>
+                  <TableColumn fx:id="columnaCodigo" prefWidth="181.0" text="Código" />
+                  <TableColumn fx:id="columnaNombre" prefWidth="226.0" text="Nombre" />
+                  <TableColumn fx:id="columnaNacionalidad" prefWidth="185.0" text="Nacionalidad" />
+                  <TableColumn fx:id="columnaTipoArtista" prefWidth="205.0" text="Tipo de artista" />
+                  <TableColumn fx:id="columnaNumCanciones" prefWidth="192.0" text="Número de canciones" />
+               </columns>
+            </TableView>
          </content>
       </ScrollPane>
    </children>

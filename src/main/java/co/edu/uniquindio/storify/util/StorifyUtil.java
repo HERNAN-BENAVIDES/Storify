@@ -1,5 +1,6 @@
 package co.edu.uniquindio.storify.util;
 
+import co.edu.uniquindio.storify.exceptions.UsuarioYaRegistradoException;
 import co.edu.uniquindio.storify.model.*;
 
 @SuppressWarnings("all")
@@ -14,8 +15,17 @@ public class StorifyUtil {
 
         Usuario usuario = new Usuario("admin", "$aDmiN", "admin@gmail", administrador);
         Usuario usuario1 = new Usuario("Mary", "1234", "mary@gmail.com", persona1);
-        tiendaMusica.getUsuarios().put("admin", usuario);
-        tiendaMusica.getUsuarios().put(usuario1.getUsername(), usuario1);
+
+        try {
+            tiendaMusica.agregarUsuario(usuario);
+            tiendaMusica.agregarUsuario(usuario1);
+        } catch (UsuarioYaRegistradoException e) {
+            throw new RuntimeException(e);
+        }
+        /**
+         * tiendaMusica.getUsuarios().put("admin", usuario);
+         *         tiendaMusica.getUsuarios().put(usuario1.getUsername(), usuario1);
+         */
 
         // Datos de artistas
         Artista artista1 = new Artista("ART001", "Michael Jackson", "Estados Unidos", TipoArtista.SOLISTA);

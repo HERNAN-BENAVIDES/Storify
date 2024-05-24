@@ -95,15 +95,19 @@
             <String fx:value="shadowPane" />
          </styleClass>
       </Pane>
-      <TableView fx:id="tablaArtistas" layoutX="14.0" layoutY="211.0" prefHeight="310.0" prefWidth="990.0">
-        <columns>
-          <TableColumn fx:id="columnaCodigo" prefWidth="181.0" text="Código" />
-          <TableColumn fx:id="columnaNombre" prefWidth="226.0" text="Nombre" />
-            <TableColumn fx:id="columnaNacionalidad" prefWidth="185.0" text="Nacionalidad" />
-            <TableColumn fx:id="columnaTipoArtista" prefWidth="205.0" text="Tipo de artista" />
-            <TableColumn fx:id="columnaNumCanciones" prefWidth="192.0" text="Número de canciones" />
-        </columns>
-      </TableView>
+      <ScrollPane layoutX="14.0" layoutY="211.0" prefViewportHeight="310.0" prefViewportWidth="990.0">
+         <content>
+            <TableView fx:id="tablaArtistas" layoutX="14.0" layoutY="211.0" prefHeight="310.0" prefWidth="990.0">
+              <columns>
+                <TableColumn fx:id="columnaCodigo" prefWidth="181.0" text="Código" />
+                <TableColumn fx:id="columnaNombre" prefWidth="226.0" text="Nombre" />
+                  <TableColumn fx:id="columnaNacionalidad" prefWidth="185.0" text="Nacionalidad" />
+                  <TableColumn fx:id="columnaTipoArtista" prefWidth="205.0" text="Tipo de artista" />
+                  <TableColumn fx:id="columnaNumCanciones" prefWidth="192.0" text="Número de canciones" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
       <Button layoutX="366.0" layoutY="546.0" mnemonicParsing="false" onAction="#verCanciones" prefHeight="31.0" prefWidth="279.0" text="Ver lista de canciones" />
    </children>
 </Pane>

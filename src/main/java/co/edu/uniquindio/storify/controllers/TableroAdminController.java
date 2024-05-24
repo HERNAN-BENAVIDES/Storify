@@ -23,6 +23,35 @@ public class TableroAdminController implements Initializable {
 
     }
 
+    public void gestionarCanciones(){
+        aplicacion.motrarVentanaGestionCanciones();
+        aplicacion.detenerVideoYoutube();
+
+    }
+
+    public void gestionarArtistas(){
+        aplicacion.motrarVentanaGestionArtista();
+        aplicacion.detenerVideoYoutube();
+
+    }
+
+    public void verCancionesGenerales(){
+        aplicacion.mostrarVentanaCancionesGenerales();
+        aplicacion.detenerVideoYoutube();
+    }
+
+    public void verEstadisticas(){
+        aplicacion.mostrarVentanaEstadisticas(true);
+        aplicacion.detenerVideoYoutube();
+
+    }
+
+    public void gestionarUsuarios(){
+
+    }
+
+
+
 
 
 }

@@ -228,5 +228,24 @@ public class BinaryTree<T extends Comparable<T>> implements Serializable {
         return cancionesFiltradas;
     }
 
+    public void reemplazarValor(T value, T valueActualizado) {
+        BinaryNode<T> nodo = buscarNodo(root, value);
+        if (nodo != null) {
+            nodo.setData(valueActualizado);
+        }
+    }
+
+    private BinaryNode<T> buscarNodo(BinaryNode<T> node, T data) {
+        if (node == null || node.getData().equals(data)) {
+            return node;
+        }
+        if (data.compareTo(node.getData()) < 0) {
+            return buscarNodo(node.getLeftNode(), data);
+        } else {
+            return buscarNodo(node.getRightNode(), data);
+        }
+    }
+
+
 }
 

@@ -5,10 +5,7 @@ import co.edu.uniquindio.storify.controllers.controladorFlujo.Comando;
 import co.edu.uniquindio.storify.controllers.controladorFlujo.ComandoAgregarCancion;
 import co.edu.uniquindio.storify.controllers.controladorFlujo.ComandoEliminarCancion;
 import co.edu.uniquindio.storify.exceptions.ArtistaNoEncontradoException;
-import co.edu.uniquindio.storify.model.Artista;
-import co.edu.uniquindio.storify.model.Cancion;
-import co.edu.uniquindio.storify.model.Cliente;
-import co.edu.uniquindio.storify.model.Usuario;
+import co.edu.uniquindio.storify.model.*;
 import co.edu.uniquindio.storify.util.Alertas;
 import co.edu.uniquindio.storify.util.YoutubeEmbedGenerator;
 import javafx.fxml.FXML;
@@ -62,10 +59,14 @@ public class VentanaCancionDetalleController implements Initializable {
     @FXML
     private Button btnAgregarFav;
 
+    @FXML
+    private Button btnVolverAdmin;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnEliminarFav.setVisible(false);
         btnAgregarFav.setVisible(false);
+        btnVolverAdmin.setVisible(false);
     }
 
 
@@ -75,6 +76,18 @@ public class VentanaCancionDetalleController implements Initializable {
         if(cancion!=null){
             webView.getEngine().load("");
         }
+
+    }
+
+    public void permitirVolverAdmin(){
+        Persona persona = usuario.getPersona();
+        if (persona instanceof Administrador) {
+            btnVolverAdmin.setVisible(true);
+        }
+    }
+
+    public void volverAdmin(){
+        aplicacion.motrarVentanaGestionCanciones();
 
     }
 
@@ -166,12 +179,17 @@ public class VentanaCancionDetalleController implements Initializable {
     }
 
     public void iniciarTextos(){
-        Cliente clienteUsuario= (Cliente)usuario.getPersona();
-        if (clienteUsuario.getCancionesFavoritas().contains(cancion)){
-            btnEliminarFav.setVisible(true);
-        }else{
-            btnAgregarFav.setVisible(true);
+
+        Persona persona = usuario.getPersona();
+        if (persona instanceof Cliente) {
+            Cliente clienteUsuario= (Cliente)usuario.getPersona();
+            if (clienteUsuario.getCancionesFavoritas().contains(cancion)){
+                btnEliminarFav.setVisible(true);
+            }else{
+                btnAgregarFav.setVisible(true);
+            }
         }
+
         txtCancion.setText(cancion.getNombre());
         txtAlbum.setText("Album: "+cancion.getAlbum());
         txtAnio.setText("Año de lanzamiento: "+cancion.getAnioLanzamiento());

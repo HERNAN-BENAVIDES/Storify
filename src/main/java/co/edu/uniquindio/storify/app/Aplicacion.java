@@ -71,14 +71,17 @@ public class Aplicacion extends Application {
             ventanaInicioController=loader.getController();
             controlador.setUsuario(usuario);
             String tipoUsuario= mfm.getTiendaMusica().obtenerTipoUsuario(usuario.getUsername(), usuario.getPassword());
-
+            System.out.println(tipoUsuario);
             switch (tipoUsuario) {
                 case "Administrador":
+                    System.out.println("inicio panel admin");
                     controlador.mostrarPanelIzquierdoAdmin();
                     controlador.mostrarPanelDerechoAdminGestionarCanciones();
                     controlador.mostrarBarraSuperiorAdmin(null);
+                    break;
 
                 case "Cliente":
+                    System.out.println("inicio panel cliente");
                     controlador.mostrarPanelIzquierdoCliente();
                     controlador.mostrarPanelDerechoClienteFavoritos();
                     controlador.mostrarBarraSuperiorCliente(null); break;
@@ -90,12 +93,26 @@ public class Aplicacion extends Application {
         }
     }
 
+    public void mostrarVentanaCrearEditarCancion(Cancion cancion){
+        ventanaInicioController.mostrarPanelDerechoCrearEditarCancion(cancion);
+
+    }
+
+    public void mostrarVentanaCrearEditarArtista(Artista artista){
+        ventanaInicioController.mostrarPanelDerechoCrearEditarArtista(artista);
+    }
+
     public void mostrarVentanaMisCanciones(){
         ventanaInicioController.mostrarPanelDerechoClienteFavoritos();
     }
 
     public void mostrarVentanaCancionesGenerales(){
         ventanaInicioController.mostrarPanelDerechoCancionesGenerales();
+    }
+
+    public void mostrarVentanaEstadisticas(Boolean empiezaGenero){
+        ventanaInicioController.mostrarPanelDerechoEstadisticas(empiezaGenero);
+
     }
 
     public void abrirDetalleCancion(Cancion cancion){
@@ -112,6 +129,15 @@ public class Aplicacion extends Application {
 
     public void verCancionesDeArtista(Artista artistaElegido) {
         ventanaInicioController.mostrarPanelDerechoCancionesArtista(artistaElegido);
+    }
+
+    public void motrarVentanaGestionCanciones(){
+        ventanaInicioController.mostrarPanelDerechoAdminGestionarCanciones();
+    }
+
+    public void motrarVentanaGestionArtista(){
+        ventanaInicioController.mostrarPanelDerechoAdminGestionarArtistas();
+
     }
 
     public void detenerVideoYoutube(){

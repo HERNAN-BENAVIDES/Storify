@@ -73,6 +73,67 @@ public class TiendaMusica implements Serializable {
 
     }
 
+    public Artista editarArtista(Artista artistaAntiguo, String nombre, String codigo, String nacionalidad, String tipoArtista, ListaEnlazadaDoble<Cancion>listaNuevaCanciones) throws AtributoVacioException, ArtistaNoEncontradoException {
+        Artista artistaNuevo=crearArtista(nombre, codigo, nacionalidad, tipoArtista);
+        artistaNuevo.setCanciones(listaNuevaCanciones);
+
+        artistas.reemplazarValor(artistaAntiguo, artistaNuevo);
+
+// actualizar canciones tambien si es q se hicieron cambios
+        //luego de reemplazar al artista por el nuevoartista se debe de implementar
+        //un metodo que permita buscar entre todas las canciones favoritas de los clientes
+        //y en caso de coincidir una cancion con que se tiene q el autor es el artista antiguo, actualizarlo
+
+        //como se haria esto, si un artista se actualiza, las canciones favoritas de los usuarios
+        //siguen siendo las mismas, solo que igual esas canciones siguen sin tener ''conexion'' con los artistas
+        //asi q no se cambiaria nada mas?
+        return artistaNuevo;
+    }
+
+    public Cancion editarCancion(Cancion cancionAntigua, String nombre, String nombreAlbum, String caratula, String anio, String duracion, String genero, String urlYoutube ) throws AtributoVacioException, ArtistaNoEncontradoException {
+        Cancion cancionNueva=crearCancion(nombre, nombreAlbum, caratula, anio, duracion, genero, urlYoutube);
+
+        Artista artista = buscarArtistaCancion(cancionAntigua);
+
+        // Reemplazar la canción antigua con la nueva en la lista de canciones del artista
+        ListaEnlazadaDoble<Cancion> cancionesArtista = artista.getCanciones();
+        Node<Cancion> current = cancionesArtista.getHeadNode();
+        while (current != null) {
+            if (current.getData().equals(cancionAntigua)) {
+                current.setData(cancionNueva);
+                actualizarCancionUsuarioFav(cancionNueva, cancionAntigua);
+                break;
+            }
+            current = current.getNextNode();
+        }
+        return cancionNueva;
+    }
+
+    public void actualizarCancionUsuarioFav(Cancion cancionNueva, Cancion cancionAntigua){
+        for (Usuario usuario : usuarios.values()) {
+            Persona persona= usuario.getPersona();
+            if (persona instanceof Cliente) {
+
+                Cliente cliente=(Cliente)usuario.getPersona();
+                ListaEnlazadaSimpleCircular<Cancion> cancionesFavoritas = cliente.getCancionesFavoritas();
+
+                // Verificar si la lista de favoritos no está vacía
+                if (cancionesFavoritas.getHeadNode() != null) {
+                    Node<Cancion> currentFavorita = cancionesFavoritas.getHeadNode();
+                    do {
+                        if (currentFavorita.getData().equals(cancionAntigua)) {
+                            currentFavorita.setData(cancionNueva);
+                            break; // Salir del bucle cuando se actualiza la canción
+                        }
+                        currentFavorita = currentFavorita.getNextNode();
+                    } while (currentFavorita != cancionesFavoritas.getHeadNode());
+                }
+
+            }
+
+        }
+    }
+
 
     public Cancion crearCancion(String nombre, String nombreAlbum, String caratula, String anio, String duracion, String genero, String urlYoutube)throws AtributoVacioException{
 
@@ -93,10 +154,14 @@ public class TiendaMusica implements Serializable {
         }
         if (genero == null || genero.isBlank()) {
             throw new AtributoVacioException("El genero de la canción es obligatorio");
+        }else if (genero.equals("R&B")){
+            genero="RB";
         }
         if (urlYoutube == null || urlYoutube.isBlank()) {
             throw new AtributoVacioException("El url Youtube de la canción es obligatorio");
         }
+
+
 
 
         Cancion cancionNueva = Cancion.builder()
@@ -284,6 +349,30 @@ public class TiendaMusica implements Serializable {
         // Si no se lanza la excepción, significa que todos los artistas se han agregado correctamente
     }
 
+    public Map<String, Integer> contarCancionesPorGenero() {
+        Map<String, Integer> contadorGeneros = new HashMap<>();
+        ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
+
+        // Iterar sobre todos los artistas en la tienda
+        for (Artista artista : artistas) {
+            // Iterar sobre todas las canciones del artista
+            for (Cancion cancion : artista.getCanciones()) {
+                // Obtener el género de la canción
+                String genero = cancion.getGenero().toString();
+
+                // Incrementar el contador para el género actual
+                contadorGeneros.put(genero, contadorGeneros.getOrDefault(genero, 0) + 1);
+            }
+        }
+
+        return contadorGeneros;
+    }
+
+    /**
+     * se obtiene un map de los generos y el numero de canciones que se tienen en cada uno
+     * de manera que se pueda usar la variable para llenar el barchart en la ventana de estadisticas
+     * @return
+     */
     public String obtenerGeneroConMasCanciones() {
         HashMap<TipoGenero, Integer> contadorGeneros = new HashMap<>();
         ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
@@ -310,6 +399,40 @@ public class TiendaMusica implements Serializable {
         }
 
         return generoConMasCanciones;
+    }
+
+    //por ahora ya que obtenervistas de url youtube no esta funcionando por completo(retorna errores)
+    // Método simulado para obtener la cantidad de reproducciones
+    private long obtenerCantidadVistas(Cancion cancion) {
+        // Calcular la cantidad de reproducciones basada en la cantidad de letras en el nombre de la canción
+        int longitudNombre = cancion.getNombre().length();
+        return longitudNombre * 4500;
+    }
+
+    public Map<String, Double> contarVistasPorArtista() throws IOException, GeneralSecurityException {
+        Map<String, Double> vistasPorArtista = new HashMap<>();
+
+        // Iterar sobre todos los artistas en la tienda
+        for (Artista artista : getArtistas().iterator()) {
+            double totalVistas = 0.0;
+
+            // Iterar sobre todas las canciones del artista
+            for (Cancion cancion : artista.getCanciones()) {
+                // Obtener el enlace de YouTube de la canción
+                String enlaceYouTube = cancion.getUrlYoutube();
+
+                // Simular obtener la cantidad de reproducciones del video de YouTube
+                long reproducciones = obtenerCantidadVistas(cancion);
+
+                // Sumar las reproducciones de la canción al total del artista
+                totalVistas += reproducciones;
+            }
+
+            // Añadir el nombre del artista y el total de vistas al mapa
+            vistasPorArtista.put(artista.getNombre(), totalVistas);
+        }
+
+        return vistasPorArtista;
     }
 
     public Artista obtenerArtistaMasPopular() throws IOException, GeneralSecurityException {
@@ -356,6 +479,14 @@ public class TiendaMusica implements Serializable {
         }
 
         return lista;
+    }
+
+    public <T extends Comparable<T>> ArrayList<T> convertirAArrayList(ListaEnlazadaDoble<T> listaEnlazadaDoble) {
+        ArrayList<T> arrayList = new ArrayList<>();
+        for (T elemento : listaEnlazadaDoble) {
+            arrayList.add(elemento);
+        }
+        return arrayList;
     }
 
     public List<String> obtenerNacionalidadesSinRepetir() {
@@ -536,6 +667,46 @@ public class TiendaMusica implements Serializable {
         BinaryTree<Artista> resultadoArbol= new BinaryTree<>();
         resultadoArbol.insert(artistaPorBuscar);
         return resultadoArbol;
+    }
+
+    public ArrayList<String> obtenerNombresPaises(){
+        ArrayList<String> countries = new ArrayList<>();
+        // Agregar nombres de países sin tildes
+        countries.add("Estados Unidos");
+        countries.add("Reino Unido");
+        countries.add("Canada");
+        countries.add("Corea del Sur");
+        countries.add("Inglaterra");
+        countries.add("Mexico");
+        countries.add("Australia");
+        countries.add("Brasil");
+        countries.add("Argentina");
+        countries.add("China");
+        countries.add("Japon");
+        countries.add("India");
+        countries.add("Rusia");
+        countries.add("Alemania");
+        countries.add("Francia");
+        countries.add("Italia");
+        countries.add("España");
+        countries.add("Portugal");
+        countries.add("Suecia");
+        countries.add("Noruega");
+        countries.add("Dinamarca");
+        countries.add("Finlandia");
+        countries.add("Holanda");
+        countries.add("Belgica");
+        countries.add("Suiza");
+        countries.add("Austria");
+        countries.add("Grecia");
+        countries.add("Irlanda");
+        countries.add("Turquia");
+        countries.add("Vietnam");
+        countries.add("Tailandia");
+        countries.add("Indonesia");
+        countries.add("Malasia");
+        countries.add("Filipinas");
+        return countries;
     }
 
 
