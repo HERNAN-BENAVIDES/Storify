@@ -148,6 +148,7 @@ public class VentanaGestionarController implements Initializable {
     }
 
     public void iniciarScrollCanciones()  {
+        establecerListaCancionesGenerales();
         if (listaCanciones.size() > 0) {
             myListenerCancion = new MyListenerCancion() {
                 @Override
