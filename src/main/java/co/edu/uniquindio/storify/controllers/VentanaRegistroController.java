@@ -162,7 +162,6 @@ public class VentanaRegistroController implements Initializable {
         openEye2.setVisible(true);
         closeEye2.setVisible(false);
         txtHidePassword.setVisible(false);
-
     }
     @FXML
     public void ShowPasswordOnAction2(KeyEvent keyevent) {
