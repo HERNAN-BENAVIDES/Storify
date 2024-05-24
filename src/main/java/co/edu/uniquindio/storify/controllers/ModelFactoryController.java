@@ -1,7 +1,7 @@
 package co.edu.uniquindio.storify.controllers;
 
 import co.edu.uniquindio.storify.app.Aplicacion;
-import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
+import co.edu.uniquindio.storify.controllers.controladorFlujo.AdministradorComandos;
 import co.edu.uniquindio.storify.exceptions.ArtistasYaEnTiendaException;
 import co.edu.uniquindio.storify.model.*;
 import co.edu.uniquindio.storify.util.Persistencia;
@@ -9,13 +9,14 @@ import co.edu.uniquindio.storify.util.StorifyUtil;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
+
 
 @SuppressWarnings("all")
 public class ModelFactoryController {
     private TiendaMusica tiendaMusica=null;
     private Aplicacion aplicacion=null;
     private Stage ventana;
+    private AdministradorComandos administradorComandos = new AdministradorComandos();
 
     public ModelFactoryController()  {
         //cargarDatosBinario();
@@ -109,6 +110,9 @@ public class ModelFactoryController {
         this.aplicacion = aplicacion;
     }
 
+    public AdministradorComandos getAdministradorComandos() {
+        return administradorComandos;
+    }
 
 
      /*

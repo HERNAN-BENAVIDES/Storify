@@ -1,6 +1,7 @@
 package co.edu.uniquindio.storify.controllers;
 
 import co.edu.uniquindio.storify.app.Aplicacion;
+import co.edu.uniquindio.storify.controllers.controladorFlujo.AdministradorComandos;
 import co.edu.uniquindio.storify.controllers.controladorFlujo.Comando;
 import co.edu.uniquindio.storify.model.Artista;
 import co.edu.uniquindio.storify.model.Cancion;
@@ -40,6 +41,7 @@ public class VentanaInicioController implements Initializable {
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -128,7 +130,7 @@ public class VentanaInicioController implements Initializable {
         }
     }
 
-    public void mostrarBarraSuperiorCliente(Comando comando){
+    public void mostrarBarraSuperiorCliente(AdministradorComandos administrador){
         try {
             barraSuperior.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/BarraUsuario.fxml"));
@@ -138,16 +140,18 @@ public class VentanaInicioController implements Initializable {
             controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
             controlador.setUsuario(this.usuario);
             controlador.cargarInfo();
-            controlador.setComando(comando);
-            if (comando!=null) {
-                controlador.cargarDeshacer();
+            controlador.setAdministradorComandos(administrador);
+
+
+            if (administrador!=null) {
+                controlador.actualizarBotones();
             }
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void mostrarBarraSuperiorAdmin(Comando comando){
+    public void mostrarBarraSuperiorAdmin(AdministradorComandos administrador){
         try {
             barraSuperior.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/BarraUsuario.fxml"));
@@ -157,9 +161,9 @@ public class VentanaInicioController implements Initializable {
             controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
             controlador.setUsuario(this.usuario);
             controlador.cargarInfo();
-            controlador.setComando(comando);
-            if (comando!=null) {
-                controlador.cargarDeshacer();
+            controlador.setAdministradorComandos(administrador);
+            if (administrador!=null) {
+                controlador.actualizarBotones();
             }
         }catch (Exception e){
             e.printStackTrace();

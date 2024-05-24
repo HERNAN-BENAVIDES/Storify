@@ -1,6 +1,7 @@
 package co.edu.uniquindio.storify.controllers;
 
 import co.edu.uniquindio.storify.app.Aplicacion;
+import co.edu.uniquindio.storify.controllers.controladorFlujo.AdministradorComandos;
 import co.edu.uniquindio.storify.controllers.controladorFlujo.Comando;
 import co.edu.uniquindio.storify.controllers.controladorFlujo.ComandoAgregarCancion;
 import co.edu.uniquindio.storify.controllers.controladorFlujo.ComandoEliminarCancion;
@@ -29,6 +30,8 @@ public class VentanaCancionDetalleController implements Initializable {
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
+    private AdministradorComandos administradorComandos = mfm.getAdministradorComandos();
+
 
     private Cancion cancion;
 
@@ -158,12 +161,13 @@ public class VentanaCancionDetalleController implements Initializable {
         stopWebView();
 
         Comando agregarCancion = new ComandoAgregarCancion((Cliente)usuario.getPersona(), cancion);
-        agregarCancion.ejecutar();
+        administradorComandos.ejecutarComando(agregarCancion);
+
 
         aplicacion.mostrarVentanaMisCanciones();
         Alertas.mostrarMensaje("Actualización Exitosa", "Operación completada", "¡Haz agregado correctamente una cancion a tu lista de favoritos! Puedes deshacer esta acción si lo requieres", Alert.AlertType.INFORMATION);
 
-        aplicacion.ventanaInicioController.mostrarBarraSuperiorCliente(agregarCancion);
+        aplicacion.ventanaInicioController.mostrarBarraSuperiorCliente(administradorComandos);
 
     }
 
@@ -171,11 +175,11 @@ public class VentanaCancionDetalleController implements Initializable {
 
         stopWebView();
         Comando eliminarCancion = new ComandoEliminarCancion((Cliente)usuario.getPersona(), cancion);
-        eliminarCancion.ejecutar();
+        administradorComandos.ejecutarComando(eliminarCancion);
 
         aplicacion.mostrarVentanaMisCanciones();
         Alertas.mostrarMensaje("Actualización Exitosa", "Operación completada", "¡Haz eliminado correctamente una cancion de tu lista de favoritos! Puedes deshacer esta acción si lo requieres", Alert.AlertType.INFORMATION);
-        aplicacion.ventanaInicioController.mostrarBarraSuperiorCliente(eliminarCancion);
+        aplicacion.ventanaInicioController.mostrarBarraSuperiorCliente(administradorComandos);
     }
 
     public void iniciarTextos(){

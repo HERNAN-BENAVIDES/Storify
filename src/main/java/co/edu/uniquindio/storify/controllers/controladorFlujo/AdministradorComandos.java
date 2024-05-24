@@ -1,10 +1,17 @@
 package co.edu.uniquindio.storify.controllers.controladorFlujo;
 
 import co.edu.uniquindio.storify.estructurasDeDatos.pila.Pila;
+import lombok.Data;
 
+@Data
 public class AdministradorComandos {
-    private Pila<Comando> pilaDeshacer = new Pila<>();
-    private Pila<Comando> pilaRehacer = new Pila<>();
+    private Pila<Comando> pilaDeshacer;
+    private Pila<Comando> pilaRehacer;
+
+    public AdministradorComandos() {
+        this.pilaDeshacer = new Pila<>();
+        this.pilaRehacer = new Pila<>();
+    }
 
     public void ejecutarComando(Comando comando) {
         comando.ejecutar();

@@ -221,7 +221,7 @@ public class VentanaGestionarController implements Initializable {
         if (esGestionCanciones) {
             if (cancionElegida!=null){
                 if (confirmarEliminacion("la canción")){
-                    //mfm.getTiendaMusica().eliminarCancion(cancionElegida);
+                    mfm.getTiendaMusica().eliminarCancion(cancionElegida);
                     iniciarScrollCanciones();
                     cancionElegida=null;
                 }
