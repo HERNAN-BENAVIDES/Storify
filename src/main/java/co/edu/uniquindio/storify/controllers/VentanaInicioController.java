@@ -65,7 +65,7 @@ public class VentanaInicioController implements Initializable {
     public void mostrarPanelIzquierdoAdmin(){
         try {
             panelIzquierdo.getChildren().clear();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/TableroAdmin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/TableroAdministrador.fxml"));
             Node node = loader.load();
             panelIzquierdo.getChildren().add(node);
             TableroAdminController controlador = loader.getController();

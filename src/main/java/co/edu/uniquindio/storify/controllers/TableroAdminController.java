@@ -3,6 +3,7 @@ package co.edu.uniquindio.storify.controllers;
 import co.edu.uniquindio.storify.app.Aplicacion;
 import co.edu.uniquindio.storify.model.Usuario;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import lombok.Data;
 
@@ -13,6 +14,10 @@ import java.util.ResourceBundle;
 
 public class TableroAdminController implements Initializable {
 
+    public ImageView btnCanciones;
+    public ImageView btnGestionarArtistas;
+    public ImageView btnAnaliticas;
+    public ImageView btnGestionarCanciones;
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
