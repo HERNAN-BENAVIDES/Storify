@@ -23,6 +23,12 @@ public class ListaEnlazadaDoble<T> implements IListasEnlazadas<T>, Iterable<T>, 
         this.size = 0;
     }
 
+    public ListaEnlazadaDoble(ListaEnlazadaDoble<T> lista) {
+         for (T data : lista) {
+             add(data);
+         }
+    }
+
     @Override
     public void addFirst(T data) {
         Node<T> newNode = new Node<>(data);

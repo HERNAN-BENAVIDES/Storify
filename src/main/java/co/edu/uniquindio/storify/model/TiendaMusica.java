@@ -732,7 +732,7 @@ public class TiendaMusica implements Serializable {
 
     }
 
-    private void eliminarCancionUsuario(Cancion cancionElegida) {
+    public void eliminarCancionUsuario(Cancion cancionElegida) {
         for (Usuario usuario: usuarios.values()){
             if(usuario.getPersona() instanceof Cliente){
                 Cliente cliente = (Cliente) usuario.getPersona();

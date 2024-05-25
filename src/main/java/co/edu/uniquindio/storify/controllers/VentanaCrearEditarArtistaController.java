@@ -34,6 +34,8 @@ public class VentanaCrearEditarArtistaController implements Initializable {
     private Usuario usuario;
     private Artista artista;
     private ListaEnlazadaDoble<Cancion> listaCancionesArtista= new ListaEnlazadaDoble<>();
+    private ListaEnlazadaDoble<Cancion> listaCancionesModificada;
+    private ListaEnlazadaDoble<Cancion> listaCancionesEliminadas = new ListaEnlazadaDoble<>();
 
     @FXML
     private TextField txtNombreArtista;
@@ -112,8 +114,24 @@ public class VentanaCrearEditarArtistaController implements Initializable {
         tablaCancionesArtista.setItems(listaCancionesProperty);
     }
 
+    public void iniciarTabla(ListaEnlazadaDoble<Cancion> listaCanciones){
+        tablaCancionesArtista.getItems().clear();
+        ObservableList<Cancion> listaCancionesProperty= FXCollections.observableArrayList();
+        // Asignar las propiedades de las columnas
+        columnaCodigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
+        columnaNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        columnaAlbum.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAlbum()));
+        columnaDuracion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDuracion()));
+        columnaGenero.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().obtenerGeneroComoString()));
+
+        listaCancionesProperty.clear();
+        listaCancionesProperty.addAll(mfm.getTiendaMusica().convertirAArrayList(listaCanciones));
+        tablaCancionesArtista.setItems(listaCancionesProperty);
+    }
+
     public void iniciarCancionesDeArtista(){
         this.listaCancionesArtista=artista.getCanciones();
+        this.listaCancionesModificada = new ListaEnlazadaDoble<>(listaCancionesArtista);
     }
 
     public void iniciarCombos(){
@@ -133,12 +151,9 @@ public class VentanaCrearEditarArtistaController implements Initializable {
         Cancion cancionEliminar = tablaCancionesArtista.getSelectionModel().getSelectedItem();
         if (cancionEliminar!=null){
             if (confirmarEliminacion(cancionEliminar)){
-                listaCancionesArtista.removeData(cancionEliminar);
-                iniciarTabla();
-
-                //la lista se actualiza pero elimina directamente de toda ubicacion la cancion
-                //esto deberia de pasar unicamente cuando se de click al boton de guardar
-                //pero funciona correctamente si se ignora que se esta borrando la cancion indefinidamente
+                listaCancionesModificada.removeData(cancionEliminar);
+                listaCancionesEliminadas.add(cancionEliminar);
+                iniciarTabla(listaCancionesModificada);
             }
         }else{
             Alertas.mostrarMensaje("Error", "Entrada no valida", "Debe elegir una canción", Alert.AlertType.ERROR);
@@ -192,8 +207,13 @@ public class VentanaCrearEditarArtistaController implements Initializable {
                     txtCodigo.getText(),
                     comboNacionalidad.getValue(),
                     comboTipo.getValue(),
-                    listaCancionesArtista
+                    listaCancionesModificada
             );
+
+            for (Cancion cancion : listaCancionesEliminadas){
+                mfm.getTiendaMusica().eliminarCancionUsuario(cancion);
+            }
+
             Alertas.mostrarMensaje("Edición Confirmada", "Operación completada", "Se ha editado correctamente el artista: "+artistaEditado.getNombre(), Alert.AlertType.INFORMATION);
             aplicacion.motrarVentanaGestionArtista();
 
