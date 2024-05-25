@@ -47,19 +47,19 @@ public class StorifyUtil {
         tiendaMusica.getArtistas().insert(artista8);
 
         // Datos adicionales de artistas y canciones
-        Cancion cancion1 = new Cancion("SONG001", "Die For You", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:20", TipoGenero.OTRO, "https://www.youtube.com/watch?v=QLCpqdqeoII&ab_channel=TheWeeknd-Topic");
-        Cancion cancion2 = new Cancion("SONG002","I Feel It Coming", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:29", TipoGenero.OTRO, "https://www.youtube.com/watch?v=iIWoYaJRryw&ab_channel=TheWeeknd-Topic");
-        Cancion cancion3 = new Cancion("SONG003","Gangnam Style", "Ssai Yukgap, Part 1", "/imagenes/gangnam.jpg", 2012, "4:13", TipoGenero.KPOP, "https://www.youtube.com/watch?v=9bZkp7q19f0&ab_channel=officialpsy");
-        Cancion cancion4 = new Cancion("SONG004","Paradise", "Mylo Xyloto", "/imagenes/paradise.jpeg", 2011, "4:20", TipoGenero.RB, "https://www.youtube.com/watch?v=J6ZWlDks0nQ&ab_channel=Coldplay");
-        Cancion cancion5 = new Cancion("SONG005","Tu Falta De Querer", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "4:38", TipoGenero.POP, "https://www.youtube.com/watch?v=EbO74Yb0un4&ab_channel=MitchellMarela");
-        Cancion cancion6 = new Cancion("SONG006","Gentleman", "The Singles", "/imagenes/theSingles.jpg", 2013, "3:53", TipoGenero.KPOP, "https://www.youtube.com/watch?v=ASO_zypdnsQ&ab_channel=officialpsy");
-        Cancion cancion7 = new Cancion("SONG007","Blue Frog", "Ssai Yukgap, Part 1", "/imagenes/gangnam.jpg", 2012, "3:27", TipoGenero.KPOP, "https://www.youtube.com/watch?v=GjIrL7ivEyk&ab_channel=PSY-Topic");
-        Cancion cancion8 = new Cancion("SONG008","Amor Completo", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "4:01", TipoGenero.POP, "https://www.youtube.com/watch?v=QaFtF7XLEBI&ab_channel=MonLaferte-Topic");
-        Cancion cancion9 = new Cancion("SONG009","Mi Buen Amor", "La Trenza", "/imagenes/laTrenza.jpg", 2017, "3:49", TipoGenero.POP, "https://www.youtube.com/watch?v=bId_8k1gfjA&ab_channel=MonLaferte-Topic");
-        Cancion cancion10 = new Cancion("SONG010","Si Tú Me Quisieras", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "3:22", TipoGenero.POP, "https://www.youtube.com/watch?v=QBew-Lg1jvY&ab_channel=MonLaferte-Topic");
-        Cancion cancion11 = new Cancion("SONG011","Billie Jean", "Thriller", "/imagenes/thriller.jpeg", 1983, "4:54", TipoGenero.RB, "https://www.youtube.com/watch?v=tfIuEwzoDME&ab_channel=elcoronelGOD");
-        Cancion cancion12 = new Cancion("SONG012","Beat It", "Thriller", "/imagenes/thriller.jpeg", 1983, "4:58", TipoGenero.ROCK, "https://www.youtube.com/watch?v=WlTlUseVt7E&ab_channel=MichaelJackson-Topic");
-        Cancion cancion13 = new Cancion("SONG013","Thriller", "Thriller", "/imagenes/thriller.jpeg", 1983, "5:45", TipoGenero.ROCK, "https://www.youtube.com/watch?v=in5IYOatFb8&ab_channel=MichaelJackson-Topic");
+        Cancion cancion1 = new Cancion("SONG001", "Die For You", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:20", TipoGenero.OTRO, "https://www.youtube.com/watch?v=QLCpqdqeoII");
+        Cancion cancion2 = new Cancion("SONG002","I Feel It Coming", "Starboy", "/imagenes/starboy.jpeg", 2016, "4:29", TipoGenero.OTRO, "https://www.youtube.com/watch?v=iIWoYaJRryw");
+        Cancion cancion3 = new Cancion("SONG003","Gangnam Style", "Ssai Yukgap, Part 1", "/imagenes/gangnam.jpg", 2012, "4:13", TipoGenero.KPOP, "https://www.youtube.com/watch?v=9bZkp7q19f0");
+        Cancion cancion4 = new Cancion("SONG004","Paradise", "Mylo Xyloto", "/imagenes/paradise.jpeg", 2011, "4:20", TipoGenero.RB, "https://www.youtube.com/watch?v=J6ZWlDks0nQ");
+        Cancion cancion5 = new Cancion("SONG005","Tu Falta De Querer", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "4:38", TipoGenero.POP, "https://www.youtube.com/watch?v=EbO74Yb0un4");
+        Cancion cancion6 = new Cancion("SONG006","Gentleman", "The Singles", "/imagenes/theSingles.jpg", 2013, "3:53", TipoGenero.KPOP, "https://www.youtube.com/watch?v=ASO_zypdnsQ");
+        Cancion cancion7 = new Cancion("SONG007","Blue Frog", "Ssai Yukgap, Part 1", "/imagenes/gangnam.jpg", 2012, "3:27", TipoGenero.KPOP, "https://www.youtube.com/watch?v=GjIrL7ivEyk");
+        Cancion cancion8 = new Cancion("SONG008","Amor Completo", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "4:01", TipoGenero.POP, "https://www.youtube.com/watch?v=QaFtF7XLEBI");
+        Cancion cancion9 = new Cancion("SONG009","Mi Buen Amor", "La Trenza", "/imagenes/laTrenza.jpg", 2017, "3:49", TipoGenero.POP, "https://www.youtube.com/watch?v=bId_8k1gfjA");
+        Cancion cancion10 = new Cancion("SONG010","Si Tú Me Quisieras", "Mon Laferte Vol. 1", "/imagenes/MonLaferte.jpeg", 2015, "3:22", TipoGenero.POP, "https://www.youtube.com/watch?v=QBew-Lg1jvY");
+        Cancion cancion11 = new Cancion("SONG011","Billie Jean", "Thriller", "/imagenes/thriller.jpeg", 1983, "4:54", TipoGenero.RB, "https://www.youtube.com/watch?v=tfIuEwzoDME");
+        Cancion cancion12 = new Cancion("SONG012","Beat It", "Thriller", "/imagenes/thriller.jpeg", 1983, "4:58", TipoGenero.ROCK, "https://www.youtube.com/watch?v=WlTlUseVt7E");
+        Cancion cancion13 = new Cancion("SONG013","Thriller", "Thriller", "/imagenes/thriller.jpeg", 1983, "5:45", TipoGenero.ROCK, "https://www.youtube.com/watch?v=in5IYOatFb8");
 
 
 

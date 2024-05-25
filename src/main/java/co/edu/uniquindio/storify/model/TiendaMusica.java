@@ -8,6 +8,7 @@ import co.edu.uniquindio.storify.estructurasDeDatos.nodo.Node;
 import co.edu.uniquindio.storify.exceptions.*;
 import co.edu.uniquindio.storify.util.ArchivoUtil;
 
+import co.edu.uniquindio.storify.util.YouTubeHelper;
 import lombok.Data;
 import lombok.ToString;
 
@@ -463,7 +464,7 @@ public class TiendaMusica implements Serializable {
                 String enlaceYouTube = cancion.getUrlYoutube();
 
                 // Simular obtener la cantidad de reproducciones del video de YouTube
-                long reproducciones = obtenerCantidadVistas(cancion);
+                long reproducciones = YouTubeHelper.obtenerVistasVideo(cancion.getUrlYoutube());
 
                 // Sumar las reproducciones de la canción al total del artista
                 totalVistas += reproducciones;
