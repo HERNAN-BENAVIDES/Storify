@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane prefHeight="800.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.TableroAdminController">
+<Pane prefHeight="800.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.TableroAdminController">
    <children>
       <Pane layoutY="674.0" prefHeight="68.0" prefWidth="272.0">
          <children>

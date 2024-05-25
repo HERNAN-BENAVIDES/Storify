@@ -13,6 +13,5 @@ module co.edu.uniquindio.storify {
     opens co.edu.uniquindio.storify.controllers to javafx.fxml;
 
 
-    opens co.edu.uniquindio.storify to javafx.fxml;
-    exports co.edu.uniquindio.storify;
+
 }

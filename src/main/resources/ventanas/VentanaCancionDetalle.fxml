@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.web.WebView?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1010.0" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.VentanaCancionDetalleController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1010.0" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.VentanaCancionDetalleController">
    <children>
       <Button fx:id="btnAgregarFav" layoutX="764.0" layoutY="492.0" mnemonicParsing="false" onAction="#agregarFav" prefHeight="31.0" prefWidth="181.0" text="Agregar a Favoritos" />
       <Button fx:id="btnEliminarFav" layoutX="764.0" layoutY="449.0" mnemonicParsing="false" onAction="#eliminarFav" prefHeight="31.0" prefWidth="181.0" text="Eliminar de Favoritos" />

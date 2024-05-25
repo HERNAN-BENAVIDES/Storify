@@ -71,17 +71,14 @@ public class Aplicacion extends Application {
             ventanaInicioController=loader.getController();
             controlador.setUsuario(usuario);
             String tipoUsuario= mfm.getTiendaMusica().obtenerTipoUsuario(usuario.getUsername(), usuario.getPassword());
-            System.out.println(tipoUsuario);
             switch (tipoUsuario) {
                 case "Administrador":
-                    System.out.println("inicio panel admin");
                     controlador.mostrarPanelIzquierdoAdmin();
                     controlador.mostrarPanelDerechoAdminGestionarCanciones();
                     controlador.mostrarBarraSuperiorAdmin(null);
                     break;
 
                 case "Cliente":
-                    System.out.println("inicio panel cliente");
                     controlador.mostrarPanelIzquierdoCliente();
                     controlador.mostrarPanelDerechoClienteFavoritos();
                     controlador.mostrarBarraSuperiorCliente(null); break;

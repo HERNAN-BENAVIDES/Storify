@@ -4,11 +4,10 @@ import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDoble;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimpleCircular;
-import co.edu.uniquindio.storify.estructurasDeDatos.nodo.BinaryNode;
 import co.edu.uniquindio.storify.estructurasDeDatos.nodo.Node;
 import co.edu.uniquindio.storify.exceptions.*;
 import co.edu.uniquindio.storify.util.ArchivoUtil;
-import co.edu.uniquindio.storify.util.YouTubeHelper;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -477,37 +476,6 @@ public class TiendaMusica implements Serializable {
         return vistasPorArtista;
     }
 
-    public Artista obtenerArtistaMasPopular() throws IOException, GeneralSecurityException {
-        ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
-        Artista artistaMasPopular = null;
-        long maxReproducciones = 0;
-
-        // Iterar sobre todos los artistas en la tienda
-        for (Artista artista : artistas) {
-            long totalReproducciones = 0;
-
-            // Iterar sobre todas las canciones del artista
-            for (Cancion cancion : artista.getCanciones()) {
-                // Obtener el enlace de YouTube de la canción
-                String enlaceYouTube = cancion.getUrlYoutube();
-
-                // Simular obtener la cantidad de reproducciones del video de YouTube
-                long reproducciones = obtenerCantidadReproducciones(enlaceYouTube);
-
-                // Sumar las reproducciones de la canción al total del artista
-                totalReproducciones += reproducciones;
-            }
-
-            // Si el total de reproducciones del artista actual es mayor que el máximo encontrado hasta ahora,
-            // actualizar el artista más popular y la cantidad máxima de reproducciones
-            if (totalReproducciones > maxReproducciones) {
-                maxReproducciones = totalReproducciones;
-                artistaMasPopular = artista;
-            }
-        }
-
-        return artistaMasPopular;
-    }
 
     public <T extends Comparable<T>> List<T> convertirArbolALista(BinaryTree<T> arbol) {
         List<T> lista = new ArrayList<>();
@@ -750,13 +718,6 @@ public class TiendaMusica implements Serializable {
         countries.add("Filipinas");
         return countries;
     }
-
-
-
-    private long obtenerCantidadReproducciones(String enlaceYouTube) throws IOException, GeneralSecurityException {
-        return YouTubeHelper.obtenerVistasVideo(enlaceYouTube); // Llama a la clase YouTubeHelper
-    }
-
 
     public void eliminarCancion(Cancion cancionElegida) {
         ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
