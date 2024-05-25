@@ -91,6 +91,7 @@ public class VentanaCancionDetalleController implements Initializable {
 
     public void volverAdmin(){
         aplicacion.motrarVentanaGestionCanciones();
+        aplicacion.detenerVideoYoutube();
 
     }
 

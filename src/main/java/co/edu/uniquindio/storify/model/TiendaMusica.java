@@ -109,7 +109,7 @@ public class TiendaMusica implements Serializable {
         return cancionNueva;
     }
 
-    public Usuario editarUsuario(Usuario usuarioAntiguo, String nuevoUsername, String nuevoPassword, String nuevoEmail, String nuevoNombre, String nuevoApellido) throws AtributoVacioException, EmailInvalidoException {
+    public Usuario editarUsuario(Usuario usuarioAntiguo, String nuevoUsername, String nuevoPassword, String nuevoEmail, String nuevoNombre, String nuevoApellido) throws AtributoVacioException, EmailInvalidoException, UsuarioNoExistenteException {
         // Validar que los campos obligatorios no estén vacíos
         if (nuevoUsername.isEmpty() || nuevoPassword.isEmpty() || nuevoEmail.isEmpty() || nuevoNombre.isEmpty() || nuevoApellido.isEmpty()) {
             throw new AtributoVacioException("Todos los campos son obligatorios");
@@ -120,18 +120,27 @@ public class TiendaMusica implements Serializable {
             throw new EmailInvalidoException("El formato del email es incorrecto");
         }
 
-        // Crea un nuevo objeto Persona con los datos actualizados
-        Persona nuevaPersona = new Persona(nuevoNombre, nuevoApellido);
 
-        // Actualiza los datos del usuario con los nuevos valores
-        usuarioAntiguo.setUsername(nuevoUsername);
-        usuarioAntiguo.setPassword(nuevoPassword);
-        usuarioAntiguo.setEmail(nuevoEmail);
-        usuarioAntiguo.setPersona(nuevaPersona);
 
-        // Actualiza la información del usuario en otras partes del sistema, si es necesario
+        for (Usuario usuario: usuarios.values()){
+            if (usuario.equals(usuarioAntiguo)){
+                // Crea un nuevo objeto Persona con los datos actualizados
+                Cliente nuevaPersona = (Cliente)usuarioAntiguo.getPersona();
+                nuevaPersona.setNombre(nuevoNombre);
+                nuevaPersona.setApellido(nuevoApellido);
 
-        return usuarioAntiguo;
+                usuario.setEmail(nuevoEmail);
+                usuario.setPassword(nuevoPassword);
+                usuario.setUsername(nuevoUsername);
+                usuario.setPersona(nuevaPersona);
+
+                return usuario;
+
+            }
+        }
+        throw new UsuarioNoExistenteException("Usuario no encontrado para edición");
+
+
     }
 
     // Método para validar el formato de un email

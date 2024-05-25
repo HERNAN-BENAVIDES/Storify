@@ -82,32 +82,26 @@ public class VentanaPerfilUsuarioController implements Initializable {
     }
 
     public void confirmarEdicion(ActionEvent actionEvent) {
-        //try {
-        //    Usuario usuario1 = tiendaMusica.editarUsuario(usuario,
-        //            usuario.getUsername(),
-        //            txtShowPassword.getText(),
-        //            txtCorreo.getText(),
-        //            txtNombre.getText(),
-        //            txtApellido.getText());
-        //    Alertas.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha editado correctamente al cliente: " + usuario1.getUsername(), Alert.AlertType.INFORMATION);
-        //
-        //} catch (EmailInvalidoException e) {
-        //    throw new RuntimeException(e);
-        //}
-        txtNombre.setEditable(false);
-        txtApellido.setEditable(false);
-        txtCorreo.setEditable(false);
-        txtHidePassword.setEditable(false);
-        txtShowPassword.setEditable(false);
-        txtUsername.setEditable(false);
-        btnEditar.setVisible(true);
-        btnConfirmar.setVisible(false);
+        try {
+            Usuario usuario1 = tiendaMusica.editarUsuario(usuario,
+                    txtUsername.getText(),
+                    txtShowPassword.getText(),
+                    txtCorreo.getText(),
+                    txtNombre.getText(),
+                    txtApellido.getText());
+            Alertas.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha editado correctamente al cliente: " + usuario1.getUsername(), Alert.AlertType.INFORMATION);
+            aplicacion.mostrarVentanaPrincipal(usuario1);
+        } catch (EmailInvalidoException | AtributoVacioException | UsuarioNoExistenteException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void habilitarEdicion() throws AtributoVacioException {
         txtNombre.setEditable(true);
         txtApellido.setEditable(true);
         txtCorreo.setEditable(true);
+        txtUsername.setEditable(true);
         txtHidePassword.setEditable(true);
         txtShowPassword.setEditable(true);
         btnEditar.setVisible(false);

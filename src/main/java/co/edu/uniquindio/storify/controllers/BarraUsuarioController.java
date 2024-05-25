@@ -40,11 +40,14 @@ public class BarraUsuarioController implements Initializable {
     }
 
     public void actualizarBotones(){
+        aplicacion.detenerVideoYoutube();
+
         btnDeshacer.setVisible(!administradorComandos.getPilaDeshacer().isEmpty());
         btnRehacer.setVisible(!administradorComandos.getPilaRehacer().isEmpty());
     }
 
     public void deshacer(){
+        aplicacion.detenerVideoYoutube();
         administradorComandos.deshacer();
         actualizarBotones();
         aplicacion.ventanaInicioController.mostrarPanelDerechoClienteFavoritos();
@@ -53,6 +56,8 @@ public class BarraUsuarioController implements Initializable {
     }
 
     public void rehacer(){
+        aplicacion.detenerVideoYoutube();
+
         administradorComandos.rehacer();
         actualizarBotones();
         Alertas.mostrarMensaje("Acción Comando", "Operación completada", "¡Rehiciste correctamente la anterior acción! Puedes deshacerla si lo requieres", Alert.AlertType.INFORMATION);
@@ -60,6 +65,8 @@ public class BarraUsuarioController implements Initializable {
     }
 
     public void salirCuenta(){
+        aplicacion.detenerVideoYoutube();
+
         aplicacion.mostrarVentanaRegistroIngreso();
     }
 
