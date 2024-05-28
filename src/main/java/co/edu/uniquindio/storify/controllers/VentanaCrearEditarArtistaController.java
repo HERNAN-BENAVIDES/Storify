@@ -13,6 +13,7 @@ import co.edu.uniquindio.storify.util.Alertas;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -28,6 +29,7 @@ import java.util.ResourceBundle;
 
 public class VentanaCrearEditarArtistaController implements Initializable {
 
+    public Button btnCargarArtista;
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
@@ -226,5 +228,9 @@ public class VentanaCrearEditarArtistaController implements Initializable {
 
     public void volver(){
         aplicacion.motrarVentanaGestionArtista();
+    }
+
+    public void cargarArtista(ActionEvent actionEvent) {
+
     }
 }

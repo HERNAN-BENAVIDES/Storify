@@ -19,6 +19,7 @@ import java.util.Objects;
 @SuppressWarnings("All")
 public class Usuario implements Serializable, Comparable<Usuario> {
 
+    private static final long serialVersionUID = 1L;
     private String username;
     private String password;
     private String email;

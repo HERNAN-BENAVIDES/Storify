@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Cancion implements Serializable, Comparable<Cancion> {
-
+    private static final long serialVersionUID = 1L;
     private String codigo;
     private String nombre;
     private String album;

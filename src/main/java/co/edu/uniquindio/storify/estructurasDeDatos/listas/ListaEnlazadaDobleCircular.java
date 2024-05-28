@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 @SuppressWarnings("All")
 @Data
 public class ListaEnlazadaDobleCircular<T> implements IListasEnlazadas<T>, Iterable<T>, Serializable {
+    private static final long serialVersionUID = 1L;
     private Node<T> headNode;
     private Node<T> lastNode;
     private int size;

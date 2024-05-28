@@ -15,6 +15,7 @@ import java.io.Serializable;
 @SuppressWarnings("all")
 @Data
 public class BinaryTree<T extends Comparable<T>> implements Serializable {
+    private static final long serialVersionUID = 1L;
     private BinaryNode root;
 
     public BinaryTree() {

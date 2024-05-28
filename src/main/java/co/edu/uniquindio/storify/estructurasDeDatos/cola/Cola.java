@@ -2,8 +2,11 @@ package co.edu.uniquindio.storify.estructurasDeDatos.cola;
 
 import co.edu.uniquindio.storify.estructurasDeDatos.nodo.Node;
 
+import java.io.Serializable;
+
 @SuppressWarnings("all")
-public class Cola<T> {
+public class Cola<T>  implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int tamanio;
     private Node<T> nodoCabeza;
     private Node<T> nodoUltimo;

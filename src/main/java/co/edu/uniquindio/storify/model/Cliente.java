@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Cliente extends Persona implements Serializable, Comparable<Cliente> {
-
+    private static final long serialVersionUID = 1L;
     private ListaEnlazadaSimpleCircular<Cancion> cancionesFavoritas;
 
     /**

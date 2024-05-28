@@ -15,6 +15,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Administrador extends Persona implements Serializable {
+    private static final long serialVersionUID = 1L;
     private static Administrador administrador;
 
     /**
