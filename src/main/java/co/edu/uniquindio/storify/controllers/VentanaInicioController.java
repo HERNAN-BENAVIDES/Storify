@@ -64,7 +64,7 @@ public class VentanaInicioController implements Initializable {
     public void mostrarPanelIzquierdoAdmin(){
         try {
             panelIzquierdo.getChildren().clear();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/TableroAdministrador.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/TableroAdmins.fxml"));
             Node node = loader.load();
             panelIzquierdo.getChildren().add(node);
             TableroAdminController controlador = loader.getController();
@@ -323,6 +323,18 @@ public class VentanaInicioController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    public void mostrarPanelDerechoArchivoTextos(){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaArchivos.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaArchivosController controlador = loader.getController();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void mostrarVentanaPerfil() {

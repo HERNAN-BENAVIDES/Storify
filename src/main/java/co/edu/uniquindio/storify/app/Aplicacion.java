@@ -140,6 +140,10 @@ public class Aplicacion extends Application {
         ventanaInicioController.mostrarPanelDerechoEstadisticas(empiezaGenero);
     }
 
+    public void mostrarVentanaArchivosTextos(){
+        ventanaInicioController.mostrarPanelDerechoArchivoTextos();
+    }
+
     /**
      * Abre una ventana con los detalles de una canción específica.
      * @param cancion la canción cuyos detalles se desean ver.

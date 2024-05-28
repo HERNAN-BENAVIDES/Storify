@@ -7,6 +7,7 @@ import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimpleCircular;
 import co.edu.uniquindio.storify.estructurasDeDatos.nodo.Node;
 import co.edu.uniquindio.storify.exceptions.ArtistaNoEncontradoException;
+import co.edu.uniquindio.storify.exceptions.EmptyNodeException;
 import co.edu.uniquindio.storify.model.Artista;
 import co.edu.uniquindio.storify.model.Cancion;
 import co.edu.uniquindio.storify.model.Usuario;
@@ -120,6 +121,7 @@ public class VentanaGestionarController implements Initializable {
     }
 
     public void iniciarTablaArtistas(){
+        establecerListaArtistasGenerales();
         tablaArtistas.getItems().clear();
         ObservableList<Artista> listaArtistasProperty= FXCollections.observableArrayList();
         // Asignar las propiedades de las columnas
@@ -207,6 +209,11 @@ public class VentanaGestionarController implements Initializable {
         listaCanciones= mfm.getTiendaMusica().obtenerCancionesGenerales();
     }
 
+    public void establecerListaArtistasGenerales(){
+        listaArtistas=mfm.getTiendaMusica().getArtistas();
+    }
+
+
     public void crear(){
         if (esGestionCanciones) {
             Cancion cancionVacia=null;
@@ -218,7 +225,7 @@ public class VentanaGestionarController implements Initializable {
 
     }
 
-    public void eliminar(){
+    public void eliminar() throws EmptyNodeException {
         if (esGestionCanciones) {
             if (cancionElegida!=null){
                 if (confirmarEliminacion("la canción")){
@@ -235,7 +242,8 @@ public class VentanaGestionarController implements Initializable {
 
             if (artistaElegido!=null){
                 if (confirmarEliminacion("el artista")){
-                    //mfm.getTiendaMusica().eliminarArtista(artistaElegido);
+                    mfm.getTiendaMusica().eliminarArtistaArbol(artistaElegido);
+                    mfm.guardarDatosBinario();
                     iniciarTablaArtistas();
                     artistaElegido=null;
                 }

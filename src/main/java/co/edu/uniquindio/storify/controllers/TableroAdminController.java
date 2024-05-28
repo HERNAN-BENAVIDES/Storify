@@ -51,6 +51,11 @@ public class TableroAdminController implements Initializable {
 
     }
 
+    public void ventanaArchivos(){
+        aplicacion.mostrarVentanaArchivosTextos();
+        aplicacion.detenerVideoYoutube();
+    }
+
     public void gestionarUsuarios(){
 
     }

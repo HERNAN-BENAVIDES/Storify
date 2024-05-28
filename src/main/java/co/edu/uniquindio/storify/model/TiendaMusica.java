@@ -955,4 +955,39 @@ public class TiendaMusica implements Serializable {
             }
         }
     }
+
+    public void eliminarArtistaArbol(Artista artistaElegido) throws EmptyNodeException {
+        //buscar entre las canciones favs de clientes y eliminar las canciones del artista
+        //elegido
+        eliminarCancionDeArtistaEnUsuario(artistaElegido);
+        artistas.delete(artistaElegido);
+    }
+
+    /**
+     * Elimina una canción de las listas de canciones favoritas de los usuarios.
+     *
+     * @param cancionElegida La canción a eliminar.
+     */
+    public void eliminarCancionDeArtistaEnUsuario(Artista artista) {
+        for (Usuario usuario : usuarios.values()) {
+            System.out.println("aaa");
+            if (usuario.getPersona() instanceof Cliente) {
+                Cliente cliente = (Cliente) usuario.getPersona();
+                List<Cancion> cancionesAEliminar = new ArrayList<>();
+
+                // Recopilar canciones a eliminar
+                for (Cancion cancion : cliente.getCancionesFavoritas()) {
+                    if (artista.getCanciones().contains(cancion)) {
+                        cancionesAEliminar.add(cancion);
+                    }
+                }
+
+                // Eliminar canciones recopiladas
+                for (Cancion cancion : cancionesAEliminar) {
+                    cliente.eliminarCancionFavorita(cancion);
+                }
+            }
+        }
+        System.out.println("listo primer metodo");
+    }
 }

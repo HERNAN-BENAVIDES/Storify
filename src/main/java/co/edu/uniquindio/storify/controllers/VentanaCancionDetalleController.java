@@ -8,6 +8,7 @@ import co.edu.uniquindio.storify.controllers.controladorFlujo.ComandoEliminarCan
 import co.edu.uniquindio.storify.exceptions.ArtistaNoEncontradoException;
 import co.edu.uniquindio.storify.model.*;
 import co.edu.uniquindio.storify.util.Alertas;
+import co.edu.uniquindio.storify.util.YouTubeHelper;
 import co.edu.uniquindio.storify.util.YoutubeEmbedGenerator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +20,9 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import lombok.Data;
 
+import java.io.IOException;
 import java.net.URL;
+import java.security.GeneralSecurityException;
 import java.util.ResourceBundle;
 
 @Data
@@ -65,6 +68,9 @@ public class VentanaCancionDetalleController implements Initializable {
     @FXML
     private Button btnVolverAdmin;
 
+    @FXML
+    private Text txtVistas;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnEliminarFav.setVisible(false);
@@ -96,7 +102,11 @@ public class VentanaCancionDetalleController implements Initializable {
     }
 
     public void iniciarVideoDatos(){
-        iniciarTextos();
+        try {
+            iniciarTextos();
+        } catch (GeneralSecurityException | IOException e) {
+            throw new RuntimeException(e);
+        }
 
         WebEngine webEngine = webView.getEngine();
         webEngine.load("https://blank.page/");
@@ -184,7 +194,7 @@ public class VentanaCancionDetalleController implements Initializable {
         aplicacion.ventanaInicioController.mostrarBarraSuperiorCliente(administradorComandos);
     }
 
-    public void iniciarTextos(){
+    public void iniciarTextos() throws GeneralSecurityException, IOException {
 
         Persona persona = usuario.getPersona();
         if (persona instanceof Cliente) {
@@ -202,12 +212,15 @@ public class VentanaCancionDetalleController implements Initializable {
         txtDuracion.setText("Duración: "+cancion.getDuracion());
         txtGenero.setText("Género: "+cancion.obtenerGeneroComoString());
         Artista artista= null;
+        long vistas= YouTubeHelper.obtenerVistasVideo(cancion.getUrlYoutube());
         try {
             artista = mfm.getTiendaMusica().buscarArtistaCancion(cancion);
+
         } catch (ArtistaNoEncontradoException e) {
             throw new RuntimeException(e);
         }
         txtArtista.setText("Artista: "+artista.getNombre());
+        txtVistas.setText("Vistas: "+ String.valueOf(vistas));
     }
 
 
