@@ -11,15 +11,26 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Clase de prueba para la tienda de música.
+ */
 class TiendaMusicaTest {
 
     private TiendaMusica tienda;
 
+    /**
+     * Configuración inicial antes de cada prueba.
+     */
     @BeforeEach
     void setUp() {
         tienda = new TiendaMusica();
     }
 
+    /**
+     * Prueba para agregar un artista a la tienda.
+     *
+     * @throws ArtistasYaEnTiendaException si el artista ya está en la tienda.
+     */
     @Test
     void agregarArtista() throws ArtistasYaEnTiendaException {
         Artista artista = new Artista("123", "Cristian", "Colombia", TipoArtista.SOLISTA);
@@ -27,12 +38,20 @@ class TiendaMusicaTest {
         assertThrows(ArtistasYaEnTiendaException.class, () -> tienda.agregarArtista(artista));
     }
 
+    /**
+     * Prueba para crear un artista en la tienda.
+     *
+     * @throws AtributoVacioException si algún atributo está vacío.
+     */
     @Test
     void crearArtista() throws AtributoVacioException {
         assertDoesNotThrow(() -> tienda.crearArtista("Cristian", "123", "Colombia", "SOLISTA"));
         assertThrows(AtributoVacioException.class, () -> tienda.crearArtista("Cristian", "123", "Colombia", ""));
     }
 
+    /**
+     * Prueba para crear una canción en la tienda.
+     */
     @Test
     void crearCancion() {
         assertDoesNotThrow(() -> tienda.crearCancion("Reminisencias", "Exitos",
@@ -41,11 +60,19 @@ class TiendaMusicaTest {
                 "caratula", "1980", "5:30", "","www.youtube.com"));
     }
 
+    /**
+     * Prueba para generar un código aleatorio.
+     */
     @Test
     void generarCodigoAleatorio() {
         assertNotNull(tienda.generarCodigoAleatorio());
     }
 
+    /**
+     * Prueba para agregar una canción a la tienda.
+     *
+     * @throws CancionYaRegistradaException si la canción ya está registrada.
+     */
     @Test
     void agregarCancion() throws CancionYaRegistradaException {
         Artista artista = new Artista("123", "Cristian", "Colombia", TipoArtista.SOLISTA);
@@ -54,12 +81,18 @@ class TiendaMusicaTest {
         assertThrows(CancionYaRegistradaException.class, () -> tienda.agregarCancion(cancion, artista));
     }
 
+    /**
+     * Prueba para crear un cliente en la tienda.
+     */
     @Test
     void crearCliente() {
         assertDoesNotThrow(() -> tienda.crearCliente("Maria", "Velez"));
         assertThrows(AtributoVacioException.class, () -> tienda.crearCliente("Maria", ""));
     }
 
+    /**
+     * Prueba para crear un usuario en la tienda.
+     */
     @Test
     void crearUsuario() {
         Persona persona = new Cliente("Maria", "Velez");
@@ -67,6 +100,9 @@ class TiendaMusicaTest {
         assertThrows(AtributoVacioException.class, () -> tienda.crearUsuario("MariaVelez", "123", "", persona));
     }
 
+    /**
+     * Prueba para agregar un usuario a la tienda.
+     */
     @Test
     void agregarUsuario() {
         Usuario usuario = new Usuario("MariaVelez", "123", "mariaVelez@gmail.com", new Persona("Maria", "Velez"));
@@ -74,6 +110,11 @@ class TiendaMusicaTest {
         assertThrows(UsuarioYaRegistradoException.class, () -> tienda.agregarUsuario(new Usuario("MariaVelez", "123", "mariaVelez@gmail.com", new Persona("Maria", "Velez"))));
     }
 
+    /**
+     * Prueba para buscar un usuario en la tienda.
+     *
+     * @throws UsuarioYaRegistradoException si el usuario ya está registrado.
+     */
     @Test
     void buscarUsuario() throws UsuarioYaRegistradoException {
         Usuario usuario = new Usuario("MariaVelez", "123", "mariaVelez@gmail.com", new Persona("Maria", "Velez"));
@@ -83,6 +124,11 @@ class TiendaMusicaTest {
         assertThrows(UsuarioNoExistenteException.class, () -> tienda.buscarUsuario("MariaVeles", "1234"));
     }
 
+    /**
+     * Prueba para obtener el tipo de usuario en la tienda.
+     *
+     * @throws UsuarioYaRegistradoException si el usuario ya está registrado.
+     */
     @Test
     void obtenerTipoUsuario() throws UsuarioYaRegistradoException {
         Usuario usuario = new Usuario("MariaVelez", "123", "mariaVelez@gmail.com", new Cliente("Maria", "Velez"));
@@ -93,6 +139,14 @@ class TiendaMusicaTest {
         assertThrows(UsuarioNoExistenteException.class, () -> tienda.obtenerTipoUsuario("MariaVeles", "1234"));
     }
 
+    /**
+     * Prueba para buscar canciones por artista en la tienda.
+     *
+     * @throws ArtistaNoEncontradoException si el artista no es encontrado.
+     * @throws ArtistasYaEnTiendaException si el artista ya está en la tienda.
+     * @throws CancionYaRegistradaException si la canción ya está registrada.
+     * @throws InterruptedException si la operación es interrumpida.
+     */
     @Test
     void buscarCancionesPorArtista() throws ArtistaNoEncontradoException, ArtistasYaEnTiendaException, CancionYaRegistradaException, InterruptedException {
         Artista artista = new Artista("Juan", "Codigo", "Nacionalidad", TipoArtista.SOLISTA);
@@ -107,11 +161,20 @@ class TiendaMusicaTest {
 
     }
 
+    /**
+     * Prueba para cargar artistas desde un archivo.
+     */
     @Test
     void cargarArtistasDesdeArchivo() {
-
+        // Implementar la prueba cuando esté disponible
     }
 
+    /**
+     * Prueba para obtener el género con más canciones en la tienda.
+     *
+     * @throws ArtistasYaEnTiendaException si el artista ya está en la tienda.
+     * @throws InterruptedException si la operación es interrumpida.
+     */
     @Test
     void obtenerGeneroConMasCanciones() throws ArtistasYaEnTiendaException, InterruptedException {
         Artista artista = new Artista("1234", "Codigo", "Nacionalidad", TipoArtista.SOLISTA);
@@ -119,12 +182,10 @@ class TiendaMusicaTest {
         assertDoesNotThrow(() -> tienda.obtenerGeneroConMasCanciones());
     }
 
-    @Test
-    void obtenerArtistaMaspopular() {
 
-        // assertDoesNotThrow(() -> tienda.obtenerArtistaMaspopular());
-    }
-
+    /**
+     * Prueba para el comando de agregar canción.
+     */
     @Test
     public void testComandoAgregarCancion() {
         Cliente usuario = new Cliente("usuarioPrueba","Velez");
@@ -143,6 +204,9 @@ class TiendaMusicaTest {
         assertTrue(usuario.getCancionesFavoritas().contains(cancion));
     }
 
+    /**
+     * Prueba para el comando de eliminar canción.
+     */
     @Test
     public void testComandoEliminarCancion() {
         Cliente usuario = new Cliente("usuarioPrueba","Velez");
@@ -162,8 +226,11 @@ class TiendaMusicaTest {
         assertFalse(usuario.getCancionesFavoritas().contains(cancion));
     }
 
+    /**
+     * Prueba para buscar un nodo en el árbol binario.
+     */
     @Test
-    void testFind() {
+    void testBuscar() {
         BinaryTree<String> arbol = new BinaryTree<>();
         arbol.insert("Beatles");
         arbol.insert("Queen");
@@ -179,8 +246,11 @@ class TiendaMusicaTest {
         }
     }
 
+    /**
+     * Prueba para buscar un nodo no existente en el árbol binario.
+     */
     @Test
-    void testFindNotFound() {
+    void testBuscarNoEncontrado() {
         BinaryTree<String> arbol = new BinaryTree<>();
         arbol.insert("Beatles");
         arbol.insert("Queen");
@@ -195,8 +265,11 @@ class TiendaMusicaTest {
         }
     }
 
+    /**
+     * Prueba para buscar la raíz en el árbol binario.
+     */
     @Test
-    void testFindRoot() {
+    void testBuscarRaiz() {
         BinaryTree<String> arbol = new BinaryTree<>();
         arbol.insert("Beatles");
         arbol.insert("Queen");
@@ -211,5 +284,4 @@ class TiendaMusicaTest {
             fail("La búsqueda fue interrumpida: " + e.getMessage());
         }
     }
-
 }
