@@ -2,12 +2,14 @@ package co.edu.uniquindio.storify.model;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @SuppressWarnings("all")
-public class Persona {
+public class Persona implements Serializable {
     private String nombre;
     private String apellido;
 

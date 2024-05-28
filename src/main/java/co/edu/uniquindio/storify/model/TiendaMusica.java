@@ -76,7 +76,6 @@ public class TiendaMusica implements Serializable {
     public Artista editarArtista(Artista artistaAntiguo, String nombre, String codigo, String nacionalidad, String tipoArtista, ListaEnlazadaDoble<Cancion>listaNuevaCanciones) throws AtributoVacioException, ArtistaNoEncontradoException {
         Artista artistaNuevo=crearArtista(nombre, codigo, nacionalidad, tipoArtista);
         artistaNuevo.setCanciones(listaNuevaCanciones);
-
         artistas.reemplazarValor(artistaAntiguo, artistaNuevo);
 
 // actualizar canciones tambien si es q se hicieron cambios

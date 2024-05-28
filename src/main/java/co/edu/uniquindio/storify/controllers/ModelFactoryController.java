@@ -4,6 +4,7 @@ import co.edu.uniquindio.storify.app.Aplicacion;
 import co.edu.uniquindio.storify.controllers.controladorFlujo.AdministradorComandos;
 import co.edu.uniquindio.storify.exceptions.ArtistasYaEnTiendaException;
 import co.edu.uniquindio.storify.model.*;
+import co.edu.uniquindio.storify.services.PersistenciaThread;
 import co.edu.uniquindio.storify.util.Persistencia;
 import co.edu.uniquindio.storify.util.StorifyUtil;
 import javafx.stage.Stage;
@@ -17,14 +18,15 @@ public class ModelFactoryController {
     private Aplicacion aplicacion=null;
     private Stage ventana;
     private AdministradorComandos administradorComandos = new AdministradorComandos();
+    private PersistenciaThread persistenciaThread = null;
 
     public ModelFactoryController()  {
-        //cargarDatosBinario();
+        cargarDatosBinario();
 
         if(tiendaMusica == null){
             cargarDatosPrueba();
         }
-
+        persistenciaThread = new PersistenciaThread(tiendaMusica);
         //guardarDatosBinario();
     }
 
@@ -34,8 +36,8 @@ public class ModelFactoryController {
         this.tiendaMusica = Persistencia.cargarRecursoBancoBinario();
     }
 
-    private void guardarDatosBinario() {
-        Persistencia.guardarRecursoBancoBinario(tiendaMusica);
+    public void guardarDatosBinario() {
+        persistenciaThread.run();
     }
 
     private void cargarArtistasDesdeArchivo(String ruta) {
@@ -54,13 +56,6 @@ public class ModelFactoryController {
         tiendaMusica = StorifyUtil.inicializarDatosPrueba();
     }
 
-//    private String obtenerGeneroConMasCanciones() {
-//        return tiendaMusica.obtenerGeneroConMasCanciones();
-//    }
-//
-//    private Artista obtenerArtistaMasPopular() throws IOException, GeneralSecurityException {
-//        return tiendaMusica.obtenerArtistaMaspopular();
-//    }
 
     /**
      * Metodo que obtiene la TiendaMusica

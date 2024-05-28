@@ -189,11 +189,13 @@ public class VentanaRegistroController implements Initializable {
         try {
             Cliente cliente = tiendaMusica.crearCliente(txtNombre.getText(), txtApellido.getText());
             Usuario usuario = tiendaMusica.crearUsuario(txtUsername.getText(), txtShowPassword.getText(), txtCorreo.getText(), cliente);
+            tiendaMusica.agregarUsuario(usuario);
             Alertas.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha registrado correctamente el cliente: "+cliente.getNombre(), Alert.AlertType.INFORMATION);
+            mfm.guardarDatosBinario();
             limpiarRegistrarPanel();
 
-        } catch (AtributoVacioException e) {
-            Alertas.mostrarAlertaError("Entradas no validas");
+        } catch (AtributoVacioException | UsuarioYaRegistradoException e) {
+            Alertas.mostrarAlertaError(e.getMessage());
         }
 
     }

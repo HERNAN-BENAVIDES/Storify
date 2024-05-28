@@ -223,6 +223,7 @@ public class VentanaGestionarController implements Initializable {
             if (cancionElegida!=null){
                 if (confirmarEliminacion("la canción")){
                     mfm.getTiendaMusica().eliminarCancion(cancionElegida);
+                    mfm.guardarDatosBinario();
                     iniciarScrollCanciones();
                     cancionElegida=null;
                 }
