@@ -189,6 +189,7 @@ public class VentanaCrearEditarArtistaController implements Initializable {
                     comboNacionalidad.getValue(),
                     comboTipo.getValue()
             );
+            mfm.guardarDatosBinario();
             mfm.getTiendaMusica().agregarArtista(artistaNuevo);
             Alertas.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha registrado correctamente el artista : "+artistaNuevo.getNombre(), Alert.AlertType.INFORMATION);
             aplicacion.motrarVentanaGestionArtista();
@@ -214,6 +215,7 @@ public class VentanaCrearEditarArtistaController implements Initializable {
                 mfm.getTiendaMusica().eliminarCancionUsuario(cancion);
             }
 
+            mfm.guardarDatosBinario();
             Alertas.mostrarMensaje("Edición Confirmada", "Operación completada", "Se ha editado correctamente el artista: "+artistaEditado.getNombre(), Alert.AlertType.INFORMATION);
             aplicacion.motrarVentanaGestionArtista();
 

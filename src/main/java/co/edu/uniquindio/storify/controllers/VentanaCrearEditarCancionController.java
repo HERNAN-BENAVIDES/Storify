@@ -154,6 +154,7 @@ public class VentanaCrearEditarCancionController implements Initializable {
                     comboGenero.getValue(),
                     txtYoutube.getText()
             );
+            mfm.guardarDatosBinario();
             Alertas.mostrarMensaje("Edición Confirmada", "Operación completada", "Se ha editado correctamente la canción: "+cancionEditada.getNombre(), Alert.AlertType.INFORMATION);
             aplicacion.motrarVentanaGestionCanciones();
 
@@ -175,7 +176,7 @@ public class VentanaCrearEditarCancionController implements Initializable {
                     txtYoutube.getText());
             Artista artistaElegido= tablaAutores.getSelectionModel().getSelectedItem();
             mfm.getTiendaMusica().agregarCancion(cancionNueva, artistaElegido);
-
+            mfm.guardarDatosBinario();
             Alertas.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha registrado correctamente la canción: "+cancionNueva.getNombre(), Alert.AlertType.INFORMATION);
             aplicacion.motrarVentanaGestionCanciones();
 

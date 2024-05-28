@@ -2,23 +2,21 @@ package co.edu.uniquindio.storify.model;
 
 import lombok.*;
 
-/**
- * La clase Persona representa una persona con un nombre y un apellido.
- */
+import java.io.Serializable;
+
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @SuppressWarnings("all")
-public class Persona {
-
+public class Persona implements Serializable {
     private String nombre;
     private String apellido;
 
     /**
-     * Constructor de la clase Persona.
-     *
-     * @param nombre  el nombre de la persona.
-     * @param apellido el apellido de la persona.
+     * public Persona(String nombre, String apellido) {
+     *               this.nombre = nombre;
+     *               this.apellido = apellido;
+     * }
      */
 }

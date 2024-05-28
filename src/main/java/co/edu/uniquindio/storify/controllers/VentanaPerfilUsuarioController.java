@@ -91,6 +91,7 @@ public class VentanaPerfilUsuarioController implements Initializable {
                     txtApellido.getText());
             Alertas.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha editado correctamente al cliente: " + usuario1.getUsername(), Alert.AlertType.INFORMATION);
             aplicacion.mostrarVentanaPrincipal(usuario1);
+            mfm.guardarDatosBinario();
         } catch (EmailInvalidoException | AtributoVacioException | UsuarioNoExistenteException e) {
             throw new RuntimeException(e);
         }

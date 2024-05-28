@@ -163,7 +163,7 @@ public class VentanaCancionDetalleController implements Initializable {
 
         Comando agregarCancion = new ComandoAgregarCancion((Cliente)usuario.getPersona(), cancion);
         administradorComandos.ejecutarComando(agregarCancion);
-
+        mfm.guardarDatosBinario();
 
         aplicacion.mostrarVentanaMisCanciones();
         Alertas.mostrarMensaje("Actualización Exitosa", "Operación completada", "¡Haz agregado correctamente una cancion a tu lista de favoritos! Puedes deshacer esta acción si lo requieres", Alert.AlertType.INFORMATION);
@@ -177,6 +177,7 @@ public class VentanaCancionDetalleController implements Initializable {
         stopWebView();
         Comando eliminarCancion = new ComandoEliminarCancion((Cliente)usuario.getPersona(), cancion);
         administradorComandos.ejecutarComando(eliminarCancion);
+        mfm.guardarDatosBinario();
 
         aplicacion.mostrarVentanaMisCanciones();
         Alertas.mostrarMensaje("Actualización Exitosa", "Operación completada", "¡Haz eliminado correctamente una cancion de tu lista de favoritos! Puedes deshacer esta acción si lo requieres", Alert.AlertType.INFORMATION);
