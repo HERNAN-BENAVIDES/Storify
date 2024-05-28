@@ -1,10 +1,13 @@
 package co.edu.uniquindio.storify.model;
 
-
 import lombok.*;
 
 import java.io.Serializable;
 
+/**
+ * La clase Cancion representa una canción en la plataforma Storify.
+ * Implementa Serializable para permitir la serialización de sus instancias y Comparable para comparar canciones por su nombre.
+ */
 @SuppressWarnings("All")
 @Data
 @Builder
@@ -21,6 +24,18 @@ public class Cancion implements Serializable, Comparable<Cancion> {
     private TipoGenero genero;
     private String urlYoutube;
 
+    /**
+     * Constructor completo de la clase Cancion.
+     *
+     * @param codigo         el código de la canción.
+     * @param nombre         el nombre de la canción.
+     * @param album          el álbum al que pertenece la canción.
+     * @param caratula       la carátula del álbum.
+     * @param anioLanzamiento el año de lanzamiento de la canción.
+     * @param duracion       la duración de la canción.
+     * @param genero         el género musical de la canción.
+     * @param urlYoutube     la URL del video de YouTube de la canción.
+     */
     public Cancion(String codigo, String nombre, String album, String caratula, int anioLanzamiento, String duracion, TipoGenero genero, String urlYoutube) {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -32,11 +47,22 @@ public class Cancion implements Serializable, Comparable<Cancion> {
         this.urlYoutube = urlYoutube;
     }
 
+    /**
+     * Compara esta canción con otra canción por nombre.
+     *
+     * @param o la canción con la cual comparar.
+     * @return un valor negativo, cero o positivo según si esta canción es menor, igual o mayor que la canción especificada.
+     */
     @Override
     public int compareTo(Cancion o) {
         return this.getNombre().compareTo(o.getNombre());
     }
 
+    /**
+     * Obtiene el género musical como una cadena de texto.
+     *
+     * @return una representación en cadena del género musical.
+     */
     public String obtenerGeneroComoString() {
         switch (genero) {
             case ROCK:
@@ -63,33 +89,4 @@ public class Cancion implements Serializable, Comparable<Cancion> {
                 return "Desconocido";
         }
     }
-
-    /**
-     * @Override
-     *     public String toString() {
-     *         return "Cancion{" +
-     *                 "codigo='" + codigo + '\'' +
-     *                 ", nombre='" + nombre + '\'' +
-     *                 ", album='" + album + '\'' +
-     *                 ", caratula='" + caratula + '\'' +
-     *                 ", anioLanzamiento=" + anioLanzamiento +
-     *                 ", duracion=" + duracion +
-     *                 ", genero=" + genero +
-     *                 ", urlYoutube='" + urlYoutube + '\'' +
-     *                 '}';
-     *     }
-     *
-     *     @Override
-     *     public boolean equals(Object o) {
-     *         if (this == o) return true;
-     *         if (!(o instanceof Cancion)) return false;
-     *         Cancion cancion = (Cancion) o;
-     *         return Objects.equals(getCodigo(), cancion.getCodigo()) && Objects.equals(getNombre(), cancion.getNombre()) && Objects.equals(getAlbum(), cancion.getAlbum());
-     *     }
-     *
-     *     @Override
-     *     public int hashCode() {
-     *         return Objects.hash(getCodigo(), getNombre(), getAlbum());
-     *     }
-     */
 }

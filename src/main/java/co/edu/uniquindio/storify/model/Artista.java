@@ -5,14 +5,15 @@ import lombok.*;
 
 import java.io.Serializable;
 
-
+/**
+ * La clase Artista representa un artista en la plataforma Storify.
+ * Implementa Serializable para permitir la serialización de sus instancias y Comparable para comparar artistas por su nombre.
+ */
 @SuppressWarnings("all")
 @Data
-
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-
 public class Artista implements Serializable, Comparable<Artista> {
 
     private String codigo;
@@ -21,6 +22,15 @@ public class Artista implements Serializable, Comparable<Artista> {
     private TipoArtista tipoArtista;
     private ListaEnlazadaDoble<Cancion> canciones;
 
+    /**
+     * Constructor de la clase Artista utilizando el patrón Builder de Lombok.
+     * Inicializa la lista de canciones como una lista enlazada doble vacía.
+     *
+     * @param codigo       el código del artista.
+     * @param nombre       el nombre del artista.
+     * @param nacionalidad la nacionalidad del artista.
+     * @param tipoArtista  el tipo de artista (solista, banda, etc.).
+     */
     @Builder
     public Artista(String codigo, String nombre, String nacionalidad, TipoArtista tipoArtista) {
         this.codigo = codigo;
@@ -30,73 +40,39 @@ public class Artista implements Serializable, Comparable<Artista> {
         this.canciones = new ListaEnlazadaDoble<>();
     }
 
-    // Método para obtener el tipo de artista como String
+    /**
+     * Obtiene el tipo de artista como una cadena de texto.
+     *
+     * @return una representación en cadena del tipo de artista.
+     */
     public String obtenerTipoArtistaString() {
         return tipoArtista.toString();
     }
 
-    public int obtenerCantidadCanciones(){
+    /**
+     * Obtiene la cantidad de canciones asociadas al artista.
+     *
+     * @return el número de canciones del artista.
+     */
+    public int obtenerCantidadCanciones() {
         return canciones.size();
     }
 
     /**
-     * @Override
-     *     public String toString() {
-     *         return "Artista{" +
-     *                 "codigo='" + codigo + '\'' +
-     *                 ", nombre='" + nombre + '\'' +
-     *                 ", nacionalidad='" + nacionalidad + '\'' +
-     *                 ", grupo=" +  (grupo ? "Si" : "No") +
-     *                 ", canciones=" + canciones +
-     *                 '}';
-     *     }
+     * Agrega una canción a la lista de canciones del artista.
+     *
+     * @param cancion la canción a agregar.
      */
-
-    /**
-     *
-     * public static ArtistaBuilder builder() {
-     *         return new ArtistaBuilder();
-     *     }
-     *
-     *     public static class ArtistaBuilder {
-     *         private String codigo;
-     *         private String nombre;
-     *         private String nacionalidad;
-     *         private TipoArtista tipoArtista;
-     *
-     *         public ArtistaBuilder codigo(String codigo) {
-     *             this.codigo = codigo;
-     *             return this;
-     *         }
-     *
-     *         public ArtistaBuilder nombre(String nombre) {
-     *             this.nombre = nombre;
-     *             return this;
-     *         }
-     *
-     *         public ArtistaBuilder nacionalidad(String nacionalidad) {
-     *             this.nacionalidad = nacionalidad;
-     *             return this;
-     *         }
-     *
-     *         public ArtistaBuilder tipoArtista(TipoArtista tipoArtista) {
-     *             this.tipoArtista = tipoArtista;
-     *             return this;
-     *         }
-     *
-     *         public Artista build() {
-     *             return new Artista(codigo, nombre, nacionalidad, tipoArtista);
-     *         }
-     *     }
-     * @param o the object to be compared.
-     * @return
-     */
-
     public void agregarCancion(Cancion cancion) {
         canciones.add(cancion);
     }
 
-
+    /**
+     * Compara este artista con otro artista por nombre.
+     *
+     * @param o el artista con el cual comparar.
+     * @return un valor negativo, cero o positivo según si este artista es menor, igual o mayor que el artista especificado.
+     */
     @Override
     public int compareTo(Artista o) {
         return this.getNombre().compareTo(o.getNombre());

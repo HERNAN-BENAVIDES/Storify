@@ -2,53 +2,120 @@ package co.edu.uniquindio.storify.model;
 
 import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaDoble;
-import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimpleCircular;
+import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimple;
 import co.edu.uniquindio.storify.estructurasDeDatos.nodo.Node;
 import co.edu.uniquindio.storify.exceptions.*;
 import co.edu.uniquindio.storify.util.ArchivoUtil;
-
 import co.edu.uniquindio.storify.util.YouTubeHelper;
 import lombok.Data;
 import lombok.ToString;
-
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
+/**
+ * La clase TiendaMusica representa la tienda de música digital Storify, encargada de administrar
+ * los artistas, canciones y usuarios registrados en la plataforma.
+ * <p>
+ * Esta clase proporciona métodos para agregar, editar y buscar artistas, canciones y usuarios,
+ * así como para crear nuevos objetos de tipo Artista, Cancion y Usuario.
+ * </p>
+ *
+ * @see Usuario
+ * @see Artista
+ * @see Cancion
+ * @see Administrador
+ * @see ArtistasYaEnTiendaException
+ * @see AtributoVacioException
+ * @see CancionYaRegistradaException
+ * @see UsuarioYaRegistradoException
+ * @see UsuarioNoExistenteException
+ * @see EmailInvalidoException
+ *
+ * @version 1.0.0
+ */
 @Data
 @ToString
 @SuppressWarnings("All")
 public class TiendaMusica implements Serializable {
 
-    private final String nombre = "Storify";
-    private final String version = "1.0.0";
-    private HashMap<String, Usuario> usuarios;
-    private BinaryTree<Artista> artistas;
-    private  Administrador administrador;
+    private static final long serialVersionUID = 1L;
 
+    /**
+     * El nombre de la tienda de música.
+     */
+    private final String nombre = "Storify";
+
+    /**
+     * La versión de la tienda de música.
+     */
+    private final String version = "1.0.0";
+
+    /**
+     * Mapa que almacena a los usuarios registrados en la tienda de música, utilizando
+     * como clave el nombre de usuario.
+     */
+    private HashMap<String, Usuario> usuarios;
+
+    /**
+     * Árbol binario que contiene a los artistas registrados en la tienda de música.
+     */
+    private BinaryTree<Artista> artistas;
+
+    /**
+     * El administrador de la tienda de música.
+     */
+    private Administrador administrador;
+
+    /**
+     * Constructor de la clase TiendaMusica.
+     * Inicializa las estructuras de datos para almacenar usuarios y artistas,
+     * y crea al administrador por defecto.
+     */
     public TiendaMusica() {
         this.usuarios = new HashMap<>();
         this.artistas = new BinaryTree<>();
         this.administrador = crearAdministrador();
     }
 
+    /**
+     * Método privado para crear un administrador por defecto.
+     *
+     * @return El administrador creado.
+     */
     private Administrador crearAdministrador() {
         Administrador administrador = new Administrador();
         return administrador;
     }
 
+    /**
+     * Agrega un nuevo artista a la tienda de música.
+     *
+     * @param artista El artista a agregar.
+     * @throws ArtistasYaEnTiendaException Si el artista ya está registrado en la tienda.
+     * @throws InterruptedException        Si se interrumpe el hilo mientras espera.
+     */
     public void agregarArtista(Artista artista) throws ArtistasYaEnTiendaException, InterruptedException {
-        if (artistas.find(artista) != null){
+        if (artistas.find(artista) != null) {
             throw new ArtistasYaEnTiendaException("El artista ya existe en la tienda.");
         }
         artistas.insert(artista);
     }
 
-    public Artista crearArtista(String nombre, String codigo, String nacionalidad, String tipoArtista)throws AtributoVacioException{
-
+    /**
+     * Crea un nuevo objeto de tipo Artista con los atributos proporcionados.
+     *
+     * @param nombre      El nombre del artista.
+     * @param codigo      El código del artista.
+     * @param nacionalidad La nacionalidad del artista.
+     * @param tipoArtista El tipo de artista.
+     * @return El objeto Artista creado.
+     * @throws AtributoVacioException Si algún atributo requerido está vacío.
+     */
+    public Artista crearArtista(String nombre, String codigo, String nacionalidad, String tipoArtista) throws AtributoVacioException {
         if (nombre == null || nombre.isBlank()) {
             throw new AtributoVacioException("El nombre es obligatorio");
         }
@@ -61,41 +128,54 @@ public class TiendaMusica implements Serializable {
         if (tipoArtista == null || tipoArtista.isBlank()) {
             throw new AtributoVacioException("El tipo de artista es obligatorio");
         }
-
         Artista artistaNuevo = Artista.builder()
                 .codigo(codigo)
                 .nombre(nombre)
                 .nacionalidad(nacionalidad)
                 .tipoArtista(TipoArtista.valueOf(tipoArtista.toUpperCase()))
                 .build();
-
         return artistaNuevo;
-
     }
 
-    public Artista editarArtista(Artista artistaAntiguo, String nombre, String codigo, String nacionalidad, String tipoArtista, ListaEnlazadaDoble<Cancion>listaNuevaCanciones) throws AtributoVacioException, ArtistaNoEncontradoException {
-        Artista artistaNuevo=crearArtista(nombre, codigo, nacionalidad, tipoArtista);
+    /**
+     * Edita un artista existente en la tienda de música.
+     *
+     * @param artistaAntiguo      El artista a editar.
+     * @param nombre              El nuevo nombre del artista.
+     * @param codigo              El nuevo código del artista.
+     * @param nacionalidad        La nueva nacionalidad del artista.
+     * @param tipoArtista         El nuevo tipo de artista.
+     * @param listaNuevaCanciones La nueva lista de canciones del artista.
+     * @return El objeto Artista editado.
+     * @throws AtributoVacioException     Si algún atributo requerido está vacío.
+     * @throws ArtistaNoEncontradoException Si el artista no se encuentra en la tienda.
+     */
+    public Artista editarArtista(Artista artistaAntiguo, String nombre, String codigo, String nacionalidad, String tipoArtista, ListaEnlazadaDoble<Cancion> listaNuevaCanciones) throws AtributoVacioException, ArtistaNoEncontradoException {
+        Artista artistaNuevo = crearArtista(nombre, codigo, nacionalidad, tipoArtista);
         artistaNuevo.setCanciones(listaNuevaCanciones);
-
         artistas.reemplazarValor(artistaAntiguo, artistaNuevo);
 
-// actualizar canciones tambien si es q se hicieron cambios
-        //luego de reemplazar al artista por el nuevoartista se debe de implementar
-        //un metodo que permita buscar entre todas las canciones favoritas de los clientes
-        //y en caso de coincidir una cancion con que se tiene q el autor es el artista antiguo, actualizarlo
-
-        //como se haria esto, si un artista se actualiza, las canciones favoritas de los usuarios
-        //siguen siendo las mismas, solo que igual esas canciones siguen sin tener ''conexion'' con los artistas
-        //asi q no se cambiaria nada mas?
         return artistaNuevo;
     }
 
-    public Cancion editarCancion(Cancion cancionAntigua, String nombre, String nombreAlbum, String caratula, String anio, String duracion, String genero, String urlYoutube ) throws AtributoVacioException, ArtistaNoEncontradoException {
-        Cancion cancionNueva=crearCancion(nombre, nombreAlbum, caratula, anio, duracion, genero, urlYoutube);
-
+    /**
+     * Edita una canción existente en la tienda de música.
+     *
+     * @param cancionAntigua El objeto Cancion a editar.
+     * @param nombre         El nuevo nombre de la canción.
+     * @param nombreAlbum    El nuevo nombre del álbum.
+     * @param caratula       La nueva carátula.
+     * @param anio           El nuevo año de lanzamiento.
+     * @param duracion       La nueva duración.
+     * @param genero         El nuevo género.
+     * @param urlYoutube     La nueva URL de YouTube.
+     * @return El objeto Cancion editado.
+     * @throws AtributoVacioException     Si algún atributo requerido está vacío.
+     * @throws ArtistaNoEncontradoException Si el artista de la canción no se encuentra en la tienda.
+     */
+    public Cancion editarCancion(Cancion cancionAntigua, String nombre, String nombreAlbum, String caratula, String anio, String duracion, String genero, String urlYoutube) throws AtributoVacioException, ArtistaNoEncontradoException {
+        Cancion cancionNueva = crearCancion(nombre, nombreAlbum, caratula, anio, duracion, genero, urlYoutube);
         Artista artista = buscarArtistaCancion(cancionAntigua);
-
-        // Reemplazar la canción antigua con la nueva en la lista de canciones del artista
         ListaEnlazadaDoble<Cancion> cancionesArtista = artista.getCanciones();
         Node<Cancion> current = cancionesArtista.getHeadNode();
         while (current != null) {
@@ -109,23 +189,30 @@ public class TiendaMusica implements Serializable {
         return cancionNueva;
     }
 
+    /**
+     * Edita un usuario existente en la tienda de música.
+     *
+     * @param usuarioAntiguo El usuario a editar.
+     * @param nuevoUsername  El nuevo nombre de usuario.
+     * @param nuevoPassword  La nueva contraseña.
+     * @param nuevoEmail     El nuevo email.
+     * @param nuevoNombre    El nuevo nombre.
+     * @param nuevoApellido  El nuevo apellido.
+     * @return El objeto Usuario editado.
+     * @throws AtributoVacioException     Si algún atributo requerido está vacío.
+     * @throws EmailInvalidoException     Si el formato del email es incorrecto.
+     * @throws UsuarioNoExistenteException Si el usuario no se encuentra en la tienda.
+     */
     public Usuario editarUsuario(Usuario usuarioAntiguo, String nuevoUsername, String nuevoPassword, String nuevoEmail, String nuevoNombre, String nuevoApellido) throws AtributoVacioException, EmailInvalidoException, UsuarioNoExistenteException {
-        // Validar que los campos obligatorios no estén vacíos
         if (nuevoUsername.isEmpty() || nuevoPassword.isEmpty() || nuevoEmail.isEmpty() || nuevoNombre.isEmpty() || nuevoApellido.isEmpty()) {
             throw new AtributoVacioException("Todos los campos son obligatorios");
         }
-
-        // Validar formato del email
         if (!isValidEmail(nuevoEmail)) {
             throw new EmailInvalidoException("El formato del email es incorrecto");
         }
-
-
-
-        for (Usuario usuario: usuarios.values()){
-            if (usuario.equals(usuarioAntiguo)){
-                // Crea un nuevo objeto Persona con los datos actualizados
-                Cliente nuevaPersona = (Cliente)usuarioAntiguo.getPersona();
+        for (Usuario usuario : usuarios.values()) {
+            if (usuario.equals(usuarioAntiguo)) {
+                Cliente nuevaPersona = (Cliente) usuarioAntiguo.getPersona();
                 nuevaPersona.setNombre(nuevoNombre);
                 nuevaPersona.setApellido(nuevoApellido);
 
@@ -135,76 +222,82 @@ public class TiendaMusica implements Serializable {
                 usuario.setPersona(nuevaPersona);
 
                 return usuario;
-
             }
         }
         throw new UsuarioNoExistenteException("Usuario no encontrado para edición");
-
-
     }
 
-    // Método para validar el formato de un email
+    /**
+     * Método para validar el formato de un email.
+     *
+     * @param email El email a validar.
+     * @return true si el email es válido, false en caso contrario.
+     */
     private boolean isValidEmail(String email) {
-        // Verifica que el email termine en @gmail.com o en @uqvirtual.edu.co
         return email.endsWith("@gmail.com") || email.endsWith("@uqvirtual.edu.co");
     }
 
-
-
-    public void actualizarCancionUsuarioFav(Cancion cancionNueva, Cancion cancionAntigua){
+    /**
+     * Actualiza las canciones favoritas de los usuarios si una canción es editada.
+     *
+     * @param cancionNueva  La nueva canción.
+     * @param cancionAntigua La canción antigua.
+     */
+    public void actualizarCancionUsuarioFav(Cancion cancionNueva, Cancion cancionAntigua) {
         for (Usuario usuario : usuarios.values()) {
-            Persona persona= usuario.getPersona();
+            Persona persona = usuario.getPersona();
             if (persona instanceof Cliente) {
-
-                Cliente cliente=(Cliente)usuario.getPersona();
+                Cliente cliente = (Cliente) usuario.getPersona();
                 ListaEnlazadaSimpleCircular<Cancion> cancionesFavoritas = cliente.getCancionesFavoritas();
-
-                // Verificar si la lista de favoritos no está vacía
                 if (cancionesFavoritas.getHeadNode() != null) {
                     Node<Cancion> currentFavorita = cancionesFavoritas.getHeadNode();
                     do {
                         if (currentFavorita.getData().equals(cancionAntigua)) {
                             currentFavorita.setData(cancionNueva);
-                            break; // Salir del bucle cuando se actualiza la canción
+                            break;
                         }
                         currentFavorita = currentFavorita.getNextNode();
                     } while (currentFavorita != cancionesFavoritas.getHeadNode());
                 }
-
             }
-
         }
     }
 
-
-    public Cancion crearCancion(String nombre, String nombreAlbum, String caratula, String anio, String duracion, String genero, String urlYoutube)throws AtributoVacioException{
-
+    /**
+     * Crea una nueva canción con los atributos proporcionados.
+     *
+     * @param nombre      El nombre de la canción.
+     * @param nombreAlbum El nombre del álbum.
+     * @param caratula    La carátula de la canción.
+     * @param anio        El año de lanzamiento.
+     * @param duracion    La duración de la canción.
+     * @param genero      El género de la canción.
+     * @param urlYoutube  La URL de YouTube.
+     * @return El objeto Cancion creado.
+     * @throws AtributoVacioException Si algún atributo requerido está vacío.
+     */
+    public Cancion crearCancion(String nombre, String nombreAlbum, String caratula, String anio, String duracion, String genero, String urlYoutube) throws AtributoVacioException {
         if (nombre == null || nombre.isBlank()) {
             throw new AtributoVacioException("El nombre es obligatorio");
         }
         if (nombreAlbum == null || nombreAlbum.isBlank()) {
-            throw new AtributoVacioException("El nombre del album es obligatorio");
+            throw new AtributoVacioException("El nombre del álbum es obligatorio");
         }
         if (caratula == null || caratula.isBlank()) {
-            throw new AtributoVacioException("La caratula es obligatoria");
+            throw new AtributoVacioException("La carátula es obligatoria");
         }
-        if (anio == null || anio.isBlank()) { //agregar formato booleano para comprobar que se ingreso un anio
+        if (anio == null || anio.isBlank()) {
             throw new AtributoVacioException("El año es obligatorio");
         }
-        if (duracion == null || duracion.isBlank()) { //lo mismo con double
+        if (duracion == null || duracion.isBlank()) {
             throw new AtributoVacioException("La duración de la canción es obligatoria");
         }
         if (genero == null || genero.isBlank()) {
-            throw new AtributoVacioException("El genero de la canción es obligatorio");
-        }else if (genero.equals("R&B")){
-            genero="RB";
+            throw new AtributoVacioException("El género de la canción es obligatorio");
         }
         if (urlYoutube == null || urlYoutube.isBlank()) {
-            throw new AtributoVacioException("El url Youtube de la canción es obligatorio");
+            throw new AtributoVacioException("La URL de YouTube es obligatoria");
         }
-
-
-
 
         Cancion cancionNueva = Cancion.builder()
                 .codigo(generarCodigoAleatorio())
@@ -218,39 +311,53 @@ public class TiendaMusica implements Serializable {
                 .build();
 
         return cancionNueva;
-
     }
 
+    /**
+     * Genera un código aleatorio para las canciones.
+     *
+     * @return El código generado.
+     */
     public static String generarCodigoAleatorio() {
         Random random = new Random();
         StringBuilder codigo = new StringBuilder();
-
-        // Generar 3 letras aleatorias
         for (int i = 0; i < 3; i++) {
-            char letra = (char) (random.nextInt(26) + 'a'); // Letras minúsculas
+            char letra = (char) (random.nextInt(26) + 'a');
             codigo.append(letra);
         }
-
-        // Generar 3 dígitos aleatorios
         for (int i = 0; i < 3; i++) {
-            int digito = random.nextInt(10); // Dígitos del 0 al 9
+            int digito = random.nextInt(10);
             codigo.append(digito);
         }
-
         return codigo.toString();
     }
 
+    /**
+     * Agrega una nueva canción a la lista de canciones de un artista.
+     *
+     * @param cancion La canción a agregar.
+     * @param artista El artista al que pertenece la canción.
+     * @return true si la canción fue agregada exitosamente, false en caso contrario.
+     * @throws CancionYaRegistradaException Si la canción ya está registrada en la lista del artista.
+     */
     public boolean agregarCancion(Cancion cancion, Artista artista) throws CancionYaRegistradaException {
         ListaEnlazadaDoble<Cancion> canciones = artista.getCanciones();
-        if(canciones.contains(cancion)) {
-            throw new CancionYaRegistradaException("La cancion ya esta en las canciones del  artista");
+        if (canciones.contains(cancion)) {
+            throw new CancionYaRegistradaException("La canción ya está en las canciones del artista");
         }
         canciones.add(cancion);
         return true;
     }
 
+    /**
+     * Crea un nuevo cliente con los atributos proporcionados.
+     *
+     * @param nombre   El nombre del cliente.
+     * @param apellido El apellido del cliente.
+     * @return El objeto Cliente creado.
+     * @throws AtributoVacioException Si algún atributo requerido está vacío.
+     */
     public Cliente crearCliente(String nombre, String apellido) throws AtributoVacioException {
-
         if (nombre == null || nombre.isBlank()) {
             throw new AtributoVacioException("El nombre es obligatorio");
         }
@@ -266,8 +373,17 @@ public class TiendaMusica implements Serializable {
         return clienteNuevo;
     }
 
-
-    public Usuario crearUsuario(String username, String password, String email, Persona persona) throws AtributoVacioException{
+    /**
+     * Crea un nuevo usuario con los atributos proporcionados.
+     *
+     * @param username El nombre de usuario.
+     * @param password La contraseña del usuario.
+     * @param email    El email del usuario.
+     * @param persona  El objeto Persona asociado al usuario.
+     * @return El objeto Usuario creado.
+     * @throws AtributoVacioException Si algún atributo requerido está vacío.
+     */
+    public Usuario crearUsuario(String username, String password, String email, Persona persona) throws AtributoVacioException {
         if (username == null || username.isBlank()) {
             throw new AtributoVacioException("El username es obligatorio");
         }
@@ -278,7 +394,7 @@ public class TiendaMusica implements Serializable {
             throw new AtributoVacioException("El email es obligatorio");
         }
 
-        Usuario usuarioNuevo= Usuario.builder()
+        Usuario usuarioNuevo = Usuario.builder()
                 .username(username)
                 .password(password)
                 .email(email)
@@ -288,6 +404,13 @@ public class TiendaMusica implements Serializable {
         return usuarioNuevo;
     }
 
+    /**
+     * Agrega un nuevo usuario a la tienda de música.
+     *
+     * @param usuario El usuario a agregar.
+     * @return true si el usuario fue agregado exitosamente, false en caso contrario.
+     * @throws UsuarioYaRegistradoException Si el usuario ya está registrado en la tienda.
+     */
     public boolean agregarUsuario(Usuario usuario) throws UsuarioYaRegistradoException {
         String usernameCliente = usuario.getUsername();
         Usuario usuarioExistente = getUsuarios().putIfAbsent(usernameCliente, usuario);
@@ -297,12 +420,21 @@ public class TiendaMusica implements Serializable {
         return true;
     }
 
-    public Usuario buscarUsuario(String username, String contrasenia) throws AtributoVacioException, UsuarioNoExistenteException{
+    /**
+     * Busca un usuario en la tienda de música por su nombre de usuario y contraseña.
+     *
+     * @param username   El nombre de usuario.
+     * @param contrasenia La contraseña del usuario.
+     * @return El objeto Usuario encontrado.
+     * @throws AtributoVacioException     Si algún atributo requerido está vacío.
+     * @throws UsuarioNoExistenteException Si el usuario no se encuentra en la tienda.
+     */
+    public Usuario buscarUsuario(String username, String contrasenia) throws AtributoVacioException, UsuarioNoExistenteException {
         if (username == null || username.isBlank()) {
             throw new AtributoVacioException("El username es obligatorio");
         }
         if (contrasenia == null || contrasenia.isBlank()) {
-            throw new AtributoVacioException("La contrasenia es obligatorio");
+            throw new AtributoVacioException("La contraseña es obligatorio");
         }
 
         for (Usuario usuario : usuarios.values()) {
@@ -313,8 +445,16 @@ public class TiendaMusica implements Serializable {
         throw new UsuarioNoExistenteException("Usuario no encontrado");
     }
 
-    public String obtenerTipoUsuario(String username, String contrasenia)throws AtributoVacioException, UsuarioNoExistenteException{
-
+    /**
+     * Obtiene el tipo de usuario (Cliente o Administrador) basado en el nombre de usuario y la contraseña.
+     *
+     * @param username   El nombre de usuario.
+     * @param contrasenia La contraseña del usuario.
+     * @return El tipo de usuario (Cliente o Administrador).
+     * @throws AtributoVacioException     Si algún atributo requerido está vacío.
+     * @throws UsuarioNoExistenteException Si el usuario no se encuentra en la tienda.
+     */
+    public String obtenerTipoUsuario(String username, String contrasenia) throws AtributoVacioException, UsuarioNoExistenteException {
         Usuario usuario = buscarUsuario(username, contrasenia);
         Persona persona = usuario.getPersona();
         if (persona instanceof Cliente) {
@@ -326,17 +466,30 @@ public class TiendaMusica implements Serializable {
         throw new UsuarioNoExistenteException("Usuario no encontrado");
     }
 
-
-
+    /**
+     * Busca canciones por el nombre del artista.
+     *
+     * @param nombreArtista El nombre del artista.
+     * @return Una lista de canciones del artista.
+     * @throws ArtistaNoEncontradoException Si el artista no se encuentra en la tienda.
+     * @throws InterruptedException Si el hilo es interrumpido.
+     */
     public ListaEnlazadaDoble<Cancion> buscarCancionesPorArtista(String nombreArtista) throws ArtistaNoEncontradoException, InterruptedException {
         ListaEnlazadaDoble<Cancion> cancionesArtista = new ListaEnlazadaDoble<>();
         Artista artista = new Artista(null, nombreArtista, null, null);
 
-        Artista artista1  = artistas.find(artista);
+        Artista artista1 = artistas.find(artista);
 
         throw new ArtistaNoEncontradoException("El artista seleccionado no existe");
     }
 
+    /**
+     * Busca el artista de una canción dada.
+     *
+     * @param cancion La canción cuya artista se desea buscar.
+     * @return El artista de la canción.
+     * @throws ArtistaNoEncontradoException Si no se encuentra ningún artista que coincida con la canción especificada.
+     */
     public Artista buscarArtistaCancion(Cancion cancion) throws ArtistaNoEncontradoException {
         for (Artista artista : artistas.iterator()) {
             ListaEnlazadaDoble<Cancion> cancionesArtista = artista.getCanciones();
@@ -346,12 +499,13 @@ public class TiendaMusica implements Serializable {
                 }
             }
         }
-        throw new ArtistaNoEncontradoException("Ningun artista coincide con la cancion especificada");
+        throw new ArtistaNoEncontradoException("Ningún artista coincide con la canción especificada");
     }
 
     /**
-     * Metodo para obtener todas las canciones en el sistema
-     * @return
+     * Obtiene todas las canciones en el sistema.
+     *
+     * @return Una lista circular de todas las canciones en el sistema.
      */
     public ListaEnlazadaSimpleCircular<Cancion> obtenerCancionesGenerales() {
         ListaEnlazadaSimpleCircular<Cancion> cancionesGenerales = new ListaEnlazadaSimpleCircular<>();
@@ -366,9 +520,14 @@ public class TiendaMusica implements Serializable {
         return cancionesGenerales;
     }
 
-
-
-
+    /**
+     * Carga artistas desde un archivo.
+     *
+     * @param ruta La ruta del archivo desde donde se cargarán los artistas.
+     * @throws IOException Si ocurre un error al leer el archivo.
+     * @throws ArtistasYaEnTiendaException Si al menos un artista ya está en la tienda.
+     * @throws InterruptedException Si el hilo es interrumpido.
+     */
     public void cargarArtistasDesdeArchivo(String ruta) throws IOException, ArtistasYaEnTiendaException, InterruptedException {
         ListaEnlazadaSimple<Artista> artistas = ArchivoUtil.cargarArtistasDesdeArchivo(ruta);
         BinaryTree<Artista> artistasExistentes = getArtistas();
@@ -376,10 +535,8 @@ public class TiendaMusica implements Serializable {
 
         for (Artista artista : artistas) {
             if (artistasExistentes.find(artista) != null) {
-                // El artista ya está en la tienda, agregalo a la lista de artistas existentes
                 artistasYaEnTienda.add(artista);
             } else {
-                // El artista es nuevo, agrégalo a la tienda
                 artistasExistentes.insert(artista);
             }
         }
@@ -387,22 +544,20 @@ public class TiendaMusica implements Serializable {
         if (!artistasYaEnTienda.isEmpty()) {
             throw new ArtistasYaEnTiendaException("Al menos un artista ya está en la tienda");
         }
-
-        // Si no se lanza la excepción, significa que todos los artistas se han agregado correctamente
     }
 
+    /**
+     * Cuenta el número de canciones por género.
+     *
+     * @return Un mapa con el género como clave y el número de canciones como valor.
+     */
     public Map<String, Integer> contarCancionesPorGenero() {
         Map<String, Integer> contadorGeneros = new HashMap<>();
         ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
 
-        // Iterar sobre todos los artistas en la tienda
         for (Artista artista : artistas) {
-            // Iterar sobre todas las canciones del artista
             for (Cancion cancion : artista.getCanciones()) {
-                // Obtener el género de la canción
                 String genero = cancion.getGenero().toString();
-
-                // Incrementar el contador para el género actual
                 contadorGeneros.put(genero, contadorGeneros.getOrDefault(genero, 0) + 1);
             }
         }
@@ -411,26 +566,21 @@ public class TiendaMusica implements Serializable {
     }
 
     /**
-     * se obtiene un map de los generos y el numero de canciones que se tienen en cada uno
-     * de manera que se pueda usar la variable para llenar el barchart en la ventana de estadisticas
-     * @return
+     * Obtiene el género con más canciones.
+     *
+     * @return El nombre del género con más canciones.
      */
     public String obtenerGeneroConMasCanciones() {
         HashMap<TipoGenero, Integer> contadorGeneros = new HashMap<>();
         ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
-        // Iterar sobre todos los artistas en la tienda
-        for (Artista artista : artistas) {
-            // Iterar sobre todas las canciones del artista
-            for (Cancion cancion : artista.getCanciones()) {
-                // Obtener el género de la canción
-                TipoGenero genero = cancion.getGenero();
 
-                // Incrementar el contador para el género actual
+        for (Artista artista : artistas) {
+            for (Cancion cancion : artista.getCanciones()) {
+                TipoGenero genero = cancion.getGenero();
                 contadorGeneros.put(genero, contadorGeneros.getOrDefault(genero, 0) + 1);
             }
         }
 
-        // Encontrar el género con más canciones
         String generoConMasCanciones = null;
         int maxCanciones = 0;
         for (Map.Entry<TipoGenero, Integer> entry : contadorGeneros.entrySet()) {
@@ -443,48 +593,41 @@ public class TiendaMusica implements Serializable {
         return generoConMasCanciones;
     }
 
-    //por ahora ya que obtenervistas de url youtube no esta funcionando por completo(retorna errores)
-    // Método simulado para obtener la cantidad de reproducciones
-    private long obtenerCantidadVistas(Cancion cancion) {
-        // Calcular la cantidad de reproducciones basada en la cantidad de letras en el nombre de la canción
-        int longitudNombre = cancion.getNombre().length();
-        return longitudNombre * 4500;
-    }
-
+    /**
+     * Cuenta las vistas por artista simulando la obtención de vistas de YouTube.
+     *
+     * @return Un mapa con el nombre del artista como clave y el total de vistas como valor.
+     * @throws IOException Si ocurre un error al leer los datos de YouTube.
+     * @throws GeneralSecurityException Si ocurre un error de seguridad al acceder a los datos de YouTube.
+     */
     public Map<String, Double> contarVistasPorArtista() throws IOException, GeneralSecurityException {
         Map<String, Double> vistasPorArtista = new HashMap<>();
 
-        // Iterar sobre todos los artistas en la tienda
         for (Artista artista : getArtistas().iterator()) {
             double totalVistas = 0.0;
 
-            // Iterar sobre todas las canciones del artista
             for (Cancion cancion : artista.getCanciones()) {
-                // Obtener el enlace de YouTube de la canción
-                String enlaceYouTube = cancion.getUrlYoutube();
-
-                // Simular obtener la cantidad de reproducciones del video de YouTube
                 long reproducciones = YouTubeHelper.obtenerVistasVideo(cancion.getUrlYoutube());
-
-                // Sumar las reproducciones de la canción al total del artista
                 totalVistas += reproducciones;
             }
 
-            // Añadir el nombre del artista y el total de vistas al mapa
             vistasPorArtista.put(artista.getNombre(), totalVistas);
         }
 
         return vistasPorArtista;
     }
 
-
+    /**
+     * Convierte un árbol binario a una lista.
+     *
+     * @param <T> El tipo de elementos en el árbol.
+     * @param arbol El árbol a convertir.
+     * @return Una lista con los elementos del árbol.
+     */
     public <T extends Comparable<T>> List<T> convertirArbolALista(BinaryTree<T> arbol) {
         List<T> lista = new ArrayList<>();
-
-        // Obtener un iterador para recorrer el árbol en orden
         ListaEnlazadaSimple<T> iterador = arbol.iterator();
 
-        // Recorrer el árbol con el iterador y agregar cada elemento a la lista
         for (T elemento : iterador) {
             lista.add(elemento);
         }
@@ -492,6 +635,13 @@ public class TiendaMusica implements Serializable {
         return lista;
     }
 
+    /**
+     * Convierte una lista enlazada doble a un ArrayList.
+     *
+     * @param <T> El tipo de elementos en la lista.
+     * @param listaEnlazadaDoble La lista enlazada doble a convertir.
+     * @return Un ArrayList con los elementos de la lista enlazada doble.
+     */
     public <T extends Comparable<T>> ArrayList<T> convertirAArrayList(ListaEnlazadaDoble<T> listaEnlazadaDoble) {
         ArrayList<T> arrayList = new ArrayList<>();
         for (T elemento : listaEnlazadaDoble) {
@@ -500,29 +650,36 @@ public class TiendaMusica implements Serializable {
         return arrayList;
     }
 
+    /**
+     * Obtiene una lista de nacionalidades sin repetir.
+     *
+     * @return Una lista de nacionalidades sin duplicados.
+     */
     public List<String> obtenerNacionalidadesSinRepetir() {
         List<String> nacionalidades = new ArrayList<>();
-        Set<String> nacionalidadesSet = new HashSet<>(); // Usamos un Set para evitar duplicados
+        Set<String> nacionalidadesSet = new HashSet<>();
 
-        // Recorremos el árbol de artistas utilizando el iterador
         for (Artista artista : this.artistas.iterator()) {
             String nacionalidad = artista.getNacionalidad();
             nacionalidadesSet.add(nacionalidad);
         }
 
-        // Convertimos el Set a una lista para retornarla
         nacionalidades.addAll(nacionalidadesSet);
         return nacionalidades;
     }
 
+    /**
+     * Obtiene una lista de años de lanzamiento sin repetir.
+     *
+     * @return Una lista de años de lanzamiento sin duplicados.
+     */
     public List<String> obtenerAniosLanzamientoSinRepetir() {
         List<String> lanzamiento = new ArrayList<>();
-        Set<String> lanzamientoSet = new HashSet<>(); // Usamos un Set para evitar duplicados
+        Set<String> lanzamientoSet = new HashSet<>();
 
-        // Recorremos el árbol de artistas utilizando el iterador
         for (Artista artista : this.artistas.iterator()) {
-            for (Cancion cancion : artista.getCanciones()){
-                String cancionLanzamiento= String.valueOf(cancion.getAnioLanzamiento());
+            for (Cancion cancion : artista.getCanciones()) {
+                String cancionLanzamiento = String.valueOf(cancion.getAnioLanzamiento());
                 lanzamientoSet.add(cancionLanzamiento);
             }
         }
@@ -532,32 +689,40 @@ public class TiendaMusica implements Serializable {
         return lanzamiento;
     }
 
+    /**
+     * Obtiene una lista de tipos de género de canciones sin repetir.
+     *
+     * @return Una lista de tipos de género de canciones sin duplicados.
+     */
     public List<String> obtenerTipoGeneroCancionesSinRepetir() {
         List<String> genero = new ArrayList<>();
-        Set<String> generoSet = new HashSet<>(); // Usamos un Set para evitar duplicados
+        Set<String> generoSet = new HashSet<>();
 
-        // Recorremos el árbol de artistas utilizando el iterador
         for (Artista artista : this.artistas.iterator()) {
-            for (Cancion cancion : artista.getCanciones()){
-                String tipoCancion= cancion.obtenerGeneroComoString();
-                generoSet.add(tipoCancion);
+            for (Cancion cancion : artista.getCanciones()) {
+                String cancionGenero = cancion.getGenero().toString();
+                generoSet.add(cancionGenero);
             }
         }
-
         generoSet.add("Todos");
 
         genero.addAll(generoSet);
         return genero;
     }
 
+    /**
+     * Obtiene una lista de duraciones de canciones sin repetir.
+     *
+     * @return Una lista de duraciones de canciones sin duplicados.
+     */
     public List<String> obtenerDuracionCancionesSinRepetir() {
         List<String> duracion = new ArrayList<>();
         Set<String> duracionSet = new HashSet<>(); // Usamos un Set para evitar duplicados
 
         // Recorremos el árbol de artistas utilizando el iterador
         for (Artista artista : this.artistas.iterator()) {
-            for (Cancion cancion : artista.getCanciones()){
-                String cancionDuracion= cancion.getDuracion();
+            for (Cancion cancion : artista.getCanciones()) {
+                String cancionDuracion = cancion.getDuracion();
                 duracionSet.add(cancionDuracion);
             }
         }
@@ -568,7 +733,14 @@ public class TiendaMusica implements Serializable {
         return duracion;
     }
 
-    public BinaryTree<Artista> obtenerMinimoFiltroArtistas(String minimoNacionalidad, String minimoTipo){
+    /**
+     * Obtiene una lista de artistas que cumplen al menos uno de los filtros de nacionalidad o tipo de artista.
+     *
+     * @param minimoNacionalidad La nacionalidad mínima a filtrar.
+     * @param minimoTipo El tipo de artista mínimo a filtrar.
+     * @return Un árbol binario con los artistas que cumplen al menos uno de los criterios.
+     */
+    public BinaryTree<Artista> obtenerMinimoFiltroArtistas(String minimoNacionalidad, String minimoTipo) {
         BinaryTree<Artista> artistasFiltrados = new BinaryTree<>();
 
         // Iterar sobre el árbol de artistas
@@ -582,7 +754,14 @@ public class TiendaMusica implements Serializable {
         return artistasFiltrados;
     }
 
-    public BinaryTree<Artista> obtenerMaximoFiltroArtistas(String minimoNacionalidad, String minimoTipo){
+    /**
+     * Obtiene una lista de artistas que cumplen ambos filtros de nacionalidad y tipo de artista.
+     *
+     * @param minimoNacionalidad La nacionalidad mínima a filtrar.
+     * @param minimoTipo El tipo de artista mínimo a filtrar.
+     * @return Un árbol binario con los artistas que cumplen ambos criterios.
+     */
+    public BinaryTree<Artista> obtenerMaximoFiltroArtistas(String minimoNacionalidad, String minimoTipo) {
         BinaryTree<Artista> artistasFiltrados = new BinaryTree<>();
 
         // Iterar sobre el árbol de artistas
@@ -625,8 +804,6 @@ public class TiendaMusica implements Serializable {
         return nuevaLista;
     }
 
-
-
     /**
      * Este metodo toma en parametro la lista favorita de un cliente, y verifica los filtros tambien especificados por parametro
      * Nota: no se uso directamente en esta parte la busqueda por hilos ya que la lista de canciones favoritas
@@ -655,9 +832,15 @@ public class TiendaMusica implements Serializable {
 
         return nuevaLista;
     }
-
-
-
+    /**
+     * Verifica si una canción cumple con al menos uno de los filtros de género, año de lanzamiento o duración.
+     *
+     * @param cancion La canción a verificar.
+     * @param genero El género a filtrar.
+     * @param anioLanzamiento El año de lanzamiento a filtrar.
+     * @param duracion La duración a filtrar.
+     * @return true si la canción cumple con al menos uno de los filtros, false en caso contrario.
+     */
     public static boolean cumpleMinimoUnFiltro(Cancion cancion, String genero, String anioLanzamiento, String duracion) {
         boolean cumpleGenero = genero.equals("Todos") || cancion.obtenerGeneroComoString().equals(genero);
         boolean cumpleAnioLanzamiento = anioLanzamiento.equals("Todos") || String.valueOf(cancion.getAnioLanzamiento()).equals(anioLanzamiento);
@@ -666,6 +849,15 @@ public class TiendaMusica implements Serializable {
         return cumpleGenero || cumpleAnioLanzamiento || cumpleDuracion;
     }
 
+    /**
+     * Verifica si una canción cumple con todos los filtros de género, año de lanzamiento y duración.
+     *
+     * @param cancion La canción a verificar.
+     * @param genero El género a filtrar.
+     * @param anioLanzamiento El año de lanzamiento a filtrar.
+     * @param duracion La duración a filtrar.
+     * @return true si la canción cumple con todos los filtros, false en caso contrario.
+     */
     public static boolean cumpleTodosLosFiltros(Cancion cancion, String genero, String anioLanzamiento, String duracion) {
         boolean cumpleGenero = genero.equals("Todos") || cancion.obtenerGeneroComoString().equals(genero) || genero.equals("Vacio");
         boolean cumpleAnioLanzamiento = anioLanzamiento.equals("Todos") || String.valueOf(cancion.getAnioLanzamiento()).equals(anioLanzamiento) || anioLanzamiento.equals("Vacio");
@@ -674,13 +866,24 @@ public class TiendaMusica implements Serializable {
         return cumpleGenero && cumpleAnioLanzamiento && cumpleDuracion;
     }
 
+    /**
+     * Obtiene un árbol binario que contiene un único artista buscado.
+     *
+     * @param artistaPorBuscar El artista a buscar.
+     * @return Un árbol binario con el artista encontrado.
+     */
     public BinaryTree<Artista> obtenerArbolPorArtista(Artista artistaPorBuscar) {
-        BinaryTree<Artista> resultadoArbol= new BinaryTree<>();
+        BinaryTree<Artista> resultadoArbol = new BinaryTree<>();
         resultadoArbol.insert(artistaPorBuscar);
         return resultadoArbol;
     }
 
-    public ArrayList<String> obtenerNombresPaises(){
+    /**
+     * Obtiene una lista de nombres de países.
+     *
+     * @return Una lista de nombres de países.
+     */
+    public ArrayList<String> obtenerNombresPaises() {
         ArrayList<String> countries = new ArrayList<>();
         // Agregar nombres de países sin tildes
         countries.add("Estados Unidos");
@@ -720,24 +923,33 @@ public class TiendaMusica implements Serializable {
         return countries;
     }
 
+    /**
+     * Elimina una canción de la lista de canciones de un artista y de las listas de canciones favoritas de los usuarios.
+     *
+     * @param cancionElegida La canción a eliminar.
+     */
     public void eliminarCancion(Cancion cancionElegida) {
         ListaEnlazadaSimple<Artista> artistas = getArtistas().iterator();
 
-        for(Artista artista: artistas){
-            if (artista.getCanciones().contains(cancionElegida)){
+        for (Artista artista : artistas) {
+            if (artista.getCanciones().contains(cancionElegida)) {
                 artista.getCanciones().removeData(cancionElegida);
                 eliminarCancionUsuario(cancionElegida);
                 return;
             }
         }
-
     }
 
+    /**
+     * Elimina una canción de las listas de canciones favoritas de los usuarios.
+     *
+     * @param cancionElegida La canción a eliminar.
+     */
     public void eliminarCancionUsuario(Cancion cancionElegida) {
-        for (Usuario usuario: usuarios.values()){
-            if(usuario.getPersona() instanceof Cliente){
+        for (Usuario usuario : usuarios.values()) {
+            if (usuario.getPersona() instanceof Cliente) {
                 Cliente cliente = (Cliente) usuario.getPersona();
-                if(cliente.getCancionesFavoritas().contains(cancionElegida)){
+                if (cliente.getCancionesFavoritas().contains(cancionElegida)) {
                     cliente.eliminarCancionFavorita(cancionElegida);
                 }
             }
