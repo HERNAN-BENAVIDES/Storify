@@ -12,30 +12,30 @@
    <children>
       <Pane layoutX="10.0" layoutY="64.0" prefHeight="118.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
          <children>
-            <Text fill="#323232" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrar Canciones ">
+            <Text fill="#323232" layoutX="300.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrar Canciones ">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#838181" layoutX="16.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Género">
+            <Text fill="#838181" layoutX="583.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Género">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="#838181" layoutX="298.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Año de lanzamiento">
+            <Text fill="#838181" layoutX="298.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Año de lanzamiento">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="#838181" layoutX="583.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duración">
+            <Text fill="#838181" layoutX="583.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duración">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <ComboBox fx:id="comboGenero" layoutX="14.0" layoutY="57.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir género" />
-            <ComboBox fx:id="comboLanzamiento" layoutX="298.0" layoutY="57.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir año de lanzamiento" />
-            <ComboBox fx:id="comboDuracion" layoutX="583.0" layoutY="57.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir duración" />
-            <Pane layoutX="854.0" layoutY="54.0" prefHeight="35.0" prefWidth="113.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
+            <ComboBox fx:id="comboGenero" layoutX="583.0" layoutY="18.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir género" />
+            <ComboBox fx:id="comboLanzamiento" layoutX="298.0" layoutY="72.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir año de lanzamiento" />
+            <ComboBox fx:id="comboDuracion" layoutX="583.0" layoutY="72.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir duración" />
+            <Pane layoutX="854.0" layoutY="60.0" prefHeight="35.0" prefWidth="113.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
                <children>
                   <Button mnemonicParsing="false" onAction="#filtrarMinimo" prefHeight="35.0" prefWidth="113.0" stylesheets="@../aplicacion.css" text="Filtrar (1)      " textFill="WHITE">
                      <font>
@@ -53,7 +53,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane layoutX="854.0" layoutY="8.0" prefHeight="35.0" prefWidth="113.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
+            <Pane layoutX="854.0" layoutY="10.0" prefHeight="35.0" prefWidth="113.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
                <children>
                   <Button mnemonicParsing="false" onAction="#filtrarMaximo" prefHeight="35.0" prefWidth="113.0" stylesheets="@../aplicacion.css" text="Filtrar (*)      " textFill="WHITE">
                      <font>
@@ -69,6 +69,25 @@
                         <Image url="@../imagenes/filtrar.png" />
                      </image>
                   </ImageView>
+               </children>
+            </Pane>
+            <ComboBox fx:id="comboOrden" layoutX="20.0" layoutY="72.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir Orden" />
+            <Text layoutX="20.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ordenar Canciones">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Pane layoutX="21.0" layoutY="28.0" prefHeight="33.0" prefWidth="113.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#ordenarCanciones" prefHeight="35.0" prefWidth="113.0" stylesheets="@../aplicacion.css" text="Ordenar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="transparent" />
+                        <String fx:value="cursor_hand" />
+                     </styleClass>
+                  </Button>
                </children>
             </Pane>
          </children>

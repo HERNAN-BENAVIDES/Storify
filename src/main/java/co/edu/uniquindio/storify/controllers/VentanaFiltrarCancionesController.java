@@ -45,6 +45,9 @@ public class VentanaFiltrarCancionesController implements Initializable {
     @FXML
     private ComboBox<String> comboLanzamiento;
 
+    @FXML
+    private ComboBox<String> comboOrden;
+
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
@@ -117,7 +120,13 @@ public class VentanaFiltrarCancionesController implements Initializable {
         listaDuracion.addAll(mfm.getTiendaMusica().obtenerDuracionCancionesSinRepetir());
         comboDuracion.setItems(listaDuracion);
 
+        //llenar combobox duracion
+        ObservableList<String> listaOrden=FXCollections.observableArrayList();
+        listaOrden.addAll(mfm.getTiendaMusica().obtenerOrdenamientos());
+        comboOrden.setItems(listaOrden);
+
     }
+
 
 
     public void filtrarMaximo() throws InterruptedException, ArtistaNoEncontradoException {
@@ -161,6 +170,81 @@ public class VentanaFiltrarCancionesController implements Initializable {
         }
 
     }
+
+    /**
+     * red gold
+     */
+    /**
+     * red gold
+     */
+    public void buscarNombreArtista(){
+        //Artista artistaDigitado= mfm.getTiendaMusica().buscarArtistaPorNombre();
+        //aplicacion.verCancionesDeArtista(artistaElegido);
+    }
+
+
+    /**
+     * red gold
+     */
+    public void ordenarCanciones() throws ArtistaNoEncontradoException {
+
+        String orden=comboOrden.getSelectionModel().getSelectedItem();
+        if (orden.equals("Mas Recientes")){
+            ordenarRecienteAntiguoLista();
+        }else if (orden.equals("Mas antiguas")){
+            ordenarAntiguoRecienteLista();
+        }else if(orden.equals("Mayor duracion")){
+            ordenarMasLargo();
+        }else if(orden.equals("Menor duracion")){
+            ordenarMasCorto();
+        }else{
+            Alertas.mostrarMensaje("ERROR", "Entrada invalida", "Debe seleccionar una opción de ordenamiento", Alert.AlertType.ERROR);
+        }
+
+    }
+
+
+    /**
+     * gol red
+     * @throws InterruptedException
+     * @throws ArtistaNoEncontradoException
+     */
+    public void ordenarRecienteAntiguoLista() throws ArtistaNoEncontradoException {
+        this.listaCanciones=mfm.getTiendaMusica().ordenarCancionesPorFechaMasReciente(listaCancionesFavs);
+        iniciarGridPane();
+    }
+
+    /**
+     * gol red
+     * @throws InterruptedException
+     * @throws ArtistaNoEncontradoException
+     */
+    public void ordenarAntiguoRecienteLista() throws ArtistaNoEncontradoException {
+        this.listaCanciones=mfm.getTiendaMusica().ordenarCancionesPorFechaMasAntigua(listaCancionesFavs);
+        iniciarGridPane();
+    }
+
+    /**
+     * gold red
+     * @throws InterruptedException
+     * @throws ArtistaNoEncontradoException
+     */
+    public void ordenarMasLargo() throws ArtistaNoEncontradoException {
+        this.listaCanciones=mfm.getTiendaMusica().ordenarCancionesPorDuracionMasLarga(listaCancionesFavs);
+        iniciarGridPane();
+    }
+
+    /**
+     * gold red
+     * @throws InterruptedException
+     * @throws ArtistaNoEncontradoException
+     */
+    public void ordenarMasCorto() throws ArtistaNoEncontradoException {
+        this.listaCanciones=mfm.getTiendaMusica().ordenarCancionesPorDuracionMasCorta(listaCancionesFavs);
+        iniciarGridPane();
+    }
+
+
 
 
 

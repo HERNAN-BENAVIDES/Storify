@@ -557,6 +557,19 @@ public class TiendaMusica implements Serializable {
         return duracion;
     }
 
+    /**
+     * gold red
+     * @return
+     */
+    public List<String>obtenerOrdenamientos(){
+        List<String> orden = new ArrayList<>();
+        orden.add("Mas Recientes");
+        orden.add("Mas antiguas");
+        orden.add("Mayor duracion");
+        orden.add("Menor duracion");
+        return orden;
+    }
+
     public BinaryTree<Artista> obtenerMinimoFiltroArtistas(String minimoNacionalidad, String minimoTipo){
         BinaryTree<Artista> artistasFiltrados = new BinaryTree<>();
 
@@ -714,6 +727,135 @@ public class TiendaMusica implements Serializable {
     private long obtenerCantidadReproducciones(String enlaceYouTube) throws IOException, GeneralSecurityException {
         return YouTubeHelper.obtenerVistasVideo(enlaceYouTube); // Llama a la clase YouTubeHelper
     }
+
+    /**
+     * RED GOLD
+     * @param listaCanciones
+     * @return
+     */
+    public ListaEnlazadaSimpleCircular<Cancion> ordenarCancionesPorFechaMasReciente(ListaEnlazadaSimpleCircular<Cancion> listaCanciones) {
+        // Paso 1: Convertir la lista circular a una lista normal
+        List<Cancion> listaNormal = new ArrayList<>();
+        if (listaCanciones.getHeadNode() != null) {
+            Node<Cancion> currentNode = listaCanciones.getHeadNode();
+            do {
+                listaNormal.add(currentNode.getData());
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != listaCanciones.getHeadNode());
+        }
+
+        // Paso 2: Ordenar la lista normal con Collections.sort() y un comparador
+        Collections.sort(listaNormal, (c1, c2) -> Integer.compare(c2.getAnioLanzamiento(), c1.getAnioLanzamiento()));
+
+        // Paso 3: Reconstruir la lista circular con el ordenado
+        ListaEnlazadaSimpleCircular<Cancion> listaOrdenada = new ListaEnlazadaSimpleCircular<>();
+        for (Cancion cancion : listaNormal) {
+            listaOrdenada.add(cancion);
+        }
+
+        return listaOrdenada;
+    }
+
+    /**
+     * red gold
+     */
+    public ListaEnlazadaSimpleCircular<Cancion> ordenarCancionesPorFechaMasAntigua(ListaEnlazadaSimpleCircular<Cancion> listaCanciones) {
+        // Paso 1: Convertir la lista circular a una lista normal
+        List<Cancion> listaNormal = new ArrayList<>();
+        if (listaCanciones.getHeadNode() != null) {
+            Node<Cancion> currentNode = listaCanciones.getHeadNode();
+            do {
+                listaNormal.add(currentNode.getData());
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != listaCanciones.getHeadNode());
+        }
+
+        // Paso 2: Ordenar la lista normal con Collections.sort() y un comparador
+        Collections.sort(listaNormal, (c1, c2) -> Integer.compare(c1.getAnioLanzamiento(), c2.getAnioLanzamiento()));
+
+        // Paso 3: Reconstruir la lista circular con el ordenado
+        ListaEnlazadaSimpleCircular<Cancion> listaOrdenada = new ListaEnlazadaSimpleCircular<>();
+        for (Cancion cancion : listaNormal) {
+            listaOrdenada.add(cancion);
+        }
+
+        return listaOrdenada;
+    }
+
+
+    /**
+     * red gold
+     */
+    private int convertirDuracionASegundos(String duracion) {
+        String[] partes = duracion.split(":");
+        int minutos = Integer.parseInt(partes[0]);
+        int segundos = Integer.parseInt(partes[1]);
+        return minutos * 60 + segundos;
+    }
+
+    public ListaEnlazadaSimpleCircular<Cancion> ordenarCancionesPorDuracionMasLarga(ListaEnlazadaSimpleCircular<Cancion> listaCanciones) {
+        // Paso 1: Convertir la lista circular a una lista normal
+        List<Cancion> listaNormal = new ArrayList<>();
+        if (listaCanciones.getHeadNode() != null) {
+            Node<Cancion> currentNode = listaCanciones.getHeadNode();
+            do {
+                listaNormal.add(currentNode.getData());
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != listaCanciones.getHeadNode());
+        }
+
+        // Paso 2: Ordenar la lista normal con Collections.sort() y un comparador
+        Collections.sort(listaNormal, (c1, c2) -> {
+            int duracion1 = convertirDuracionASegundos(c1.getDuracion());
+            int duracion2 = convertirDuracionASegundos(c2.getDuracion());
+            return Integer.compare(duracion2, duracion1); // De la más larga a la más corta
+        });
+
+        // Paso 3: Reconstruir la lista circular con el ordenado
+        ListaEnlazadaSimpleCircular<Cancion> listaOrdenada = new ListaEnlazadaSimpleCircular<>();
+        for (Cancion cancion : listaNormal) {
+            listaOrdenada.add(cancion);
+        }
+
+        return listaOrdenada;
+    }
+
+
+
+
+    /**
+     * gold red
+     *
+     */
+
+    public ListaEnlazadaSimpleCircular<Cancion> ordenarCancionesPorDuracionMasCorta(ListaEnlazadaSimpleCircular<Cancion> listaCanciones) {
+        // Paso 1: Convertir la lista circular a una lista normal
+        List<Cancion> listaNormal = new ArrayList<>();
+        if (listaCanciones.getHeadNode() != null) {
+            Node<Cancion> currentNode = listaCanciones.getHeadNode();
+            do {
+                listaNormal.add(currentNode.getData());
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != listaCanciones.getHeadNode());
+        }
+
+        // Paso 2: Ordenar la lista normal con Collections.sort() y un comparador
+        Collections.sort(listaNormal, (c1, c2) -> {
+            int duracion1 = convertirDuracionASegundos(c1.getDuracion());
+            int duracion2 = convertirDuracionASegundos(c2.getDuracion());
+            return Integer.compare(duracion1, duracion2); // De la más corta a la más larga
+        });
+
+        // Paso 3: Reconstruir la lista circular con el ordenado
+        ListaEnlazadaSimpleCircular<Cancion> listaOrdenada = new ListaEnlazadaSimpleCircular<>();
+        for (Cancion cancion : listaNormal) {
+            listaOrdenada.add(cancion);
+        }
+
+        return listaOrdenada;
+    }
+
+
 
 
 
