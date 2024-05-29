@@ -12,22 +12,22 @@
    <children>
       <Pane layoutX="10.0" layoutY="64.0" prefHeight="118.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
          <children>
-            <Text fill="#323232" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrar Canciones ">
+            <Text fx:id="labelFiltrarCanciones" fill="#323232" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrar Canciones ">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#838181" layoutX="16.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Género">
+            <Text fx:id="lblGenero" fill="#838181" layoutX="16.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Género">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="#838181" layoutX="298.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Año de lanzamiento">
+            <Text fx:id="lblAnio" fill="#838181" layoutX="298.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Año de lanzamiento">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="#838181" layoutX="583.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duración">
+            <Text fx:id="lblDuracion" fill="#838181" layoutX="583.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duración">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -71,13 +71,13 @@
                   </ImageView>
                </children>
             </Pane>
-            <ComboBox fx:id="comboOrden" layoutX="400.0" layoutY="8.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir Orden" />
-            <Text fx:id="titleOrdenar" layoutX="267.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ordenar Canciones">
+            <ComboBox fx:id="comboOrden" layoutX="434.0" layoutY="9.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir Orden" />
+            <Text fx:id="titleOrdenar" fill="#323232" layoutX="301.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ordenar Canciones">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Pane fx:id="paneOrdenar" layoutX="674.0" layoutY="5.0" prefHeight="35.0" prefWidth="113.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
+            <Pane fx:id="paneOrdenar" layoutX="699.0" layoutY="7.0" prefHeight="35.0" prefWidth="113.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
                <children>
                   <Button mnemonicParsing="false" onAction="#ordenarCanciones" prefHeight="35.0" prefWidth="113.0" stylesheets="@../aplicacion.css" text="Ordenar" textFill="WHITE">
                      <font>

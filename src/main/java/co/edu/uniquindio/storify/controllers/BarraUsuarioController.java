@@ -83,7 +83,7 @@ public class BarraUsuarioController implements Initializable {
     public void cargarInfo() {
         runTime();
         String nombre= usuario.getUsername();
-        int espacio=nombre.length()*15;
+        int espacio=nombre.length()*10;
         txtBienvenida.setText("¡Bienvenid@, "+nombre+"!");
         txtBienvenida.setX(txtBienvenida.getX()-espacio);
     }

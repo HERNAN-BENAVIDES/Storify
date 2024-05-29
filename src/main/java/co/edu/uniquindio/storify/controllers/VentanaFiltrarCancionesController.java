@@ -39,6 +39,18 @@ import java.util.ResourceBundle;
 public class VentanaFiltrarCancionesController implements Initializable {
 
     @FXML
+    private Text labelFiltrarCanciones;
+
+    @FXML
+    private Text lblAnio;
+
+    @FXML
+    private Text lblGenero;
+
+    @FXML
+    private Text lblDuracion;
+
+    @FXML
     private TextField txtFieldNombreArtista;
 
     @FXML
@@ -271,6 +283,8 @@ public class VentanaFiltrarCancionesController implements Initializable {
         comboOrden.setVisible(true);
         paneOrdenar.setVisible(true);
         titleOrdenar.setVisible(true);
+
+
     }
 
     /**

@@ -59,12 +59,12 @@
             <String fx:value="btnIngresar" />
          </styleClass>
       </Button>
-      <Label fx:id="lblFecha" layoutX="418.0" layoutY="26.0" text="MM:DD:YYYY">
+      <Label fx:id="lblFecha" layoutX="365.0" layoutY="25.0" text="MM:DD:YYYY">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Text fx:id="txtBienvenida" layoutX="695.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenid@,  ">
+      <Text fx:id="txtBienvenida" layoutX="704.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenid@,  ">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
