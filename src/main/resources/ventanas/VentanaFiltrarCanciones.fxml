@@ -100,7 +100,7 @@
          <children>
             <TextField layoutY="-2.0" minHeight="-Infinity" prefHeight="29.0" prefWidth="878.0" promptText="Buscar por nombre de la canción" styleClass="transparent" stylesheets="@../aplicacion.css" />
             <Separator layoutX="900.0" layoutY="-0.0" orientation="VERTICAL" prefHeight="27.0" prefWidth="3.0" />
-            <Button layoutX="903.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" stylesheets="@../aplicacion.css" text=" Buscar" textFill="#838181">
+            <Button layoutX="903.0" layoutY="-2.0" mnemonicParsing="false" onAction="#buscarNombreArtista" prefHeight="32.0" prefWidth="99.0" stylesheets="@../aplicacion.css" text=" Buscar" textFill="#838181">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
