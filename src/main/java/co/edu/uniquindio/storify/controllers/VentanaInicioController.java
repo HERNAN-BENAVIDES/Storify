@@ -22,7 +22,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Data
-
 public class VentanaInicioController implements Initializable {
 
     @FXML
@@ -42,12 +41,18 @@ public class VentanaInicioController implements Initializable {
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
 
+    /**
+     * Método que se ejecuta al inicializar el controlador.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        // No se realiza ninguna acción en la inicialización.
     }
 
-    public void mostrarPanelIzquierdoCliente(){
+    /**
+     * Muestra el panel izquierdo con la vista del cliente.
+     */
+    public void mostrarPanelIzquierdoCliente() {
         try {
             panelIzquierdo.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/TableroCliente.fxml"));
@@ -55,13 +60,15 @@ public class VentanaInicioController implements Initializable {
             panelIzquierdo.getChildren().add(node);
             TableroClienteController controlador = loader.getController();
             controlador.setUsuario(usuario);
-        }catch (Exception e){
-            //log.severe(e.getMessage());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void mostrarPanelIzquierdoAdmin(){
+    /**
+     * Muestra el panel izquierdo con la vista del administrador.
+     */
+    public void mostrarPanelIzquierdoAdmin() {
         try {
             panelIzquierdo.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/TableroAdmins.fxml"));
@@ -69,48 +76,52 @@ public class VentanaInicioController implements Initializable {
             panelIzquierdo.getChildren().add(node);
             TableroAdminController controlador = loader.getController();
             controlador.setUsuario(this.usuario);
-        }catch (Exception e){
-            //log.severe(e.getMessage());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
-    public void mostrarPanelDerechoAdminGestionarCanciones(){
+    /**
+     * Muestra el panel derecho para que el administrador gestione canciones.
+     */
+    public void mostrarPanelDerechoAdminGestionarCanciones() {
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaGestionar.fxml"));
             Node node = loader.load();
             panelDerecho.getChildren().add(node);
             VentanaGestionarController controlador = loader.getController();
-            controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
+            controlador.setAplicacion(this.aplicacion);
             controlador.setUsuario(this.usuario);
             controlador.establecerListaCancionesGenerales();
             controlador.iniciarGestionCanciones();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void mostrarPanelDerechoAdminGestionarArtistas(){
+
+    /**
+     * Muestra el panel derecho para que el administrador gestione artistas.
+     */
+    public void mostrarPanelDerechoAdminGestionarArtistas() {
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaGestionar.fxml"));
             Node node = loader.load();
             panelDerecho.getChildren().add(node);
             VentanaGestionarController controlador = loader.getController();
-            controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
+            controlador.setAplicacion(this.aplicacion);
             controlador.setUsuario(this.usuario);
             controlador.iniciarGestionArtistas();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
     /**
-     * Se usara el mismo metodo para canciones favoritas, y canciones generales
+     * Muestra el panel derecho con las canciones favoritas del cliente.
      */
-    public void mostrarPanelDerechoClienteFavoritos(){
+    public void mostrarPanelDerechoClienteFavoritos() {
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaFiltrarCanciones.fxml"));
@@ -123,52 +134,59 @@ public class VentanaInicioController implements Initializable {
             controlador.setEsVentanaFavoritos(true);
             controlador.iniciarGridPane();
             controlador.iniciarCombos();
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void mostrarBarraSuperiorCliente(AdministradorComandos administrador){
+    /**
+     * Muestra la barra superior con la vista del cliente.
+     */
+    public void mostrarBarraSuperiorCliente(AdministradorComandos administrador) {
         try {
             barraSuperior.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/BarraUsuario.fxml"));
             Node node = loader.load();
             barraSuperior.getChildren().add(node);
             BarraUsuarioController controlador = loader.getController();
-            controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
+            controlador.setAplicacion(this.aplicacion);
             controlador.setUsuario(this.usuario);
             controlador.cargarInfo();
             controlador.setAdministradorComandos(administrador);
-
-            if (administrador!=null) {
+            if (administrador != null) {
                 controlador.actualizarBotones();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void mostrarBarraSuperiorAdmin(AdministradorComandos administrador){
+    /**
+     * Muestra la barra superior con la vista del administrador.
+     */
+    public void mostrarBarraSuperiorAdmin(AdministradorComandos administrador) {
         try {
             barraSuperior.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/BarraUsuario.fxml"));
             Node node = loader.load();
             barraSuperior.getChildren().add(node);
             BarraUsuarioController controlador = loader.getController();
-            controlador.setAplicacion(this.aplicacion); //testear si cambia al llamar el de mfm
+            controlador.setAplicacion(this.aplicacion);
             controlador.setUsuario(this.usuario);
             controlador.cargarInfo();
             controlador.setAdministradorComandos(administrador);
-            if (administrador!=null) {
+            if (administrador != null) {
                 controlador.actualizarBotones();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void mostrarPanelDerechoCancionesGenerales(){
+    /**
+     * Muestra el panel derecho con las canciones generales.
+     */
+    public void mostrarPanelDerechoCancionesGenerales() {
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaFiltrarCanciones.fxml"));
@@ -180,13 +198,14 @@ public class VentanaInicioController implements Initializable {
             controlador.establecerListaCancionesGenerales();
             controlador.iniciarGridPane();
             controlador.iniciarCombos();
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
+    /**
+     * Abre la ventana de detalles de una canción específica.
+     */
     public void abrirVentanaDetalleCancion(Cancion cancion) {
         try {
             panelDerecho.getChildren().clear();
@@ -198,16 +217,17 @@ public class VentanaInicioController implements Initializable {
             controlador.setUsuario(this.usuario);
             controlador.setCancion(cancion);
             controlador.iniciarVideoDatos();
-            controlador.permitirVolverAdmin();//este ultimo boton solo funcionara para admin
-            aplicacion.ventanaCancionDetalleController=loader.getController();
-
-
+            controlador.permitirVolverAdmin();
+            aplicacion.ventanaCancionDetalleController = loader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void mostrarVentanaFiltrarArtistas(){
+    /**
+     * Muestra la ventana para filtrar artistas.
+     */
+    public void mostrarVentanaFiltrarArtistas() {
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaFiltrarArtistas.fxml"));
@@ -218,13 +238,15 @@ public class VentanaInicioController implements Initializable {
             controlador.setUsuario(this.usuario);
             controlador.actualizarTabla();
             controlador.actualizarCombos();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void mostrarVentanaBandas(Boolean esBanda){
+    /**
+     * Muestra la ventana para filtrar bandas o solistas.
+     */
+    public void mostrarVentanaBandas(Boolean esBanda) {
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaFiltrarArtistas.fxml"));
@@ -233,20 +255,19 @@ public class VentanaInicioController implements Initializable {
             VentanaFiltrarArtistasController controlador = loader.getController();
             controlador.setAplicacion(this.aplicacion);
             controlador.setUsuario(this.usuario);
-
             controlador.setEsVentanaBandaSolista(true);
             controlador.ordenarVentanaBanda(esBanda);
             controlador.actualizarTabla();
             controlador.actualizarCombos();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
+    /**
+     * Muestra el panel derecho con las canciones de un artista específico.
+     */
     public void mostrarPanelDerechoCancionesArtista(Artista artistaElegido) {
-
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaFiltrarCanciones.fxml"));
@@ -256,17 +277,17 @@ public class VentanaInicioController implements Initializable {
             controlador.setAplicacion(this.aplicacion);
             controlador.setUsuario(this.usuario);
             controlador.establecerArbolPorArtista(artistaElegido);
-
             controlador.iniciarGridPane();
             controlador.iniciarCombos();
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void mostrarPanelDerechoCrearEditarCancion(Cancion cancion){
-
+    /**
+     * Muestra el panel derecho para crear o editar una canción.
+     */
+    public void mostrarPanelDerechoCrearEditarCancion(Cancion cancion) {
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaCrearEditarCancion.fxml"));
@@ -275,18 +296,17 @@ public class VentanaInicioController implements Initializable {
             VentanaCrearEditarCancionController controlador = loader.getController();
             controlador.setAplicacion(this.aplicacion);
             controlador.setUsuario(this.usuario);
-            //para saber si se esta creando o editando
             controlador.setCancion(cancion);
             controlador.iniciarDatosCrearEditar();
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    public void mostrarPanelDerechoCrearEditarArtista(Artista artista){
-
+    /**
+     * Muestra el panel derecho para crear o editar un artista.
+     */
+    public void mostrarPanelDerechoCrearEditarArtista(Artista artista) {
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaCrearEditarArtista.fxml"));
@@ -295,18 +315,17 @@ public class VentanaInicioController implements Initializable {
             VentanaCrearEditarArtistaController controlador = loader.getController();
             controlador.setAplicacion(this.aplicacion);
             controlador.setUsuario(this.usuario);
-            //para saber si se esta creando o editando
             controlador.setArtista(artista);
             controlador.iniciarDatosCrearEditar();
-
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    public void mostrarPanelDerechoEstadisticas(Boolean empiezaGenero){
+    /**
+     * Muestra el panel derecho con las estadísticas.
+     */
+    public void mostrarPanelDerechoEstadisticas(Boolean empiezaGenero) {
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaEstadisticas.fxml"));
@@ -314,29 +333,34 @@ public class VentanaInicioController implements Initializable {
             panelDerecho.getChildren().add(node);
             VentanaEstadisticasController controlador = loader.getController();
             controlador.iniciarDatos();
-            if (empiezaGenero){
+            if (empiezaGenero) {
                 controlador.actualizarChartsGeneros();
-            }else{
+            } else {
                 controlador.actualizarChartsArtistas();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    public void mostrarPanelDerechoArchivoTextos(){
+    /**
+     * Muestra el panel derecho con la vista para gestionar archivos de texto.
+     */
+    public void mostrarPanelDerechoArchivoTextos() {
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaArchivos.fxml"));
             Node node = loader.load();
             panelDerecho.getChildren().add(node);
             VentanaArchivosController controlador = loader.getController();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Muestra la ventana del perfil del usuario.
+     */
     public void mostrarVentanaPerfil() {
         try {
             panelDerecho.getChildren().clear();
@@ -347,7 +371,6 @@ public class VentanaInicioController implements Initializable {
             controlador.setAplicacion(this.aplicacion);
             controlador.setUsuario(this.usuario);
             controlador.setearUsuario(this.usuario);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

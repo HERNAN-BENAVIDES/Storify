@@ -6,7 +6,6 @@ import co.edu.uniquindio.storify.model.Cliente;
 import co.edu.uniquindio.storify.model.TiendaMusica;
 import co.edu.uniquindio.storify.model.Usuario;
 import co.edu.uniquindio.storify.util.Alertas;
-import co.edu.uniquindio.storify.util.StorifyUtil;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,44 +22,68 @@ import lombok.Data;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-@Data
 
+@Data
 public class VentanaRegistroController implements Initializable {
 
-    public Pane paneCrearCuenta;
-    public TextField txtShowPassword;
-    public Button btnRegistrar;
-    public TextField txtNombre;
-    public TextField txtCorreo;
-    public PasswordField txtHidePassword;
-    public TextField txtApellido;
-    public Pane paneIngresar;
-    public TextField txtUsername2;
-    public TextField txtShowPassword2;
-    public PasswordField txtHidePassword2;
-    public AnchorPane paneSolid;
-    public Label txtNoRegistrado;
-    public Button btnYaTengoCuenta;
-    public Button btnRegistrarmePanel;
-    public Label txtYaRegistrado;
-    public ImageView openEye1;
-    public ImageView closeEye1;
-    public ImageView openEye2;
-    public ImageView closeEye2;
-    public String password2;
-    public String password;
+    @FXML
+    private Pane paneCrearCuenta;
+    @FXML
+    private TextField txtShowPassword;
+    @FXML
+    private Button btnRegistrar;
+    @FXML
+    private TextField txtNombre;
+    @FXML
+    private TextField txtCorreo;
+    @FXML
+    private PasswordField txtHidePassword;
+    @FXML
+    private TextField txtApellido;
+    @FXML
+    private Pane paneIngresar;
+    @FXML
+    private TextField txtUsername2;
+    @FXML
+    private TextField txtShowPassword2;
+    @FXML
+    private PasswordField txtHidePassword2;
+    @FXML
+    private AnchorPane paneSolid;
+    @FXML
+    private Label txtNoRegistrado;
+    @FXML
+    private Button btnYaTengoCuenta;
+    @FXML
+    private Button btnRegistrarmePanel;
+    @FXML
+    private Label txtYaRegistrado;
+    @FXML
+    private ImageView openEye1;
+    @FXML
+    private ImageView closeEye1;
+    @FXML
+    private ImageView openEye2;
+    @FXML
+    private ImageView closeEye2;
+
+    private String password2;
+    private String password;
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
-    public TiendaMusica tiendaMusica = mfm.getTiendaMusica();
+    private TiendaMusica tiendaMusica = mfm.getTiendaMusica();
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuarioSesion;
 
     @FXML
     private TextField txtUsername;
-
     @FXML
     private TextField txtContrasenia;
 
+    /**
+     * Método que se ejecuta al inicializar el controlador.
+     * Se establecen las configuraciones iniciales para los campos y botones.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         txtShowPassword2.setVisible(false);
@@ -71,30 +94,40 @@ public class VentanaRegistroController implements Initializable {
         openEye1.setVisible(false);
     }
 
+    /**
+     * Método para ingresar un usuario al sistema.
+     * Busca al usuario en la tienda de música y muestra un mensaje de éxito o error.
+     */
     @FXML
-    public void ingresarUsuario(){
-
+    public void ingresarUsuario() {
         try {
             Usuario usuario = mfm.getTiendaMusica().buscarUsuario(txtUsername2.getText(), txtShowPassword2.getText());
-            String nombreUsuario=usuario.getPersona().getNombre();
+            String nombreUsuario = usuario.getPersona().getNombre();
             iniciarSesionUsuario(usuario); // Guardar el usuario que inició sesión
-            Alertas.mostrarMensaje("Ingreso Exitoso", "Operación completada", "¡Haz ingresado correctamente "+nombreUsuario+"!", Alert.AlertType.INFORMATION);
-
+            Alertas.mostrarMensaje("Ingreso Exitoso", "Operación completada", "¡Haz ingresado correctamente " + nombreUsuario + "!", Alert.AlertType.INFORMATION);
         } catch (AtributoVacioException | UsuarioNoExistenteException e) {
-            Alertas.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
+            Alertas.mostrarMensaje("Error", "Entradas no válidas", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
-    // Método para guardar el usuario que inició sesión en la variable de instancia
+    /**
+     * Método para guardar el usuario que inició sesión en la variable de instancia.
+     *
+     * @param usuario El usuario que inició sesión.
+     * @throws AtributoVacioException si algún atributo está vacío.
+     * @throws UsuarioNoExistenteException si el usuario no existe.
+     */
     public void iniciarSesionUsuario(Usuario usuario) throws AtributoVacioException, UsuarioNoExistenteException {
         this.usuarioSesion = usuario;
         ventana.close();
         aplicacion.mostrarVentanaPrincipal(usuario);
     }
 
-
-    public void switchFormbtnIngresarPanel(){
-        TranslateTransition slider= new TranslateTransition();
+    /**
+     * Cambia el formulario para mostrar el panel de ingresar.
+     */
+    public void switchFormbtnIngresarPanel() {
+        TranslateTransition slider = new TranslateTransition();
         slider.setNode(paneSolid);
         slider.setToX(0);
         slider.setDuration(Duration.seconds(.7));
@@ -104,16 +137,15 @@ public class VentanaRegistroController implements Initializable {
             btnRegistrarmePanel.setVisible(true);
             txtNoRegistrado.setVisible(true);
             limpiarRegistrarPanel();
-
         });
-
         slider.play();
-
     }
 
-    public void switchFormbtnRegistrarmePanel(){
-        TranslateTransition slider= new TranslateTransition();
-
+    /**
+     * Cambia el formulario para mostrar el panel de registrar.
+     */
+    public void switchFormbtnRegistrarmePanel() {
+        TranslateTransition slider = new TranslateTransition();
         slider.setNode(paneSolid);
         slider.setToX(370);
         slider.setDuration(Duration.seconds(.7));
@@ -124,10 +156,14 @@ public class VentanaRegistroController implements Initializable {
             txtNoRegistrado.setVisible(false);
             limpiarIngresarPanel();
         });
-
         slider.play();
-
     }
+
+    /**
+     * Muestra la contraseña en texto plano cuando se hace clic en el icono del ojo.
+     *
+     * @param mousevent Evento de clic del ratón.
+     */
     @FXML
     public void Open_Eye_OnClickAction2(MouseEvent mousevent) {
         txtShowPassword2.setVisible(false);
@@ -139,8 +175,13 @@ public class VentanaRegistroController implements Initializable {
         openEye2.setVisible(false);
         closeEye2.setVisible(true);
         txtHidePassword.setVisible(true);
-
     }
+
+    /**
+     * Oculta la contraseña cuando se hace clic en el icono del ojo cerrado.
+     *
+     * @param mousevent Evento de clic del ratón.
+     */
     @FXML
     public void Close_Eye_ClickOnAction2(MouseEvent mousevent) {
         txtShowPassword2.setVisible(true);
@@ -153,6 +194,12 @@ public class VentanaRegistroController implements Initializable {
         closeEye2.setVisible(false);
         txtHidePassword.setVisible(false);
     }
+
+    /**
+     * Sincroniza las contraseñas visibles y ocultas cuando se muestran.
+     *
+     * @param keyevent Evento de tecla presionada.
+     */
     @FXML
     public void ShowPasswordOnAction2(KeyEvent keyevent) {
         password2 = txtShowPassword2.getText();
@@ -161,43 +208,58 @@ public class VentanaRegistroController implements Initializable {
         password = txtShowPassword.getText();
         txtHidePassword.setText(password);
     }
+
+    /**
+     * Sincroniza las contraseñas visibles y ocultas cuando se ocultan.
+     *
+     * @param keyevent Evento de tecla presionada.
+     */
     @FXML
     public void HidePasswordKeyReleased2(KeyEvent keyevent) {
-
         password2 = txtHidePassword2.getText();
-        txtShowPassword2.setText(String.valueOf(password2));
+        txtShowPassword2.setText(password2);
 
         password = txtHidePassword.getText();
-        txtShowPassword.setText(String.valueOf(password));
+        txtShowPassword.setText(password);
     }
-    public void limpiarIngresarPanel(){
+
+    /**
+     * Limpia los campos del panel de ingresar.
+     */
+    public void limpiarIngresarPanel() {
         txtUsername2.clear();
         txtShowPassword2.clear();
         txtHidePassword2.clear();
-        password2="";
+        password2 = "";
     }
-    public void limpiarRegistrarPanel(){
+
+    /**
+     * Limpia los campos del panel de registrar.
+     */
+    public void limpiarRegistrarPanel() {
         txtNombre.clear();
         txtApellido.clear();
         txtCorreo.clear();
         txtUsername.clear();
         txtShowPassword.clear();
         txtHidePassword.clear();
-        password="";
+        password = "";
     }
-    public void registrarCliente(){
+
+    /**
+     * Registra un nuevo cliente en el sistema.
+     * Crea un nuevo cliente y usuario, y muestra un mensaje de éxito o error.
+     */
+    public void registrarCliente() {
         try {
             Cliente cliente = tiendaMusica.crearCliente(txtNombre.getText(), txtApellido.getText());
             Usuario usuario = tiendaMusica.crearUsuario(txtUsername.getText(), txtShowPassword.getText(), txtCorreo.getText(), cliente);
             tiendaMusica.agregarUsuario(usuario);
-            Alertas.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha registrado correctamente el cliente: "+cliente.getNombre(), Alert.AlertType.INFORMATION);
+            Alertas.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha registrado correctamente el cliente: " + cliente.getNombre(), Alert.AlertType.INFORMATION);
             mfm.guardarDatosBinario();
             limpiarRegistrarPanel();
-
         } catch (AtributoVacioException | UsuarioYaRegistradoException e) {
             Alertas.mostrarAlertaError(e.getMessage());
         }
-
     }
-
 }
