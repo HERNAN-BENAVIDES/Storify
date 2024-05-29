@@ -10,7 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,18 +20,22 @@ import lombok.Data;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-@Data
 
+/**
+ * Controlador para la ventana de filtrado de artistas.
+ * Esta clase maneja la lógica para filtrar y mostrar artistas según varios criterios.
+ */
+@Data
 public class VentanaFiltrarArtistasController implements Initializable {
 
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
-    BinaryTree<Artista> artistas= mfm.getTiendaMusica().getArtistas();
+    private BinaryTree<Artista> artistas = mfm.getTiendaMusica().getArtistas();
     private Cancion cancion;
-    private boolean esVentanaBandaSolista=false;
-    private boolean esBanda=false;
+    private boolean esVentanaBandaSolista = false;
+    private boolean esBanda = false;
 
     @FXML
     private Text txtTipoArtista;
@@ -64,14 +67,23 @@ public class VentanaFiltrarArtistasController implements Initializable {
     @FXML
     private ComboBox<String> comboNacionalidad;
 
+    /**
+     * Inicializa los componentes de la interfaz.
+     *
+     * @param url La URL de ubicación.
+     * @param resourceBundle El conjunto de recursos.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        // Método inicial vacío
     }
 
-    public void actualizarTabla(){
+    /**
+     * Actualiza la tabla de artistas con los datos filtrados.
+     */
+    public void actualizarTabla() {
         tablaArtistas.getItems().clear();
-        ObservableList<Artista> listaArtistasProperty= FXCollections.observableArrayList();
+        ObservableList<Artista> listaArtistasProperty = FXCollections.observableArrayList();
         // Asignar las propiedades de las columnas
         columnaTipoArtista.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().obtenerTipoArtistaString()));
         columnaCodigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
@@ -84,68 +96,81 @@ public class VentanaFiltrarArtistasController implements Initializable {
         tablaArtistas.setItems(listaArtistasProperty);
     }
 
-    public void filtrarMinimo(){
-        String minimoNacionalidad=comboNacionalidad.getValue();
-        String minimoTipoArtista=comboTipoArtista.getValue();
-        if (!esVentanaBandaSolista){ //ventana normal
-
-            BinaryTree<Artista> artistasArbolMin= mfm.getTiendaMusica().obtenerMinimoFiltroArtistas(minimoNacionalidad, minimoTipoArtista);
-            this.artistas=artistasArbolMin;
+    /**
+     * Filtra los artistas según los criterios mínimos seleccionados en los ComboBox.
+     */
+    public void filtrarMinimo() {
+        String minimoNacionalidad = comboNacionalidad.getValue();
+        String minimoTipoArtista = comboTipoArtista.getValue();
+        if (!esVentanaBandaSolista) { // ventana normal
+            BinaryTree<Artista> artistasArbolMin = mfm.getTiendaMusica().obtenerMinimoFiltroArtistas(minimoNacionalidad, minimoTipoArtista);
+            this.artistas = artistasArbolMin;
             actualizarTabla();
-        } else{ //venata solista o banda
-            if (esBanda){ //en caso de q la ventana filtro artista sea solo banda
-                minimoTipoArtista="BANDA";
-            }else{
-                minimoTipoArtista="SOLISTA";
+        } else { // ventana solista o banda
+            if (esBanda) { // en caso de que la ventana filtro artista sea solo banda
+                minimoTipoArtista = "BANDA";
+            } else {
+                minimoTipoArtista = "SOLISTA";
             }
-            BinaryTree<Artista> artistasArbolMin= mfm.getTiendaMusica().obtenerMaximoFiltroArtistas(minimoNacionalidad, minimoTipoArtista);
-            this.artistas=artistasArbolMin;
+            BinaryTree<Artista> artistasArbolMin = mfm.getTiendaMusica().obtenerMaximoFiltroArtistas(minimoNacionalidad, minimoTipoArtista);
+            this.artistas = artistasArbolMin;
             actualizarTabla();
         }
     }
 
-    public void filtrarMaximo(){
-        String minimoNacionalidad=comboNacionalidad.getValue();
-        String minimoTipoArtista=comboTipoArtista.getValue();
+    /**
+     * Filtra los artistas según los criterios máximos seleccionados en los ComboBox.
+     */
+    public void filtrarMaximo() {
+        String minimoNacionalidad = comboNacionalidad.getValue();
+        String minimoTipoArtista = comboTipoArtista.getValue();
 
-        BinaryTree<Artista> artistasArbolMax= mfm.getTiendaMusica().obtenerMaximoFiltroArtistas(minimoNacionalidad, minimoTipoArtista);
-        this.artistas=artistasArbolMax;
+        BinaryTree<Artista> artistasArbolMax = mfm.getTiendaMusica().obtenerMaximoFiltroArtistas(minimoNacionalidad, minimoTipoArtista);
+        this.artistas = artistasArbolMax;
         actualizarTabla();
     }
 
-    public void actualizarCombos(){
-        //obtenerNacionalidadesSinRepetir
-
-        //llenar combobox
-        ObservableList<String> tipoNacionalidad=FXCollections.observableArrayList();
+    /**
+     * Actualiza los ComboBox con las opciones de nacionalidad y tipo de artista.
+     */
+    public void actualizarCombos() {
+        // Obtener nacionalidades sin repetir
+        ObservableList<String> tipoNacionalidad = FXCollections.observableArrayList();
         tipoNacionalidad.addAll(mfm.getTiendaMusica().obtenerNacionalidadesSinRepetir());
         comboNacionalidad.setItems(tipoNacionalidad);
 
-        //llenar combobox
-        ObservableList<String> tiposArtistas=FXCollections.observableArrayList();
+        // Llenar combobox con tipos de artistas
+        ObservableList<String> tiposArtistas = FXCollections.observableArrayList();
         tiposArtistas.add("SOLISTA");
         tiposArtistas.add("BANDA");
         comboTipoArtista.setItems(tiposArtistas);
     }
 
+    /**
+     * Ordena la ventana para mostrar solo bandas o solistas.
+     *
+     * @param esBanda Si es true, muestra solo bandas; si es false, muestra solo solistas.
+     */
     public void ordenarVentanaBanda(boolean esBanda) {
         comboTipoArtista.setVisible(false);
         txtTipoArtista.setVisible(false);
         btnFiltrarMax.setVisible(false);
-        if (esBanda){
+        if (esBanda) {
             setEsBanda(true);
-            BinaryTree<Artista> artistasArbolMax= mfm.getTiendaMusica().obtenerMinimoFiltroArtistas(null, "BANDA");
-            this.artistas=artistasArbolMax;
-
-        }else{
+            BinaryTree<Artista> artistasArbolMax = mfm.getTiendaMusica().obtenerMinimoFiltroArtistas(null, "BANDA");
+            this.artistas = artistasArbolMax;
+        } else {
             setEsBanda(false);
-            BinaryTree<Artista> artistasArbolMax= mfm.getTiendaMusica().obtenerMinimoFiltroArtistas(null, "SOLISTA");
-            this.artistas=artistasArbolMax;
+            BinaryTree<Artista> artistasArbolMax = mfm.getTiendaMusica().obtenerMinimoFiltroArtistas(null, "SOLISTA");
+            this.artistas = artistasArbolMax;
         }
     }
 
-    public void verCanciones(){
-        Artista artistaElegido=tablaArtistas.getSelectionModel().getSelectedItem();
+    /**
+     * Muestra las canciones del artista seleccionado.
+     */
+    public void verCanciones() {
+        Artista artistaElegido = tablaArtistas.getSelectionModel().getSelectedItem();
         aplicacion.verCancionesDeArtista(artistaElegido);
     }
 }

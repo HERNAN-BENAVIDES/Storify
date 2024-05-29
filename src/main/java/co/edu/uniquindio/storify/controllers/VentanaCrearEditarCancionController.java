@@ -25,14 +25,18 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para la ventana de creación y edición de canciones.
+ * Esta clase maneja la lógica para crear nuevas canciones, editar las existentes
+ * y gestionar las relaciones con los artistas.
+ */
 @Data
-
 public class VentanaCrearEditarCancionController implements Initializable {
 
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
-    BinaryTree<Artista> artistas= mfm.getTiendaMusica().getArtistas();
+    private BinaryTree<Artista> artistas = mfm.getTiendaMusica().getArtistas();
     private Usuario usuario;
     private Cancion cancion;
     private String caratulaElegida;
@@ -83,31 +87,36 @@ public class VentanaCrearEditarCancionController implements Initializable {
     @FXML
     private Button btnCrear;
 
+    /**
+     * Inicializa los componentes de la interfaz.
+     *
+     * @param url La URL de ubicación.
+     * @param resourceBundle El conjunto de recursos.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        // Método inicial vacío
     }
 
-    public void iniciarDatosCrearEditar(){
+    /**
+     * Inicializa los datos para la creación o edición de una canción.
+     * Configura los campos y la tabla según si se está creando o editando una canción.
+     */
+    public void iniciarDatosCrearEditar() {
         actualizarTabla();
-        if (cancion!=null){ //si la cancion existe se tratará de una edicion
+        if (cancion != null) { // Si la canción existe, se trata de una edición
             txtNombre.setText(cancion.getNombre());
             txtAlbum.setText(cancion.getAlbum());
             txtAnio.setText(String.valueOf(cancion.getAnioLanzamiento()));
             txtDuracion.setText(cancion.getDuracion());
             txtYoutube.setText(cancion.getUrlYoutube());
             actualizarCombo();
-            String generoCancion=cancion.obtenerGeneroComoString();
-            comboGenero.setValue(generoCancion);
-            caratulaElegida=cancion.getCaratula();
-
-
+            comboGenero.setValue(cancion.obtenerGeneroComoString());
+            caratulaElegida = cancion.getCaratula();
 
             try {
-                Artista artistaCancion= mfm.getTiendaMusica().buscarArtistaCancion(cancion);
+                Artista artistaCancion = mfm.getTiendaMusica().buscarArtistaCancion(cancion);
                 tablaAutores.getSelectionModel().select(artistaCancion);
-
-
                 Image image = new Image(getClass().getResourceAsStream(cancion.getCaratula()));
                 fotoCaratula.setImage(image);
             } catch (Exception e) {
@@ -116,33 +125,28 @@ public class VentanaCrearEditarCancionController implements Initializable {
                     fotoCaratula.setImage(image);
                 }
             }
-        }else{ //si no se tratara de una creacion cancion
+        } else { // Si no, se trata de una creación de canción
             btnCrear.setVisible(true);
             btnGuardar.setVisible(false);
             actualizarCombo();
-
             Image image = new Image(getClass().getResourceAsStream("/imagenes/Banda Icon.png"));
             fotoCaratula.setImage(image);
-
-
         }
     }
 
-    public void actualizarCombo(){
-        ObservableList<String> tipoGeneroObservable= FXCollections.observableArrayList();
-        tipoGeneroObservable.add("Rock");
-        tipoGeneroObservable.add("Pop");
-        tipoGeneroObservable.add("Salsa");
-        tipoGeneroObservable.add("Bachata");
-        tipoGeneroObservable.add("Punk");
-        tipoGeneroObservable.add("Reggaeton");
-        tipoGeneroObservable.add("Electronica");
-        tipoGeneroObservable.add("R&B");
-        tipoGeneroObservable.add("Otro");
+    /**
+     * Actualiza el combo de géneros musicales.
+     */
+    public void actualizarCombo() {
+        ObservableList<String> tipoGeneroObservable = FXCollections.observableArrayList();
+        tipoGeneroObservable.addAll("Rock", "Pop", "Salsa", "Bachata", "Punk", "Reggaeton", "Electronica", "R&B", "Otro");
         comboGenero.setItems(tipoGeneroObservable);
     }
 
-    public void guardar(){
+    /**
+     * Guarda los cambios realizados en una canción existente.
+     */
+    public void guardar() {
         try {
             Cancion cancionEditada = mfm.getTiendaMusica().editarCancion(
                     this.cancion,
@@ -155,45 +159,50 @@ public class VentanaCrearEditarCancionController implements Initializable {
                     txtYoutube.getText()
             );
             mfm.guardarDatosBinario();
-            Alertas.mostrarMensaje("Edición Confirmada", "Operación completada", "Se ha editado correctamente la canción: "+cancionEditada.getNombre(), Alert.AlertType.INFORMATION);
+            Alertas.mostrarMensaje("Edición Confirmada", "Operación completada", "Se ha editado correctamente la canción: " + cancionEditada.getNombre(), Alert.AlertType.INFORMATION);
             aplicacion.motrarVentanaGestionCanciones();
-
-        } catch (AtributoVacioException| ArtistaNoEncontradoException e) {
-            Alertas.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
+        } catch (AtributoVacioException | ArtistaNoEncontradoException e) {
+            Alertas.mostrarMensaje("Error", "Entradas no válidas", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
-    public void crear(){
-
+    /**
+     * Crea una nueva canción con los datos proporcionados en el formulario.
+     */
+    public void crear() {
         try {
-            Cancion cancionNueva= mfm.getTiendaMusica().crearCancion(
+            Cancion cancionNueva = mfm.getTiendaMusica().crearCancion(
                     txtNombre.getText(),
                     txtAlbum.getText(),
                     caratulaElegida,
                     txtAnio.getText(),
                     txtDuracion.getText(),
                     comboGenero.getValue(),
-                    txtYoutube.getText());
-            Artista artistaElegido= tablaAutores.getSelectionModel().getSelectedItem();
+                    txtYoutube.getText()
+            );
+            Artista artistaElegido = tablaAutores.getSelectionModel().getSelectedItem();
             mfm.getTiendaMusica().agregarCancion(cancionNueva, artistaElegido);
             mfm.guardarDatosBinario();
-            Alertas.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha registrado correctamente la canción: "+cancionNueva.getNombre(), Alert.AlertType.INFORMATION);
+            Alertas.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha registrado correctamente la canción: " + cancionNueva.getNombre(), Alert.AlertType.INFORMATION);
             aplicacion.motrarVentanaGestionCanciones();
-
         } catch (AtributoVacioException | CancionYaRegistradaException e) {
-            Alertas.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
+            Alertas.mostrarMensaje("Error", "Entradas no válidas", e.getMessage(), Alert.AlertType.ERROR);
         }
-
     }
 
-    public void volver(){
+    /**
+     * Vuelve a la ventana de gestión de canciones.
+     */
+    public void volver() {
         aplicacion.motrarVentanaGestionCanciones();
     }
 
-    public void actualizarTabla(){
+    /**
+     * Actualiza la tabla de artistas con los datos actuales.
+     */
+    public void actualizarTabla() {
         tablaAutores.getItems().clear();
-        ObservableList<Artista> listaArtistasProperty= FXCollections.observableArrayList();
-        // Asignar las propiedades de las columnas
+        ObservableList<Artista> listaArtistasProperty = FXCollections.observableArrayList();
         columnaTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().obtenerTipoArtistaString()));
         columnaCodigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
         columnaNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
@@ -204,7 +213,10 @@ public class VentanaCrearEditarCancionController implements Initializable {
         tablaAutores.setItems(listaArtistasProperty);
     }
 
-    public void subirFoto(){
+    /**
+     * Abre un cuadro de diálogo para seleccionar una imagen y la asigna como carátula de la canción.
+     */
+    public void subirFoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Archivos de Imagen", "*.jpg", "*.png", "*.jpeg"));
@@ -215,16 +227,12 @@ public class VentanaCrearEditarCancionController implements Initializable {
         if (selectedFile != null) {
             Image image = new Image(selectedFile.toURI().toString());
             fotoCaratula.setImage(image);
-            this.caratulaElegida=fotoCaratula.getImage().getUrl();
+            this.caratulaElegida = fotoCaratula.getImage().getUrl();
         } else {
             // Restaurar la imagen a null si no se selecciona ninguna
-            Image image =  new Image ("/imagenes/user.png");
+            Image image = new Image("/imagenes/user.png");
             fotoCaratula.setImage(image);
-            this.caratulaElegida=fotoCaratula.getImage().getUrl();
+            this.caratulaElegida = fotoCaratula.getImage().getUrl();
         }
-
-
     }
-
-
 }

@@ -10,10 +10,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import lombok.Data;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-@Data
 
+/**
+ * Controlador para la barra de usuario en la interfaz de la aplicación.
+ * Maneja las acciones de deshacer, rehacer y salir de la cuenta de usuario.
+ */
+@Data
 public class BarraUsuarioController implements Initializable {
 
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
@@ -22,53 +27,74 @@ public class BarraUsuarioController implements Initializable {
     private Usuario usuario;
     private AdministradorComandos administradorComandos;
 
-
     @FXML
     private Button btnDeshacer;
 
     @FXML
     private Button btnRehacer;
 
+    /**
+     * Método de inicialización que se ejecuta cuando se carga la interfaz.
+     * Establece la visibilidad inicial de los botones de deshacer y rehacer.
+     *
+     * @param url La URL de la localización utilizada para resolver rutas relativas.
+     * @param resourceBundle El recurso utilizado para localizar objetos.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnDeshacer.setVisible(false);
         btnRehacer.setVisible(false);
     }
 
-    public void cargarInfo(){
-        //bienvenida de nombre y hilo tiempo
+    /**
+     * Carga la información del usuario y muestra un mensaje de bienvenida.
+     * (Implementación pendiente).
+     */
+    public void cargarInfo() {
+        // bienvenida de nombre y hilo tiempo
     }
 
-    public void actualizarBotones(){
+    /**
+     * Actualiza la visibilidad de los botones de deshacer y rehacer
+     * según el estado de las pilas correspondientes en el administrador de comandos.
+     */
+    public void actualizarBotones() {
         aplicacion.detenerVideoYoutube();
-
         btnDeshacer.setVisible(!administradorComandos.getPilaDeshacer().isEmpty());
         btnRehacer.setVisible(!administradorComandos.getPilaRehacer().isEmpty());
     }
 
-    public void deshacer(){
+    /**
+     * Deshace la última acción realizada, actualiza los botones y muestra un mensaje de confirmación.
+     */
+    public void deshacer() {
         aplicacion.detenerVideoYoutube();
         administradorComandos.deshacer();
         mfm.guardarDatosBinario();
         actualizarBotones();
         aplicacion.ventanaInicioController.mostrarPanelDerechoClienteFavoritos();
-        Alertas.mostrarMensaje("Acción Comando", "Operación completada", "¡Deshiciste correctamente la anterior acción! Puedes rehacerla si lo requieres", Alert.AlertType.INFORMATION);
-
+        Alertas.mostrarMensaje("Acción Comando", "Operación completada",
+                "¡Deshiciste correctamente la anterior acción! Puedes rehacerla si lo requieres", Alert.AlertType.INFORMATION);
     }
 
-    public void rehacer(){
+    /**
+     * Rehace la última acción deshecha, actualiza los botones y muestra un mensaje de confirmación.
+     */
+    public void rehacer() {
         aplicacion.detenerVideoYoutube();
         administradorComandos.rehacer();
         mfm.guardarDatosBinario();
         actualizarBotones();
-        Alertas.mostrarMensaje("Acción Comando", "Operación completada", "¡Rehiciste correctamente la anterior acción! Puedes deshacerla si lo requieres", Alert.AlertType.INFORMATION);
+        Alertas.mostrarMensaje("Acción Comando", "Operación completada",
+                "¡Rehiciste correctamente la anterior acción! Puedes deshacerla si lo requieres", Alert.AlertType.INFORMATION);
         aplicacion.ventanaInicioController.mostrarPanelDerechoClienteFavoritos();
     }
 
-    public void salirCuenta(){
+    /**
+     * Sale de la cuenta del usuario actual y muestra la ventana de registro e ingreso.
+     */
+    public void salirCuenta() {
         aplicacion.detenerVideoYoutube();
-
         aplicacion.mostrarVentanaRegistroIngreso();
     }
-
 }

@@ -31,8 +31,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-@Data
 
+/**
+ * Controlador para la ventana de gestión de canciones y artistas.
+ * Esta clase maneja la lógica para gestionar (crear, editar, eliminar) canciones y artistas.
+ */
+@Data
 public class VentanaGestionarController implements Initializable {
 
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
@@ -40,15 +44,15 @@ public class VentanaGestionarController implements Initializable {
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
     private ListaEnlazadaSimpleCircular<Cancion> listaCanciones = new ListaEnlazadaSimpleCircular<>();
-    BinaryTree<Artista> listaArtistas= mfm.getTiendaMusica().getArtistas();
+    BinaryTree<Artista> listaArtistas = mfm.getTiendaMusica().getArtistas();
     private Boolean esGestionCanciones;
     private Boolean esGestionArtistas;
 
-    //DATOS VALOR CAMBIANTE PARA LAS VENTANAS
+    // Variables para almacenar los objetos seleccionados en la gestión
     public Cancion cancionElegida;
     public Artista artistaElegido;
 
-    //listeners
+    // Listeners
     private MyListenerCancion myListenerCancion;
     private MyListenerArtista myListenerArtista;
 
@@ -97,19 +101,27 @@ public class VentanaGestionarController implements Initializable {
     @FXML
     private TableColumn<Artista, String> columnaNumCanciones;
 
+    /**
+     * Inicializa los componentes de la interfaz.
+     *
+     * @param url            la URL de inicialización
+     * @param resourceBundle el conjunto de recursos
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //inicializan ambas, scroll y tabla, como invisibles
+        // Inicializan ambas, scroll y tabla, como invisibles
         tablaArtistas.setVisible(false);
         grid.setVisible(false);
         scrollGrid.setVisible(false);
         scrollTabla.setVisible(false);
-
     }
 
+    /**
+     * Inicia la gestión de canciones, configurando la vista y cargando las canciones.
+     */
     public void iniciarGestionCanciones() {
-        esGestionCanciones=true;
-        esGestionArtistas=false;
+        esGestionCanciones = true;
+        esGestionArtistas = false;
         txtAdvertencia.setText("Antes de elegir una opción de gestión, tenga en cuenta que debe seleccionar una canción");
         txtTituloGestion.setText("Gestión de Canciones");
         iniciarScrollCanciones();
@@ -117,13 +129,15 @@ public class VentanaGestionarController implements Initializable {
         scrollGrid.setVisible(true);
         tablaArtistas.setVisible(false);
         scrollTabla.setVisible(false);
-
     }
 
-    public void iniciarTablaArtistas(){
+    /**
+     * Inicia la tabla de artistas, configurando las columnas y cargando los artistas.
+     */
+    public void iniciarTablaArtistas() {
         establecerListaArtistasGenerales();
         tablaArtistas.getItems().clear();
-        ObservableList<Artista> listaArtistasProperty= FXCollections.observableArrayList();
+        ObservableList<Artista> listaArtistasProperty = FXCollections.observableArrayList();
         // Asignar las propiedades de las columnas
         columnaTipoArtista.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().obtenerTipoArtistaString()));
         columnaCodigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
@@ -136,9 +150,12 @@ public class VentanaGestionarController implements Initializable {
         tablaArtistas.setItems(listaArtistasProperty);
     }
 
-    public void iniciarGestionArtistas(){
-        esGestionArtistas=true;
-        esGestionCanciones=false;
+    /**
+     * Inicia la gestión de artistas, configurando la vista y cargando los artistas.
+     */
+    public void iniciarGestionArtistas() {
+        esGestionArtistas = true;
+        esGestionCanciones = false;
         txtAdvertencia.setText("Antes de elegir una opción de gestión, tenga en cuenta que debe seleccionar un artista");
         txtTituloGestion.setText("Gestión de Artistas");
         grid.setVisible(false);
@@ -146,18 +163,15 @@ public class VentanaGestionarController implements Initializable {
         tablaArtistas.setVisible(true);
         scrollTabla.setVisible(true);
         iniciarTablaArtistas();
-
     }
 
-    public void iniciarScrollCanciones()  {
+    /**
+     * Inicia el scroll de canciones, configurando la vista y cargando las canciones.
+     */
+    public void iniciarScrollCanciones() {
         establecerListaCancionesGenerales();
         if (listaCanciones.size() > 0) {
-            myListenerCancion = new MyListenerCancion() {
-                @Override
-                public void onClickListener(Cancion cancion) {
-                    setCancionElegida(cancion);
-                }
-            };
+            myListenerCancion = cancion -> setCancionElegida(cancion);
         }
 
         int column = 0;
@@ -197,69 +211,82 @@ public class VentanaGestionarController implements Initializable {
                 } while (currentNode != null && currentNode != listaCanciones.getHeadNode()); // Seguir iterando hasta que se vuelva al nodo de inicio
             }
 
-            scrollGrid.setVvalue(0.05); //para que no se vea el espacio en blanco de 2 cm entre el filtro y el panel
-        } catch (IOException e) {
+            scrollGrid.setVvalue(0.05); // Para que no se vea el espacio en blanco de 2 cm entre el filtro y el panel
+        } catch (IOException | ArtistaNoEncontradoException e) {
             e.printStackTrace();
-        } catch (ArtistaNoEncontradoException e) {
-            throw new RuntimeException(e);
         }
     }
 
-    public void establecerListaCancionesGenerales(){
-        listaCanciones= mfm.getTiendaMusica().obtenerCancionesGenerales();
+    /**
+     * Establece la lista de canciones generales.
+     */
+    public void establecerListaCancionesGenerales() {
+        listaCanciones = mfm.getTiendaMusica().obtenerCancionesGenerales();
     }
 
-    public void establecerListaArtistasGenerales(){
-        listaArtistas=mfm.getTiendaMusica().getArtistas();
+    /**
+     * Establece la lista de artistas generales.
+     */
+    public void establecerListaArtistasGenerales() {
+        listaArtistas = mfm.getTiendaMusica().getArtistas();
     }
 
-
-    public void crear(){
+    /**
+     * Abre la ventana de creación o edición según el tipo de gestión.
+     */
+    public void crear() {
         if (esGestionCanciones) {
-            Cancion cancionVacia=null;
+            Cancion cancionVacia = null;
             aplicacion.mostrarVentanaCrearEditarCancion(cancionVacia);
-        }else if (esGestionArtistas){
-            Artista artistaVacio=null;
+        } else if (esGestionArtistas) {
+            Artista artistaVacio = null;
             aplicacion.mostrarVentanaCrearEditarArtista(artistaVacio);
         }
-
     }
 
+    /**
+     * Elimina la canción o el artista seleccionado.
+     *
+     * @throws EmptyNodeException si no se puede eliminar el nodo vacío.
+     */
     public void eliminar() throws EmptyNodeException {
         if (esGestionCanciones) {
-            if (cancionElegida!=null){
-                if (confirmarEliminacion("la canción")){
+            if (cancionElegida != null) {
+                if (confirmarEliminacion("la canción")) {
                     mfm.getTiendaMusica().eliminarCancion(cancionElegida);
                     mfm.guardarDatosBinario();
                     iniciarScrollCanciones();
-                    cancionElegida=null;
+                    cancionElegida = null;
                 }
-            }else{
+            } else {
                 Alertas.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione una canción primero", Alert.AlertType.ERROR);
             }
-        } else if (esGestionArtistas){
-            artistaElegido=tablaArtistas.getSelectionModel().getSelectedItem();
+        } else if (esGestionArtistas) {
+            artistaElegido = tablaArtistas.getSelectionModel().getSelectedItem();
 
-            if (artistaElegido!=null){
-                if (confirmarEliminacion("el artista")){
+            if (artistaElegido != null) {
+                if (confirmarEliminacion("el artista")) {
                     mfm.getTiendaMusica().eliminarArtistaArbol(artistaElegido);
                     mfm.guardarDatosBinario();
                     iniciarTablaArtistas();
-                    artistaElegido=null;
+                    artistaElegido = null;
                 }
-            }else{
+            } else {
                 Alertas.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un artista primero", Alert.AlertType.ERROR);
             }
-
         }
-
-
     }
 
+    /**
+     * Confirma la eliminación del objeto seleccionado.
+     *
+     * @param objeto el objeto a eliminar
+     * @return true si el usuario confirma, false si cancela
+     */
     public boolean confirmarEliminacion(String objeto) {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle("Confirmar Eliminación");
-        alerta.setHeaderText("¿Está seguro de eliminar a "+objeto+" seleccionado/a?");
+        alerta.setHeaderText("¿Está seguro de eliminar a " + objeto + " seleccionado/a?");
         alerta.setContentText("Esta acción no se puede deshacer.");
 
         // Configurar los botones del cuadro de diálogo
@@ -275,11 +302,16 @@ public class VentanaGestionarController implements Initializable {
         return resultado.isPresent() && resultado.get() == botonSi;
     }
 
+    /**
+     * Confirma la acción de mostrar detalles.
+     *
+     * @return true si el usuario confirma, false si cancela
+     */
     public boolean confirmarDetalle() {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle("Confirmar Detalle");
         alerta.setHeaderText("Esta acción solo le mostrará las canciones del artista elegido");
-        alerta.setContentText("Todos los detalles del artista estan en la tabla");
+        alerta.setContentText("Todos los detalles del artista están en la tabla");
 
         // Configurar los botones del cuadro de diálogo
         ButtonType botonSi = new ButtonType("Sí");
@@ -294,47 +326,46 @@ public class VentanaGestionarController implements Initializable {
         return resultado.isPresent() && resultado.get() == botonSi;
     }
 
-    public void editar(){
+    /**
+     * Abre la ventana de edición según el tipo de gestión.
+     */
+    public void editar() {
         if (esGestionCanciones) {
-            if (cancionElegida!=null){
+            if (cancionElegida != null) {
                 aplicacion.mostrarVentanaCrearEditarCancion(cancionElegida);
-            }else{
+            } else {
                 Alertas.mostrarMensaje(
                         "Error", "Entrada no valida", "Por favor seleccione una canción primero", Alert.AlertType.ERROR);
             }
-        }else if (esGestionArtistas){
-            artistaElegido=tablaArtistas.getSelectionModel().getSelectedItem();
-            if (artistaElegido!=null){
+        } else if (esGestionArtistas) {
+            artistaElegido = tablaArtistas.getSelectionModel().getSelectedItem();
+            if (artistaElegido != null) {
                 aplicacion.mostrarVentanaCrearEditarArtista(artistaElegido);
-            }else{
+            } else {
                 Alertas.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un artista primero", Alert.AlertType.ERROR);
             }
         }
-
     }
 
-    public void detalles(){
-
+    /**
+     * Muestra los detalles de la canción o el artista seleccionado.
+     */
+    public void detalles() {
         if (esGestionCanciones) {
-            if (cancionElegida!=null){
+            if (cancionElegida != null) {
                 aplicacion.abrirDetalleCancion(cancionElegida);
-            }else{
+            } else {
                 Alertas.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione una canción primero", Alert.AlertType.ERROR);
             }
-        }else if (esGestionArtistas){
-            artistaElegido=tablaArtistas.getSelectionModel().getSelectedItem();
-            if (artistaElegido!=null) {
+        } else if (esGestionArtistas) {
+            artistaElegido = tablaArtistas.getSelectionModel().getSelectedItem();
+            if (artistaElegido != null) {
                 if (confirmarDetalle()) {
-                    aplicacion.verCancionesDeArtista(artistaElegido); //colocar boton volver en esa ventana, if cliente null
+                    aplicacion.verCancionesDeArtista(artistaElegido); // Colocar botón volver en esa ventana, if cliente null
                 }
-            }else{
+            } else {
                 Alertas.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un artista primero", Alert.AlertType.ERROR);
-
             }
         }
-
     }
-
-
-
 }

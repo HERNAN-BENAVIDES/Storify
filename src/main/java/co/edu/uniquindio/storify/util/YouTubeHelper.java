@@ -14,24 +14,51 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Utilidad para interactuar con la API de YouTube.
+ * Esta clase proporciona métodos para obtener estadísticas de videos de YouTube.
+ */
 public class YouTubeHelper {
 
      private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
      private static final String API_KEY = "AIzaSyAJsq8canZkjSv_6SvKVSbHcXhoVk5PJUM"; // Reemplaza con tu clave de API
 
-
+     /**
+      * Obtiene el número de vistas de un video de YouTube dado su URL.
+      *
+      * @param url La URL del video de YouTube.
+      * @return El número de vistas del video.
+      * @throws GeneralSecurityException Si ocurre un problema de seguridad.
+      * @throws IOException Si ocurre un problema de I/O.
+      */
      public static long obtenerVistasVideo(String url) throws GeneralSecurityException, IOException {
           String videoId = obtenerVideoId(url); // El ID del video que deseas analizar
           return getYouTubeVideoViews(videoId);
      }
 
+     /**
+      * Extrae el ID del video de YouTube a partir de su URL.
+      *
+      * @param url La URL del video de YouTube.
+      * @return El ID del video de YouTube.
+      */
      private static String obtenerVideoId(String url) {
           return url.substring(url.lastIndexOf("=") + 1);
      }
 
+     /**
+      * Obtiene el número de vistas de un video de YouTube dado su ID.
+      *
+      * @param videoId El ID del video de YouTube.
+      * @return El número de vistas del video.
+      * @throws IOException Si ocurre un problema de I/O.
+      * @throws GeneralSecurityException Si ocurre un problema de seguridad.
+      */
      private static long getYouTubeVideoViews(String videoId) throws IOException, GeneralSecurityException {
           final HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-          YouTube youtubeService = new YouTube.Builder(httpTransport, JSON_FACTORY, getRequestInitializer()).setApplicationName("YouTube-Video-Stats").build();
+          YouTube youtubeService = new YouTube.Builder(httpTransport, JSON_FACTORY, getRequestInitializer())
+                  .setApplicationName("YouTube-Video-Stats")
+                  .build();
 
           YouTube.Videos.List request = youtubeService.videos().list(Collections.singletonList("statistics"));
           VideoListResponse response = request.setKey(API_KEY).setId(Collections.singletonList(videoId)).execute();
@@ -46,6 +73,11 @@ public class YouTubeHelper {
           }
      }
 
+     /**
+      * Inicializador de solicitud HTTP.
+      *
+      * @return Un HttpRequestInitializer.
+      */
      private static HttpRequestInitializer getRequestInitializer() {
           return httpRequest -> {
                // No hay inicializaciones especiales necesarias

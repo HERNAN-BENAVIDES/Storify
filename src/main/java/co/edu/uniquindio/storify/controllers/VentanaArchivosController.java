@@ -15,15 +15,18 @@ import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para la ventana de gestión de archivos en la aplicación.
+ * Permite cargar archivos de texto y visualizar su contenido, así como guardar cambios.
+ */
 @Data
-
 public class VentanaArchivosController implements Initializable {
 
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
-    private boolean archivoCargado=false;
+    private boolean archivoCargado = false;
     private File archivoSeleccionado;
 
     @FXML
@@ -32,12 +35,22 @@ public class VentanaArchivosController implements Initializable {
     @FXML
     private Button btnCargar;
 
-
+    /**
+     * Método de inicialización que se ejecuta cuando se carga la interfaz.
+     *
+     * @param url La URL de la localización utilizada para resolver rutas relativas.
+     * @param resourceBundle El recurso utilizado para localizar objetos.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        // No se requiere ninguna inicialización especial en este momento.
     }
 
+    /**
+     * Maneja la carga y guarda de archivos de texto.
+     * Si un archivo no ha sido cargado, se abre un selector de archivos para elegir uno y mostrar su contenido.
+     * Si un archivo ya ha sido cargado, se guarda su contenido en la tienda de música.
+     */
     public void cargarArchivo() {
         if (!archivoCargado) {
             FileChooser fileChooser = new FileChooser();
@@ -62,6 +75,12 @@ public class VentanaArchivosController implements Initializable {
         }
     }
 
+    /**
+     * Muestra el contenido de un archivo de texto en el área de texto de la interfaz.
+     *
+     * @param file      El archivo cuyo contenido se va a mostrar.
+     * @param textArea  El área de texto donde se mostrará el contenido del archivo.
+     */
     private void displayFileContent(File file, TextArea textArea) {
         StringBuilder content = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -74,6 +93,4 @@ public class VentanaArchivosController implements Initializable {
         }
         textArea.setText(content.toString());
     }
-
-
 }

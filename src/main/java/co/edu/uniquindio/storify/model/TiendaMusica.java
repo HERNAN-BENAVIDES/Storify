@@ -970,8 +970,6 @@ public class TiendaMusica implements Serializable {
      */
     public void eliminarCancionDeArtistaEnUsuario(Artista artista) {
         for (Usuario usuario : usuarios.values()) {
-            System.out.println("aaa");
-            System.out.println(usuario.getPersona().getNombre());
             if (usuario.getPersona() instanceof Cliente) {
                 Cliente cliente = (Cliente) usuario.getPersona();
                 List<Cancion> cancionesAEliminar = new ArrayList<>();
@@ -990,6 +988,5 @@ public class TiendaMusica implements Serializable {
                 }
             }
         }
-        System.out.println("listo primer metodo");
     }
 }

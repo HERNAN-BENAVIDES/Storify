@@ -18,12 +18,16 @@ import java.security.GeneralSecurityException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para la ventana de estadísticas.
+ * Esta clase maneja la lógica para mostrar estadísticas de géneros musicales y artistas.
+ */
 public class VentanaEstadisticasController implements Initializable {
 
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
-    BinaryTree<Artista> artistas= mfm.getTiendaMusica().getArtistas();
+    private BinaryTree<Artista> artistas = mfm.getTiendaMusica().getArtistas();
 
     @FXML
     private NumberAxis yAxis;
@@ -43,105 +47,104 @@ public class VentanaEstadisticasController implements Initializable {
     @FXML
     private ComboBox<String> comboEstadistica;
 
+    /**
+     * Inicializa los componentes de la interfaz.
+     *
+     * @param url La URL de ubicación.
+     * @param resourceBundle El conjunto de recursos.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        // Método inicial vacío
     }
 
-    public void iniciarDatos(){
-        //inicio de combo
-        ObservableList<String> opciones= FXCollections.observableArrayList(
+    /**
+     * Inicializa los datos para la ventana de estadísticas.
+     * Configura el combo box con las opciones de estadísticas.
+     */
+    public void iniciarDatos() {
+        ObservableList<String> opciones = FXCollections.observableArrayList(
                 "GENEROS",
                 "ARTISTAS"
         );
         comboEstadistica.setItems(opciones);
-
     }
 
-    public void analizar(){
-        String chosen=comboEstadistica.getSelectionModel().getSelectedItem();
-        if (chosen!=null || !chosen.isBlank()){
-            if(chosen.equals("GENEROS")){
+    /**
+     * Analiza la opción seleccionada en el combo box y muestra la estadística correspondiente.
+     */
+    public void analizar() {
+        String chosen = comboEstadistica.getSelectionModel().getSelectedItem();
+        if (chosen != null && !chosen.isBlank()) {
+            if (chosen.equals("GENEROS")) {
                 aplicacion.mostrarVentanaEstadisticas(true);
-            }
-            else if (chosen.equals("ARTISTAS")){
+            } else if (chosen.equals("ARTISTAS")) {
                 aplicacion.mostrarVentanaEstadisticas(false);
             }
         }
     }
 
-
+    /**
+     * Actualiza los gráficos con las estadísticas de géneros musicales.
+     */
     public void actualizarChartsGeneros() {
         comboEstadistica.setValue("GENEROS");
         xAxis.setLabel("Géneros");
         yAxis.setLabel("Cantidad de Canciones por Género");
         txtTituloEstadistica.setText("Estadísticas de Géneros Musicales");
-        // Obtener el conteo de canciones por género desde TiendaMusica
+
         Map<String, Integer> conteoPorGenero = mfm.getTiendaMusica().contarCancionesPorGenero();
 
-        // Crear una serie de datos para el BarChart
         XYChart.Series<String, Double> barSeries = new XYChart.Series<>();
         barSeries.setName("Canciones por Género");
 
-        // Crear una lista de datos para el PieChart
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
-        // Añadir los datos a ambas series
         for (Map.Entry<String, Integer> entry : conteoPorGenero.entrySet()) {
             String genero = entry.getKey();
-            Double cantidad = entry.getValue().doubleValue(); // Convertir a Double
+            Double cantidad = entry.getValue().doubleValue();
 
-            // Añadir al BarChart
             barSeries.getData().add(new XYChart.Data<>(genero, cantidad));
-
-            // Añadir al PieChart
             pieChartData.add(new PieChart.Data(genero, cantidad));
         }
 
-        // Limpiar el BarChart y añadir la nueva serie
         chart.getData().clear();
         chart.getData().add(barSeries);
 
-        // Limpiar el PieChart y añadir los nuevos datos
         pieChart.setData(pieChartData);
-
     }
 
+    /**
+     * Actualiza los gráficos con las estadísticas de vistas por artista.
+     *
+     * @throws GeneralSecurityException Si ocurre un problema de seguridad.
+     * @throws IOException              Si ocurre un problema de entrada/salida.
+     */
     public void actualizarChartsArtistas() throws GeneralSecurityException, IOException {
         comboEstadistica.setValue("ARTISTAS");
 
         xAxis.setLabel("Artistas");
         yAxis.setLabel("Cantidad De Vistas Totales");
         txtTituloEstadistica.setText("Estadísticas de Número de Vistas Artistas");
-        // Obtener el conteo de canciones por género desde TiendaMusica
+
         Map<String, Double> conteoPorArtistas = mfm.getTiendaMusica().contarVistasPorArtista();
 
-        // Crear una serie de datos para el BarChart
         XYChart.Series<String, Double> barSeries = new XYChart.Series<>();
         barSeries.setName("Vistas Por Artista");
 
-        // Crear una lista de datos para el PieChart
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
-        // Añadir los datos a ambas series
         for (Map.Entry<String, Double> entry : conteoPorArtistas.entrySet()) {
             String artista = entry.getKey();
-            Double vistas = entry.getValue().doubleValue(); // Convertir a Double
+            Double vistas = entry.getValue();
 
-            // Añadir al BarChart
             barSeries.getData().add(new XYChart.Data<>(artista, vistas));
-
-            // Añadir al PieChart
             pieChartData.add(new PieChart.Data(artista, vistas));
         }
 
-        // Limpiar el BarChart y añadir la nueva serie
         chart.getData().clear();
         chart.getData().add(barSeries);
 
-        // Limpiar el PieChart y añadir los nuevos datos
         pieChart.setData(pieChartData);
-
     }
-
 }

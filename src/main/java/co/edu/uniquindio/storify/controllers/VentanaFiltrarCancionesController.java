@@ -24,9 +24,12 @@ import lombok.Data;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para la ventana de filtrado de canciones.
+ * Esta clase maneja la lógica para filtrar y mostrar canciones según varios criterios.
+ */
 @Data
 public class VentanaFiltrarCancionesController implements Initializable {
 
@@ -51,14 +54,25 @@ public class VentanaFiltrarCancionesController implements Initializable {
     private Usuario usuario;
     private ListaEnlazadaSimpleCircular<Cancion> listaCancionesFavs = new ListaEnlazadaSimpleCircular<>();
     private ListaEnlazadaSimpleCircular<Cancion> listaCanciones = new ListaEnlazadaSimpleCircular<>();
-    private BinaryTree<Artista> arbolArtistas= mfm.getTiendaMusica().getArtistas();
-    private boolean esVentanaFavoritos=false;
+    private BinaryTree<Artista> arbolArtistas = mfm.getTiendaMusica().getArtistas();
+    private boolean esVentanaFavoritos = false;
 
+    /**
+     * Método inicializador de la interfaz.
+     *
+     * @param url La URL de ubicación.
+     * @param resourceBundle El conjunto de recursos.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        // Método inicial vacío
     }
 
+    /**
+     * Inicia el GridPane con las canciones filtradas.
+     *
+     * @throws ArtistaNoEncontradoException Si no se encuentra el artista.
+     */
     public void iniciarGridPane() throws ArtistaNoEncontradoException {
         int column = 0;
         int row = 1;
@@ -72,7 +86,7 @@ public class VentanaFiltrarCancionesController implements Initializable {
                     ItemCancionController controlador = loader.getController();
                     controlador.setAplicacion(this.aplicacion);
                     controlador.setUsuario(this.usuario);
-                    controlador.cargarDatos(currentNode.getData()); //settea tmb la cancion en el nodo
+                    controlador.cargarDatos(currentNode.getData()); // Establecer la canción en el nodo
                     controlador.setEsVentanaFavs(esVentanaFavoritos);
                     if (column == 3) {
                         column = 0;
@@ -80,11 +94,11 @@ public class VentanaFiltrarCancionesController implements Initializable {
                     }
                     grid.add(anchorPane, column++, row);
 
-                    //grid width
+                    // Establecer tamaño del GridPane
                     grid.setMinWidth(Region.USE_COMPUTED_SIZE);
                     grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
                     grid.setMaxWidth(Region.USE_PREF_SIZE);
-                    //grid height
+
                     grid.setMinHeight(Region.USE_COMPUTED_SIZE);
                     grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
                     grid.setMaxHeight(Region.USE_PREF_SIZE);
@@ -95,42 +109,47 @@ public class VentanaFiltrarCancionesController implements Initializable {
                 } while (currentNode != null && currentNode != listaCanciones.getHeadNode()); // Seguir iterando hasta que se vuelva al nodo de inicio
             }
 
-            scroll.setVvalue(0.05); //para q no se vea el espacio en blanco de 2 cm entre el filtro y el panel
+            scroll.setVvalue(0.05); // Para que no se vea el espacio en blanco de 2 cm entre el filtro y el panel
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void iniciarCombos(){
-        //llenar combobox tipoGenero
-        ObservableList<String> tipoGenero= FXCollections.observableArrayList();
+    /**
+     * Inicia los ComboBox con las opciones disponibles.
+     */
+    public void iniciarCombos() {
+        // Llenar combobox tipoGenero
+        ObservableList<String> tipoGenero = FXCollections.observableArrayList();
         tipoGenero.addAll(mfm.getTiendaMusica().obtenerTipoGeneroCancionesSinRepetir());
         comboGenero.setItems(tipoGenero);
 
-        //llenar combobox lanzamientos
-        ObservableList<String> listaLanzamientos=FXCollections.observableArrayList();
+        // Llenar combobox lanzamientos
+        ObservableList<String> listaLanzamientos = FXCollections.observableArrayList();
         listaLanzamientos.addAll(mfm.getTiendaMusica().obtenerAniosLanzamientoSinRepetir());
         comboLanzamiento.setItems(listaLanzamientos);
 
-        //llenar combobox duracion
-        ObservableList<String> listaDuracion=FXCollections.observableArrayList();
+        // Llenar combobox duracion
+        ObservableList<String> listaDuracion = FXCollections.observableArrayList();
         listaDuracion.addAll(mfm.getTiendaMusica().obtenerDuracionCancionesSinRepetir());
         comboDuracion.setItems(listaDuracion);
-
     }
 
-
+    /**
+     * Filtra las canciones según los criterios máximos seleccionados en los ComboBox.
+     *
+     * @throws InterruptedException Si el hilo es interrumpido.
+     * @throws ArtistaNoEncontradoException Si no se encuentra el artista.
+     */
     public void filtrarMaximo() throws InterruptedException, ArtistaNoEncontradoException {
         grid.getChildren().clear();
-        String genero=comboGenero.getValue();
-        String lanzamiento=comboLanzamiento.getValue();
-        String duracion=comboDuracion.getValue();
+        String genero = comboGenero.getValue();
+        String lanzamiento = comboLanzamiento.getValue();
+        String duracion = comboDuracion.getValue();
 
-        if (genero==null && lanzamiento==null && duracion==null) { //si se da que ninguno fue seleccioando
-
+        if (genero == null && lanzamiento == null && duracion == null) { // Si ninguno fue seleccionado
             Alertas.mostrarMensaje("Entradas Erroneas", "Operación Incompleta", "¡Tiene que seleccionar al menos un criterio de filtro!", Alert.AlertType.WARNING);
-        }else { //en otro caso, si al menos uno de los filtros fue modificado, se cambian los que no fueron seleccionados por la variable todos
-
+        } else { // Al menos uno de los filtros fue modificado
             if (genero == null) {
                 genero = "Vacio";
             }
@@ -141,40 +160,35 @@ public class VentanaFiltrarCancionesController implements Initializable {
                 duracion = "Vacio";
             }
 
-            //si es ventana de favoritos sera diferente de ventanageneral o ventanabandasolista
-            if (esVentanaFavoritos){
-                this.listaCanciones=mfm.getTiendaMusica().obtenerListaMaximoFiltroDeFavoritos(listaCancionesFavs, genero, lanzamiento,duracion);
-
-            }else{
-                this.listaCanciones=arbolArtistas.obtenerBusquedaTodosFiltros(genero, lanzamiento, duracion).convertirListaDobleASimpleCircular();
-
+            if (esVentanaFavoritos) {
+                this.listaCanciones = mfm.getTiendaMusica().obtenerListaMaximoFiltroDeFavoritos(listaCancionesFavs, genero, lanzamiento, duracion);
+            } else {
+                this.listaCanciones = arbolArtistas.obtenerBusquedaTodosFiltros(genero, lanzamiento, duracion).convertirListaDobleASimpleCircular();
             }
 
-            // Verificar si la lista de canciones está vacía
-            if (listaCanciones.size()==0) {
-
-                Alertas.mostrarMensaje("Filtro de canciones", "Resultados obtenidos", "No se encontraron canciones que cumplan con los creiterios de busqueda", Alert.AlertType.INFORMATION);
-
+            if (listaCanciones.size() == 0) {
+                Alertas.mostrarMensaje("Filtro de canciones", "Resultados obtenidos", "No se encontraron canciones que cumplan con los criterios de búsqueda", Alert.AlertType.INFORMATION);
             } else {
                 iniciarGridPane();
             }
         }
-
     }
 
-
-
+    /**
+     * Filtra las canciones según los criterios mínimos seleccionados en los ComboBox.
+     *
+     * @throws InterruptedException Si el hilo es interrumpido.
+     * @throws ArtistaNoEncontradoException Si no se encuentra el artista.
+     */
     public void filtrarMinimo() throws InterruptedException, ArtistaNoEncontradoException {
         grid.getChildren().clear();
-        String genero=comboGenero.getValue();
-        String lanzamiento=comboLanzamiento.getValue();
-        String duracion=comboDuracion.getValue();
+        String genero = comboGenero.getValue();
+        String lanzamiento = comboLanzamiento.getValue();
+        String duracion = comboDuracion.getValue();
 
-        if (genero==null && lanzamiento==null && duracion==null) { //si se da que ninguno fue seleccioando
-
+        if (genero == null && lanzamiento == null && duracion == null) { // Si ninguno fue seleccionado
             Alertas.mostrarMensaje("Entradas Erroneas", "Operación Incompleta", "¡Tiene que seleccionar al menos un criterio de filtro!", Alert.AlertType.WARNING);
-        }else { //en otro caso, si al menos uno de los filtros fue modificado, se cambian los que no fueron seleccionados por la variable todos
-
+        } else { // Al menos uno de los filtros fue modificado
             if (genero == null) {
                 genero = "Vacio";
             }
@@ -185,46 +199,46 @@ public class VentanaFiltrarCancionesController implements Initializable {
                 duracion = "Vacio";
             }
 
-            //si es ventana de favoritos sera diferente de ventanageneral o ventanabandasolista
-            if (esVentanaFavoritos){
-                this.listaCanciones=mfm.getTiendaMusica().obtenerListaMinimoFiltroDeFavoritos(listaCancionesFavs, genero, lanzamiento,duracion);
-
-            }else{
-                this.listaCanciones=arbolArtistas.obtenerBusquedaAlMenosUnFiltro(genero, lanzamiento, duracion).convertirListaDobleASimpleCircular();
-
+            if (esVentanaFavoritos) {
+                this.listaCanciones = mfm.getTiendaMusica().obtenerListaMinimoFiltroDeFavoritos(listaCancionesFavs, genero, lanzamiento, duracion);
+            } else {
+                this.listaCanciones = arbolArtistas.obtenerBusquedaAlMenosUnFiltro(genero, lanzamiento, duracion).convertirListaDobleASimpleCircular();
             }
-            // Verificar si la lista de canciones está vacía
-            if (listaCanciones.size()==0) {
 
-                Alertas.mostrarMensaje("Filtro de canciones", "Resultados obtenidos", "No se encontraron canciones que cumplan con los creiterios de busqueda", Alert.AlertType.INFORMATION);
-
+            if (listaCanciones.size() == 0) {
+                Alertas.mostrarMensaje("Filtro de canciones", "Resultados obtenidos", "No se encontraron canciones que cumplan con los criterios de búsqueda", Alert.AlertType.INFORMATION);
             } else {
                 iniciarGridPane();
             }
         }
-
     }
 
-
+    /**
+     * Establece la lista de canciones favoritas del usuario.
+     */
     public void establecerListaCancionesFavoritas() {
-        // Verificar si el usuario es un cliente
-        Persona persona= usuario.getPersona();
+        Persona persona = usuario.getPersona();
         if (persona instanceof Cliente) {
             Cliente cliente = (Cliente) persona;
             listaCanciones = cliente.getCancionesFavoritas();
-            listaCancionesFavs=cliente.getCancionesFavoritas();
+            listaCancionesFavs = cliente.getCancionesFavoritas();
         }
     }
 
-    public void establecerListaCancionesGenerales(){
-        listaCanciones= mfm.getTiendaMusica().obtenerCancionesGenerales();
+    /**
+     * Establece la lista de canciones generales.
+     */
+    public void establecerListaCancionesGenerales() {
+        listaCanciones = mfm.getTiendaMusica().obtenerCancionesGenerales();
     }
 
+    /**
+     * Establece el árbol de canciones por artista.
+     *
+     * @param artista El artista para el cual se obtendrá el árbol de canciones.
+     */
     public void establecerArbolPorArtista(Artista artista) {
-        arbolArtistas=mfm.getTiendaMusica().obtenerArbolPorArtista(artista);
-        listaCanciones= artista.getCanciones().convertirListaDobleASimpleCircular();
+        arbolArtistas = mfm.getTiendaMusica().obtenerArbolPorArtista(artista);
+        listaCanciones = artista.getCanciones().convertirListaDobleASimpleCircular();
     }
-
-
-
 }

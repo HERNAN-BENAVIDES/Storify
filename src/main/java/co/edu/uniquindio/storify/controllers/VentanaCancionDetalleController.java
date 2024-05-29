@@ -25,8 +25,11 @@ import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para la ventana de detalles de una canción.
+ * Muestra información detallada de la canción seleccionada y permite agregarla o eliminarla de favoritos.
+ */
 @Data
-
 public class VentanaCancionDetalleController implements Initializable {
 
     private ModelFactoryController mfm = ModelFactoryController.getInstance();
@@ -34,7 +37,6 @@ public class VentanaCancionDetalleController implements Initializable {
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
     private AdministradorComandos administradorComandos = mfm.getAdministradorComandos();
-
 
     private Cancion cancion;
 
@@ -71,6 +73,12 @@ public class VentanaCancionDetalleController implements Initializable {
     @FXML
     private Text txtVistas;
 
+    /**
+     * Método de inicialización que se ejecuta cuando se carga la interfaz.
+     *
+     * @param url La URL de la localización utilizada para resolver rutas relativas.
+     * @param resourceBundle El recurso utilizado para localizar objetos.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnEliminarFav.setVisible(false);
@@ -78,30 +86,37 @@ public class VentanaCancionDetalleController implements Initializable {
         btnVolverAdmin.setVisible(false);
     }
 
-
-
-    public void stopWebView(){
-
-        if(cancion!=null){
+    /**
+     * Detiene la reproducción del video en el WebView.
+     */
+    public void stopWebView() {
+        if (cancion != null) {
             webView.getEngine().load("");
         }
-
     }
 
-    public void permitirVolverAdmin(){
+    /**
+     * Permite la visibilidad del botón de volver a la administración si el usuario es un administrador.
+     */
+    public void permitirVolverAdmin() {
         Persona persona = usuario.getPersona();
         if (persona instanceof Administrador) {
             btnVolverAdmin.setVisible(true);
         }
     }
 
-    public void volverAdmin(){
+    /**
+     * Vuelve a la ventana de gestión de canciones para administradores.
+     */
+    public void volverAdmin() {
         aplicacion.motrarVentanaGestionCanciones();
         aplicacion.detenerVideoYoutube();
-
     }
 
-    public void iniciarVideoDatos(){
+    /**
+     * Inicia la reproducción del video y muestra los detalles de la canción.
+     */
+    public void iniciarVideoDatos() {
         try {
             iniciarTextos();
         } catch (GeneralSecurityException | IOException e) {
@@ -111,8 +126,7 @@ public class VentanaCancionDetalleController implements Initializable {
         WebEngine webEngine = webView.getEngine();
         webEngine.load("https://blank.page/");
 
-        String embedCode=YoutubeEmbedGenerator.obtenerEmbedCode(cancion.getUrlYoutube());
-
+        String embedCode = YoutubeEmbedGenerator.obtenerEmbedCode(cancion.getUrlYoutube());
 
         webEngine.documentProperty().addListener((obs, oldDoc, newDoc) -> {
             if (newDoc != null) {
@@ -153,8 +167,6 @@ public class VentanaCancionDetalleController implements Initializable {
                 String oldUrl = "linkEmbed";
                 String newURL = newContent.replace(oldUrl, embedCode);
 
-
-
                 webEngine.executeScript(
                         "document.open();" +
                                 "document.write('" + newURL.replaceAll("'", "\\\\'") + "');" +
@@ -162,67 +174,68 @@ public class VentanaCancionDetalleController implements Initializable {
                 );
             }
         });
-
-
     }
 
-
-    public void agregarFav(){
-
+    /**
+     * Agrega la canción a la lista de favoritos del usuario.
+     */
+    public void agregarFav() {
         stopWebView();
 
-        Comando agregarCancion = new ComandoAgregarCancion((Cliente)usuario.getPersona(), cancion);
+        Comando agregarCancion = new ComandoAgregarCancion((Cliente) usuario.getPersona(), cancion);
         administradorComandos.ejecutarComando(agregarCancion);
         mfm.guardarDatosBinario();
 
         aplicacion.mostrarVentanaMisCanciones();
-        Alertas.mostrarMensaje("Actualización Exitosa", "Operación completada", "¡Haz agregado correctamente una cancion a tu lista de favoritos! Puedes deshacer esta acción si lo requieres", Alert.AlertType.INFORMATION);
+        Alertas.mostrarMensaje("Actualización Exitosa", "Operación completada", "¡Haz agregado correctamente una canción a tu lista de favoritos! Puedes deshacer esta acción si lo requieres", Alert.AlertType.INFORMATION);
 
         aplicacion.ventanaInicioController.mostrarBarraSuperiorCliente(administradorComandos);
-
     }
 
-    public void eliminarFav(){
-
+    /**
+     * Elimina la canción de la lista de favoritos del usuario.
+     */
+    public void eliminarFav() {
         stopWebView();
-        Comando eliminarCancion = new ComandoEliminarCancion((Cliente)usuario.getPersona(), cancion);
+        Comando eliminarCancion = new ComandoEliminarCancion((Cliente) usuario.getPersona(), cancion);
         administradorComandos.ejecutarComando(eliminarCancion);
         mfm.guardarDatosBinario();
 
         aplicacion.mostrarVentanaMisCanciones();
-        Alertas.mostrarMensaje("Actualización Exitosa", "Operación completada", "¡Haz eliminado correctamente una cancion de tu lista de favoritos! Puedes deshacer esta acción si lo requieres", Alert.AlertType.INFORMATION);
+        Alertas.mostrarMensaje("Actualización Exitosa", "Operación completada", "¡Haz eliminado correctamente una canción de tu lista de favoritos! Puedes deshacer esta acción si lo requieres", Alert.AlertType.INFORMATION);
         aplicacion.ventanaInicioController.mostrarBarraSuperiorCliente(administradorComandos);
     }
 
+    /**
+     * Inicializa los textos con la información de la canción.
+     *
+     * @throws GeneralSecurityException En caso de error de seguridad general.
+     * @throws IOException En caso de error de E/S.
+     */
     public void iniciarTextos() throws GeneralSecurityException, IOException {
-
         Persona persona = usuario.getPersona();
         if (persona instanceof Cliente) {
-            Cliente clienteUsuario= (Cliente)usuario.getPersona();
-            if (clienteUsuario.getCancionesFavoritas().contains(cancion)){
+            Cliente clienteUsuario = (Cliente) usuario.getPersona();
+            if (clienteUsuario.getCancionesFavoritas().contains(cancion)) {
                 btnEliminarFav.setVisible(true);
-            }else{
+            } else {
                 btnAgregarFav.setVisible(true);
             }
         }
 
         txtCancion.setText(cancion.getNombre());
-        txtAlbum.setText("Album: "+cancion.getAlbum());
-        txtAnio.setText("Año de lanzamiento: "+cancion.getAnioLanzamiento());
-        txtDuracion.setText("Duración: "+cancion.getDuracion());
-        txtGenero.setText("Género: "+cancion.obtenerGeneroComoString());
-        Artista artista= null;
-        long vistas= YouTubeHelper.obtenerVistasVideo(cancion.getUrlYoutube());
+        txtAlbum.setText("Album: " + cancion.getAlbum());
+        txtAnio.setText("Año de lanzamiento: " + cancion.getAnioLanzamiento());
+        txtDuracion.setText("Duración: " + cancion.getDuracion());
+        txtGenero.setText("Género: " + cancion.obtenerGeneroComoString());
+        Artista artista;
+        long vistas = YouTubeHelper.obtenerVistasVideo(cancion.getUrlYoutube());
         try {
             artista = mfm.getTiendaMusica().buscarArtistaCancion(cancion);
-
         } catch (ArtistaNoEncontradoException e) {
             throw new RuntimeException(e);
         }
-        txtArtista.setText("Artista: "+artista.getNombre());
-        txtVistas.setText("Vistas: "+ String.valueOf(vistas));
+        txtArtista.setText("Artista: " + artista.getNombre());
+        txtVistas.setText("Vistas: " + vistas);
     }
-
-
-
 }

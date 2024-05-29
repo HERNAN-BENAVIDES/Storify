@@ -20,8 +20,12 @@ import lombok.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-@Data
 
+/**
+ * Controlador para el ítem de canción en la interfaz de la aplicación.
+ * Maneja la visualización y las interacciones del usuario con un elemento de canción.
+ */
+@Data
 public class ItemCancionController implements Initializable {
 
     @FXML
@@ -37,36 +41,47 @@ public class ItemCancionController implements Initializable {
     private Stage ventana = mfm.getVentana();
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
-    private Cancion cancion= null;
+    private Cancion cancion = null;
     private boolean esVentanaFavs;
     private boolean esGestion;
     private MyListenerCancion myListenerCancion;
 
+    /**
+     * Método de inicialización que se ejecuta cuando se carga la interfaz.
+     *
+     * @param url La URL de la localización utilizada para resolver rutas relativas.
+     * @param resourceBundle El recurso utilizado para localizar objetos.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        // No se requiere ninguna inicialización especial en este momento.
     }
 
     /**
-     * Método invocado cuando se hace clic en el elemento.
-     * Notifica al listener de clic con la cancion asociada.
+     * Método invocado cuando se hace clic en el elemento de canción.
+     * Notifica al listener de clic con la canción asociada.
      */
     @FXML
     private void click() {
         myListenerCancion.onClickListener(cancion);
-
     }
 
+    /**
+     * Carga los datos de una canción en la interfaz.
+     *
+     * @param cancion La canción cuyos datos se cargarán.
+     * @throws ArtistaNoEncontradoException Si no se encuentra el artista de la canción.
+     */
     public void cargarDatos(Cancion cancion) throws ArtistaNoEncontradoException {
-        this.cancion=cancion;
+        this.cancion = cancion;
 
-        String nombreCancion= cancion.getNombre();
-        Artista nombreAutor= mfm.getTiendaMusica().buscarArtistaCancion(cancion);
+        String nombreCancion = cancion.getNombre();
+        Artista nombreAutor = mfm.getTiendaMusica().buscarArtistaCancion(cancion);
         lblNombreCancion.setText(nombreCancion);
         lblAutorNombre.setText(nombreAutor.getNombre());
 
-        //para insertar la foto en el imageview
-        String foto=cancion.getCaratula();
+        // Para insertar la foto en el ImageView
+        String foto = cancion.getCaratula();
         try {
             Image image = new Image(getClass().getResourceAsStream(foto));
             portada.setImage(image);
@@ -78,37 +93,15 @@ public class ItemCancionController implements Initializable {
         }
     }
 
+    /**
+     * Abre una ventana de YouTube para reproducir el video de la canción.
+     * Si la ventana no es de gestión, abre los detalles de la canción.
+     */
     public void abrirVentanaYoutube() {
-        if (!esGestion){
+        if (!esGestion) {
             aplicacion.abrirDetalleCancion(cancion);
-        }else{
+        } else {
             click();
         }
     }
-
-
-    /**
-     * public void abrirVentanaYoutube() {
-     *         try {
-     *
-     *
-     *             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaCancionDetalle.fxml"));
-     *             Parent root = loader.load();
-     *             VentanaCancionDetalleController youtubeController = loader.getController();
-     *             youtubeController.setCancion(cancion); // Pasar la canción al controlador de la ventana de YouTube
-     *             youtubeController.iniciarDatos();
-     *             Scene scene = new Scene(root);
-     *             Stage stage = new Stage();
-     *             stage.setScene(scene);
-     *             stage.setTitle("Ventana de YouTube");
-     *             stage.show();
-     *         } catch (IOException e) {
-     *             e.printStackTrace();
-     *         }
-     *     }
-     */
-
-
 }
-
-
