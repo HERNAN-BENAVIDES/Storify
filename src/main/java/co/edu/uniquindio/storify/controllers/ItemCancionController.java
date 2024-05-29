@@ -29,6 +29,12 @@ import java.util.ResourceBundle;
 public class ItemCancionController implements Initializable {
 
     @FXML
+    private Text txtAnio;
+
+    @FXML
+    private Text txtDuracion;
+
+    @FXML
     private Text lblAutorNombre;
 
     @FXML
@@ -78,6 +84,8 @@ public class ItemCancionController implements Initializable {
         String nombreCancion = cancion.getNombre();
         Artista nombreAutor = mfm.getTiendaMusica().buscarArtistaCancion(cancion);
         lblNombreCancion.setText(nombreCancion);
+        txtAnio.setText("("+cancion.getAnioLanzamiento()+")");
+        txtDuracion.setText(cancion.getDuracion());
         lblAutorNombre.setText(nombreAutor.getNombre());
 
         // Para insertar la foto en el ImageView

@@ -4,14 +4,19 @@ import co.edu.uniquindio.storify.app.Aplicacion;
 import co.edu.uniquindio.storify.controllers.controladorFlujo.AdministradorComandos;
 import co.edu.uniquindio.storify.model.Usuario;
 import co.edu.uniquindio.storify.util.Alertas;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.Data;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
@@ -26,6 +31,12 @@ public class BarraUsuarioController implements Initializable {
     private Aplicacion aplicacion = mfm.getAplicacion();
     private Usuario usuario;
     private AdministradorComandos administradorComandos;
+
+    @FXML
+    private Text txtBienvenida;
+
+    @FXML
+    private Label lblFecha;
 
     @FXML
     private Button btnDeshacer;
@@ -46,12 +57,35 @@ public class BarraUsuarioController implements Initializable {
         btnRehacer.setVisible(false);
     }
 
+    public void runTime(){
+        new Thread(){
+            public void run(){
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+                while(true){
+                    try{
+                        Thread.sleep(1000);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    Platform.runLater(() -> {
+                        Date date = new Date(System.currentTimeMillis());
+                        lblFecha.setText(format.format(date));
+                    });
+                }
+            }
+        }.start();
+    }
+
     /**
      * Carga la información del usuario y muestra un mensaje de bienvenida.
      * (Implementación pendiente).
      */
     public void cargarInfo() {
-        // bienvenida de nombre y hilo tiempo
+        runTime();
+        String nombre= usuario.getUsername();
+        int espacio=nombre.length()*15;
+        txtBienvenida.setText("¡Bienvenid@, "+nombre+"!");
+        txtBienvenida.setX(txtBienvenida.getX()-espacio);
     }
 
     /**

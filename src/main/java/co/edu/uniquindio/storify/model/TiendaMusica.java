@@ -502,6 +502,18 @@ public class TiendaMusica implements Serializable {
         throw new ArtistaNoEncontradoException("Ningún artista coincide con la canción especificada");
     }
 
+    public Artista buscarArtistaPorNombre(String nombre) throws ArtistaNoEncontradoException {
+        for (Artista artista : artistas.iterator()) {
+            // Comprobar si el nombre completo o el primer nombre coincide
+            if (artista.getNombre().equalsIgnoreCase(nombre) || artista.getNombre().split(" ")[0].equalsIgnoreCase(nombre)) {
+                return artista;
+            }
+        }
+        throw new ArtistaNoEncontradoException("Ningún artista coincide con el nombre especificado");
+    }
+
+
+
     /**
      * Obtiene todas las canciones en el sistema.
      *
@@ -700,7 +712,7 @@ public class TiendaMusica implements Serializable {
 
         for (Artista artista : this.artistas.iterator()) {
             for (Cancion cancion : artista.getCanciones()) {
-                String cancionGenero = cancion.getGenero().toString();
+                String cancionGenero = cancion.obtenerGeneroComoString();
                 generoSet.add(cancionGenero);
             }
         }
@@ -956,6 +968,14 @@ public class TiendaMusica implements Serializable {
         }
     }
 
+
+    /**
+     * Elimina un artista del árbol de artistas y también elimina las canciones del
+     * artista elegido de las listas de canciones favoritas de los usuarios.
+     *
+     * @param artistaElegido El artista que se desea eliminar.
+     * @throws EmptyNodeException Si el árbol de artistas está vacío.
+     */
     public void eliminarArtistaArbol(Artista artistaElegido) throws EmptyNodeException {
         //buscar entre las canciones favs de clientes y eliminar las canciones del artista
         //elegido
@@ -989,4 +1009,168 @@ public class TiendaMusica implements Serializable {
             }
         }
     }
+
+    /**
+     * Ordena una lista de canciones por fecha de lanzamiento, de más reciente a más antigua.
+     *
+     * @param listaCanciones La lista enlazada circular de canciones que se desea ordenar.
+     * @return Una nueva lista enlazada circular con las canciones ordenadas por fecha de lanzamiento.
+     */
+    public ListaEnlazadaSimpleCircular<Cancion> ordenarCancionesPorFechaMasReciente(ListaEnlazadaSimpleCircular<Cancion> listaCanciones) {
+        // Paso 1: Convertir la lista circular a una lista normal
+        List<Cancion> listaNormal = new ArrayList<>();
+        if (listaCanciones.getHeadNode() != null) {
+            Node<Cancion> currentNode = listaCanciones.getHeadNode();
+            do {
+                listaNormal.add(currentNode.getData());
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != listaCanciones.getHeadNode());
+        }
+
+        // Paso 2: Ordenar la lista normal con Collections.sort() y un comparador
+        Collections.sort(listaNormal, (c1, c2) -> Integer.compare(c2.getAnioLanzamiento(), c1.getAnioLanzamiento()));
+
+        // Paso 3: Reconstruir la lista circular con el ordenado
+        ListaEnlazadaSimpleCircular<Cancion> listaOrdenada = new ListaEnlazadaSimpleCircular<>();
+        for (Cancion cancion : listaNormal) {
+            listaOrdenada.add(cancion);
+        }
+
+        return listaOrdenada;
+    }
+
+
+    /**
+     * Ordena una lista de canciones por fecha de lanzamiento, de más antigua a más reciente.
+     *
+     * @param listaCanciones La lista enlazada circular de canciones que se desea ordenar.
+     * @return Una nueva lista enlazada circular con las canciones ordenadas por fecha de lanzamiento.
+     */
+    public ListaEnlazadaSimpleCircular<Cancion> ordenarCancionesPorFechaMasAntigua(ListaEnlazadaSimpleCircular<Cancion> listaCanciones) {
+        // Paso 1: Convertir la lista circular a una lista normal
+        List<Cancion> listaNormal = new ArrayList<>();
+        if (listaCanciones.getHeadNode() != null) {
+            Node<Cancion> currentNode = listaCanciones.getHeadNode();
+            do {
+                listaNormal.add(currentNode.getData());
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != listaCanciones.getHeadNode());
+        }
+
+        // Paso 2: Ordenar la lista normal con Collections.sort() y un comparador
+        Collections.sort(listaNormal, (c1, c2) -> Integer.compare(c1.getAnioLanzamiento(), c2.getAnioLanzamiento()));
+
+        // Paso 3: Reconstruir la lista circular con el ordenado
+        ListaEnlazadaSimpleCircular<Cancion> listaOrdenada = new ListaEnlazadaSimpleCircular<>();
+        for (Cancion cancion : listaNormal) {
+            listaOrdenada.add(cancion);
+        }
+
+        return listaOrdenada;
+    }
+
+
+    /**
+     * Convierte una duración de formato "mm:ss" a segundos.
+     *
+     * @param duracion La duración en formato "mm:ss".
+     * @return La duración en segundos.
+     * @throws NumberFormatException Si la cadena de duración no está en el formato esperado.
+     */
+    private int convertirDuracionASegundos(String duracion) {
+        String[] partes = duracion.split(":");
+        int minutos = Integer.parseInt(partes[0]);
+        int segundos = Integer.parseInt(partes[1]);
+        return minutos * 60 + segundos;
+    }
+
+    /**
+     * Ordena una lista de canciones por duración, de más larga a más corta.
+     *
+     * @param listaCanciones La lista enlazada circular de canciones que se desea ordenar.
+     * @return Una nueva lista enlazada circular con las canciones ordenadas por duración de más larga a más corta.
+     * @throws NumberFormatException Si la duración de alguna canción no está en el formato esperado "mm:ss".
+     */
+    public ListaEnlazadaSimpleCircular<Cancion> ordenarCancionesPorDuracionMasLarga(ListaEnlazadaSimpleCircular<Cancion> listaCanciones) {
+        // Paso 1: Convertir la lista circular a una lista normal
+        List<Cancion> listaNormal = new ArrayList<>();
+        if (listaCanciones.getHeadNode() != null) {
+            Node<Cancion> currentNode = listaCanciones.getHeadNode();
+            do {
+                listaNormal.add(currentNode.getData());
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != listaCanciones.getHeadNode());
+        }
+
+        // Paso 2: Ordenar la lista normal con Collections.sort() y un comparador
+        Collections.sort(listaNormal, (c1, c2) -> {
+            int duracion1 = convertirDuracionASegundos(c1.getDuracion());
+            int duracion2 = convertirDuracionASegundos(c2.getDuracion());
+            return Integer.compare(duracion2, duracion1); // De la más larga a la más corta
+        });
+
+        // Paso 3: Reconstruir la lista circular con el ordenado
+        ListaEnlazadaSimpleCircular<Cancion> listaOrdenada = new ListaEnlazadaSimpleCircular<>();
+        for (Cancion cancion : listaNormal) {
+            listaOrdenada.add(cancion);
+        }
+
+        return listaOrdenada;
+    }
+
+
+
+
+
+    /**
+     * Ordena una lista de canciones por duración, de más corta a más larga.
+     *
+     * @param listaCanciones La lista enlazada circular de canciones que se desea ordenar.
+     * @return Una nueva lista enlazada circular con las canciones ordenadas por duración de más corta a más larga.
+     * @throws NumberFormatException Si la duración de alguna canción no está en el formato esperado "mm:ss".
+     */
+    public ListaEnlazadaSimpleCircular<Cancion> ordenarCancionesPorDuracionMasCorta(ListaEnlazadaSimpleCircular<Cancion> listaCanciones) {
+        // Paso 1: Convertir la lista circular a una lista normal
+        List<Cancion> listaNormal = new ArrayList<>();
+        if (listaCanciones.getHeadNode() != null) {
+            Node<Cancion> currentNode = listaCanciones.getHeadNode();
+            do {
+                listaNormal.add(currentNode.getData());
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != listaCanciones.getHeadNode());
+        }
+
+        // Paso 2: Ordenar la lista normal con Collections.sort() y un comparador
+        Collections.sort(listaNormal, (c1, c2) -> {
+            int duracion1 = convertirDuracionASegundos(c1.getDuracion());
+            int duracion2 = convertirDuracionASegundos(c2.getDuracion());
+            return Integer.compare(duracion1, duracion2); // De la más corta a la más larga
+        });
+
+        // Paso 3: Reconstruir la lista circular con el ordenado
+        ListaEnlazadaSimpleCircular<Cancion> listaOrdenada = new ListaEnlazadaSimpleCircular<>();
+        for (Cancion cancion : listaNormal) {
+            listaOrdenada.add(cancion);
+        }
+
+        return listaOrdenada;
+    }
+
+
+
+
+    /**
+     * Obtiene una lista de los tipos de ordenamientos disponibles.
+     *
+     * @return Una lista de cadenas que representan los tipos de ordenamientos disponibles.
+     */
+    public List<String>obtenerOrdenamientos(){
+        List<String> orden = new ArrayList<>();
+        orden.add("Mas Recientes");
+        orden.add("Mas antiguas");
+        orden.add("Mayor duracion");
+        orden.add("Menor duracion");
+        return orden;
+    }
+
 }

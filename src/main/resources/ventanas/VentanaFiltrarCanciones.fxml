@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.VentanaFiltrarCancionesController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.storify.controllers.VentanaFiltrarCancionesController">
    <children>
       <Pane layoutX="10.0" layoutY="64.0" prefHeight="118.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
          <children>
@@ -71,6 +71,25 @@
                   </ImageView>
                </children>
             </Pane>
+            <ComboBox fx:id="comboOrden" layoutX="400.0" layoutY="8.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir Orden" />
+            <Text fx:id="titleOrdenar" layoutX="267.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ordenar Canciones">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Pane fx:id="paneOrdenar" layoutX="674.0" layoutY="5.0" prefHeight="35.0" prefWidth="113.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#ordenarCanciones" prefHeight="35.0" prefWidth="113.0" stylesheets="@../aplicacion.css" text="Ordenar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="transparent" />
+                        <String fx:value="cursor_hand" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </Pane>
          </children>
          <styleClass>
             <String fx:value="white-bg" />
@@ -79,9 +98,9 @@
       </Pane>
       <Pane layoutX="10.0" layoutY="20.0" prefHeight="28.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
          <children>
-            <TextField layoutY="-2.0" minHeight="-Infinity" prefHeight="29.0" prefWidth="878.0" promptText="Buscar por nombre de la canción" styleClass="transparent" stylesheets="@../aplicacion.css" />
+            <TextField fx:id="txtFieldNombreArtista" layoutY="-2.0" minHeight="-Infinity" prefHeight="29.0" prefWidth="878.0" promptText="Buscar Canciones por Nombre del Artista" styleClass="transparent" stylesheets="@../aplicacion.css" />
             <Separator layoutX="900.0" layoutY="-0.0" orientation="VERTICAL" prefHeight="27.0" prefWidth="3.0" />
-            <Button layoutX="903.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" stylesheets="@../aplicacion.css" text=" Buscar" textFill="#838181">
+            <Button layoutX="903.0" layoutY="-2.0" mnemonicParsing="false" onAction="#buscarNombreArtista" prefHeight="32.0" prefWidth="99.0" stylesheets="@../aplicacion.css" text=" Buscar" textFill="#838181">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

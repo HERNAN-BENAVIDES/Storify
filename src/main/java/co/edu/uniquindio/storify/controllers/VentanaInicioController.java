@@ -132,6 +132,7 @@ public class VentanaInicioController implements Initializable {
             controlador.setUsuario(this.usuario);
             controlador.establecerListaCancionesFavoritas();
             controlador.setEsVentanaFavoritos(true);
+            controlador.setCombosFavs();
             controlador.iniciarGridPane();
             controlador.iniciarCombos();
         } catch (Exception e) {

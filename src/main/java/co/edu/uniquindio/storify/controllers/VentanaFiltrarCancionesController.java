@@ -5,6 +5,8 @@ import co.edu.uniquindio.storify.estructurasDeDatos.arbolBinario.BinaryTree;
 import co.edu.uniquindio.storify.estructurasDeDatos.listas.ListaEnlazadaSimpleCircular;
 import co.edu.uniquindio.storify.estructurasDeDatos.nodo.Node;
 import co.edu.uniquindio.storify.exceptions.ArtistaNoEncontradoException;
+import co.edu.uniquindio.storify.exceptions.AtributoVacioException;
+import co.edu.uniquindio.storify.exceptions.UsuarioNoExistenteException;
 import co.edu.uniquindio.storify.model.*;
 import co.edu.uniquindio.storify.util.Alertas;
 import javafx.collections.FXCollections;
@@ -16,9 +18,12 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.Data;
 
@@ -32,6 +37,18 @@ import java.util.ResourceBundle;
  */
 @Data
 public class VentanaFiltrarCancionesController implements Initializable {
+
+    @FXML
+    private TextField txtFieldNombreArtista;
+
+    @FXML
+    private ComboBox<String> comboOrden;
+
+    @FXML
+    private Pane paneOrdenar;
+
+    @FXML
+    private Text titleOrdenar;
 
     @FXML
     private GridPane grid;
@@ -65,7 +82,9 @@ public class VentanaFiltrarCancionesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Método inicial vacío
+        comboOrden.setVisible(false);
+        paneOrdenar.setVisible(false);
+        titleOrdenar.setVisible(false);
     }
 
     /**
@@ -133,6 +152,12 @@ public class VentanaFiltrarCancionesController implements Initializable {
         ObservableList<String> listaDuracion = FXCollections.observableArrayList();
         listaDuracion.addAll(mfm.getTiendaMusica().obtenerDuracionCancionesSinRepetir());
         comboDuracion.setItems(listaDuracion);
+
+        //llenar combobox orden
+        ObservableList<String> listaOrden=FXCollections.observableArrayList();
+        listaOrden.addAll(mfm.getTiendaMusica().obtenerOrdenamientos());
+        comboOrden.setItems(listaOrden);
+
     }
 
     /**
@@ -241,4 +266,101 @@ public class VentanaFiltrarCancionesController implements Initializable {
         arbolArtistas = mfm.getTiendaMusica().obtenerArbolPorArtista(artista);
         listaCanciones = artista.getCanciones().convertirListaDobleASimpleCircular();
     }
+
+    public void setCombosFavs(){
+        comboOrden.setVisible(true);
+        paneOrdenar.setVisible(true);
+        titleOrdenar.setVisible(true);
+    }
+
+    /**
+     * Busca un artista por su nombre y muestra las canciones asociadas a dicho artista.
+     * Si no se encuentra ningún artista con el nombre proporcionado, se muestra un mensaje de error.
+     */
+    public void buscarNombreArtista(){
+        try{
+            if (txtFieldNombreArtista.getText()!=null){
+                Artista artistaDigitado= mfm.getTiendaMusica().buscarArtistaPorNombre(txtFieldNombreArtista.getText());
+
+                aplicacion.verCancionesDeArtista(artistaDigitado);
+            }
+        }
+        catch (ArtistaNoEncontradoException e) {
+            Alertas.mostrarMensaje("Error", "Entradas no válidas", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+
+    /**
+     * Ordena las canciones según el tipo de ordenamiento seleccionado en el combo box.
+     * Los tipos de ordenamiento disponibles son: "Mas Recientes", "Mas antiguas", "Mayor duracion" y "Menor duracion".
+     * Si no se selecciona ningún tipo de ordenamiento, se muestra un mensaje de error.
+     *
+     * @throws ArtistaNoEncontradoException Si ocurre un error al buscar un artista por su nombre.
+     */
+    public void ordenarCanciones() throws ArtistaNoEncontradoException {
+
+        String orden=comboOrden.getSelectionModel().getSelectedItem();
+        if (orden.equals("Mas Recientes")){
+            ordenarRecienteAntiguoLista();
+        }else if (orden.equals("Mas antiguas")){
+            ordenarAntiguoRecienteLista();
+        }else if(orden.equals("Mayor duracion")){
+            ordenarMasLargo();
+        }else if(orden.equals("Menor duracion")){
+            ordenarMasCorto();
+        }else{
+            Alertas.mostrarMensaje("ERROR", "Entrada invalida", "Debe seleccionar una opción de ordenamiento", Alert.AlertType.ERROR);
+        }
+
+    }
+
+
+    /**
+     * Ordena las canciones de la lista de canciones favoritas por fecha de lanzamiento, de más reciente a más antigua,
+     * y actualiza la lista de canciones para reflejar el nuevo orden.
+     *
+     * @throws ArtistaNoEncontradoException Si ocurre un error al buscar un artista por su nombre.
+     */
+    public void ordenarRecienteAntiguoLista() throws ArtistaNoEncontradoException {
+        this.listaCanciones=mfm.getTiendaMusica().ordenarCancionesPorFechaMasReciente(listaCancionesFavs);
+        iniciarGridPane();
+    }
+
+
+    /**
+     * Ordena las canciones de la lista de canciones favoritas por fecha de lanzamiento, de más antigua a más reciente,
+     * y actualiza la lista de canciones para reflejar el nuevo orden.
+     *
+     * @throws ArtistaNoEncontradoException Si ocurre un error al buscar un artista por su nombre.
+     */
+    public void ordenarAntiguoRecienteLista() throws ArtistaNoEncontradoException {
+        this.listaCanciones=mfm.getTiendaMusica().ordenarCancionesPorFechaMasAntigua(listaCancionesFavs);
+        iniciarGridPane();
+    }
+
+
+    /**
+     * Ordena las canciones de la lista de canciones favoritas por duración, de más larga a más corta,
+     * y actualiza la lista de canciones para reflejar el nuevo orden.
+     *
+     * @throws ArtistaNoEncontradoException Si ocurre un error al buscar un artista por su nombre.
+     */
+    public void ordenarMasLargo() throws ArtistaNoEncontradoException {
+        this.listaCanciones=mfm.getTiendaMusica().ordenarCancionesPorDuracionMasLarga(listaCancionesFavs);
+        iniciarGridPane();
+    }
+
+    /**
+     * Ordena las canciones de la lista de canciones favoritas por duración, de más corta a más larga,
+     * y actualiza la lista de canciones para reflejar el nuevo orden.
+     *
+     * @throws ArtistaNoEncontradoException Si ocurre un error al buscar un artista por su nombre.
+     */
+    public void ordenarMasCorto() throws ArtistaNoEncontradoException {
+        this.listaCanciones=mfm.getTiendaMusica().ordenarCancionesPorDuracionMasCorta(listaCancionesFavs);
+        iniciarGridPane();
+    }
+
+
 }
