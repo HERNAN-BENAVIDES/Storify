@@ -534,10 +534,10 @@ public class TiendaMusica implements Serializable {
         ListaEnlazadaSimple<Artista> artistasYaEnTienda = new ListaEnlazadaSimple<>();
 
         for (Artista artista : artistas) {
-            if (artistasExistentes.find(artista) != null) {
-                artistasYaEnTienda.add(artista);
-            } else {
+            if (!(artistasExistentes.find(artista) != null)) {
                 artistasExistentes.insert(artista);
+            } else {
+                artistasYaEnTienda.add(artista);
             }
         }
 
@@ -971,12 +971,14 @@ public class TiendaMusica implements Serializable {
     public void eliminarCancionDeArtistaEnUsuario(Artista artista) {
         for (Usuario usuario : usuarios.values()) {
             System.out.println("aaa");
+            System.out.println(usuario.getPersona().getNombre());
             if (usuario.getPersona() instanceof Cliente) {
                 Cliente cliente = (Cliente) usuario.getPersona();
                 List<Cancion> cancionesAEliminar = new ArrayList<>();
 
                 // Recopilar canciones a eliminar
-                for (Cancion cancion : cliente.getCancionesFavoritas()) {
+                ListaEnlazadaDoble<Cancion> canciones = artista.getCanciones();
+                for (Cancion cancion : canciones) {
                     if (artista.getCanciones().contains(cancion)) {
                         cancionesAEliminar.add(cancion);
                     }

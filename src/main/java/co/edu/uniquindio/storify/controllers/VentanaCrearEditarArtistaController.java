@@ -18,9 +18,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.Data;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -77,6 +81,7 @@ public class VentanaCrearEditarArtistaController implements Initializable {
 
     @FXML
     private TableColumn<Cancion, String> columnaDuracion;
+    private String rutaArchivo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -230,7 +235,33 @@ public class VentanaCrearEditarArtistaController implements Initializable {
         aplicacion.motrarVentanaGestionArtista();
     }
 
-    public void cargarArtista(ActionEvent actionEvent) {
+    public void cargarArtista(ActionEvent actionEvent) throws ArtistasYaEnTiendaException, IOException, InterruptedException {
+        try {
+            openFileChooser();
+            mfm.getTiendaMusica().cargarArtistasDesdeArchivo(rutaArchivo);
+            mfm.guardarDatosBinario();
+            Alertas.mostrarMensaje("Carga de Artistas", "Artistas cargados con exito","Se han cargado correctamente los artistas desde el archivo "+rutaArchivo, Alert.AlertType.INFORMATION);
+            aplicacion.motrarVentanaGestionArtista();
+        } catch (FileNotFoundException e) {
+            Alertas.mostrarMensaje("Error", "Archivo no encontrado", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
 
+    public void openFileChooser() {
+        // Crear el FileChooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar archivo de texto");
+
+        // Filtro para solo mostrar archivos .txt
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos de texto (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Mostrar el cuadro de diálogo de abrir archivo
+        File selectedFile = fileChooser.showOpenDialog(ventana);
+
+        // Si el usuario selecciona un archivo, almacenar la ruta del archivo
+        if (selectedFile != null) {
+            rutaArchivo = selectedFile.getAbsolutePath();
+        }
     }
 }

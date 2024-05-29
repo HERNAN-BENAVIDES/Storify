@@ -54,6 +54,7 @@ public class VentanaArchivosController implements Initializable {
         } else {
             try {
                 mfm.getTiendaMusica().cargarArtistasDesdeArchivo(archivoSeleccionado.getAbsolutePath());
+                mfm.guardarDatosBinario();
                 aplicacion.motrarVentanaGestionArtista();
             } catch (IOException | InterruptedException | ArtistasYaEnTiendaException e) {
                 e.printStackTrace();

@@ -40,18 +40,6 @@ public class ModelFactoryController {
         persistenciaThread.run();
     }
 
-    private void cargarArtistasDesdeArchivo(String ruta) {
-        try {
-            tiendaMusica.cargarArtistasDesdeArchivo(ruta);
-        } catch (ArtistasYaEnTiendaException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e){
-            throw new RuntimeException(e);
-        }
-    }
-
     private void cargarDatosPrueba() {
         tiendaMusica = StorifyUtil.inicializarDatosPrueba();
     }
